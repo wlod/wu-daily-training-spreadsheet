@@ -7,10 +7,6 @@
   <body>
     <p>Google Sheets API Quickstart</p>
 
-    <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
-
     <pre id="content"></pre>
 
     <script type="text/javascript">
@@ -46,37 +42,10 @@
           discoveryDocs: DISCOVERY_DOCS,
           scope: SCOPES
         }).then(function () {
-        	listMajors();
+        	printRange('trening!B11:B40');
+        	listMajors('trening!B11:B40');
+        	/*  listMajors('trening!B11:Q11'); */
         });
-      }
-
-      /**
-       *  Called when the signed in status changes, to update the UI
-       *  appropriately. After a sign-in, the API is called.
-       */
-      function updateSigninStatus(isSignedIn) {
-        if (isSignedIn) {
-          authorizeButton.style.display = 'none';
-          signoutButton.style.display = 'block';
-          listMajors();
-        } else {
-          authorizeButton.style.display = 'block';
-          signoutButton.style.display = 'none';
-        }
-      }
-
-      /**
-       *  Sign in the user upon button click.
-       */
-      function handleAuthClick(event) {
-        gapi.auth2.getAuthInstance().signIn();
-      }
-
-      /**
-       *  Sign out the user upon button click.
-       */
-      function handleSignoutClick(event) {
-        gapi.auth2.getAuthInstance().signOut();
       }
 
       /**
@@ -95,18 +64,18 @@
        * Print the names and majors of students in a sample spreadsheet:
        * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
        */
-      function listMajors() {
+      function listMajors(range) {
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8',
-          range: 'trening!A9:A9',
+          range: range,
         }).then(function(response) {
           var range = response.result;
           if (range.values.length > 0) {
             appendPre('Name, Major:');
+            console.log("range.values.length: " + range.values.length);
             for (i = 0; i < range.values.length; i++) {
               var row = range.values[i];
-              // Print columns A and E, which correspond to indices 0 and 4.
-              appendPre(row[0] + ', ' + row[4]);
+              appendPre(row[0] + ', ' + row[1] + ', ' + row[2] + ', ' + row[4]);
             }
           } else {
             appendPre('No data found.');
@@ -114,7 +83,29 @@
         }, function(response) {
           appendPre('Error: ' + response.result.error.message);
         });
-      }
+      };
+      
+      function printRow(range) {
+    	  
+      };
+      
+      function printColumn(range) {
+    	  
+      };
+      
+      function printRange(rawRange) {
+    	  // TODO perf for later 
+    	  let sheet =  rawRange.split('!')[0];
+    	  let rawSheetRange = rawRange.split('!')[1];
+    	  let beginCell = rawSheetRange.split(':')[0];
+    	  let endCell = rawSheetRange.split(':')[1];
+    	  
+    	  console.log("sheet: " + sheet + " - rawSheetRange: " + rawSheetRange + " - beginCell: " + beginCell + " - endCell: " + endCell);
+    	  
+    	  // 'trening!B11:B40'
+    	  
+    	  
+      };
 
     </script>
 
