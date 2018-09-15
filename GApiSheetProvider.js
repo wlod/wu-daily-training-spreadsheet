@@ -1,3 +1,5 @@
+"use strict";
+
 // Client ID and API key from the Developer Console
 var CLIENT_ID = '418597576423-5nv3ndftur1f3n8avthqq1o4uopjaf01.apps.googleusercontent.com';
 var API_KEY = 'AIzaSyDMgqOEObXEA-nSA7rr19IGZziiuEJAwu0';
@@ -14,45 +16,49 @@ var SPREADSHEET_ID = "1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8";
 // training name and range
 var SPREADSHEET_TRAINING_RANGE = "trening!A8:Q40";
 
-
-
 class GApiSheetProvider {
     
-    constructor(range, result) {
-        this.range = range;
-        this.result = result;
-        this._initSheetConfig();
-        this._initSheetData();
+    constructor(gapi) {
+        this.gapi = gapi;
       }
     
-}
-
-/**
- * Initializes the API client library and sets up sign-in state listeners.
- */
-function initClient() {
-    gapi.client.init({
-            apiKey : API_KEY,
-            clientId : CLIENT_ID,
-            discoveryDocs : DISCOVERY_DOCS,
-            scope : SCOPES
-    }).then(function() {
-        initTraining(SPREADSHEET_TRAINING_RANGE);
-    });
-}
-
-function initTraining(rawRange) {
-    gapi.client.sheets.spreadsheets.values.get({
+    loadData(spreadsheetRange, fDataLoaded) {
+        let self = this;
+        this.gapi.load('client:auth2', function() { 
+            self._initSheetConfig(spreadsheetRange, fDataLoaded);
+        });
+    }
+    
+    _initSheetConfig(spreadsheetRange, fDataLoaded) {
+        let self = this;
+        this.gapi.client.init({
+                apiKey : API_KEY,
+                clientId : CLIENT_ID,
+                discoveryDocs : DISCOVERY_DOCS,
+                scope : SCOPES
+        }).then(function() {
+            self._initSheetData(spreadsheetRange, fDataLoaded);
+        });
+    }
+    
+    _initSheetData(rawRange, fDataLoaded) {
+        let self = this;
+        this.gapi.client.sheets.spreadsheets.values.get({
             spreadsheetId : SPREADSHEET_ID,
             range : rawRange,
-    }).then(function(response) {
-
-        let gCalSheet = new GCalSheet(rawRange, response.result);
-        console.log(gCalSheet.info);
-        console.log(gCalSheet.training.infoHeaders);
-        gCalSheet.dataPrint;
-
-    }, function(response) {
-        appendPre('Error: ' + response.result.error.message);
-    });
-};
+        }).then(function(response) {
+            self.gCalSheet = new GCalSheet(rawRange, response.result);
+            fDataLoaded();
+        }, function(response) {
+            appendPre('Error: ' + response.result.error.message);
+        });
+    }
+    
+    get gCalSheet() {
+        return this._gCalSheet;
+    }
+    
+    set gCalSheet(gCalSheet) {
+        this._gCalSheet = gCalSheet;
+    }
+}

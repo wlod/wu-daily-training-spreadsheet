@@ -1,3 +1,5 @@
+"use strict";
+
 class GCalSheet {
   constructor(range, result) {
     this.range = range;

@@ -32,7 +32,12 @@
           *  On load, called to load API client library.
           */
          function handleClientLoad() {
-             gapi.load('client:auth2', initClient);
+             let gApiSheetProvider = new GApiSheetProvider(gapi);
+             gApiSheetProvider.loadData(SPREADSHEET_TRAINING_RANGE, function() {
+                 console.log(gApiSheetProvider.gCalSheet.info);
+                 console.log(gApiSheetProvider.gCalSheet.training.infoHeaders);
+                 gApiSheetProvider.gCalSheet.dataPrint;
+             });
          }
          
          
