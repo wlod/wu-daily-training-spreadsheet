@@ -27,14 +27,6 @@ class GCalSheet {
 	  this.training = new Training(this);
   }
   
-  get columns() {
-      return this.beginCellChars - this.endCellChars;
-  }
-  
-  get printRow() {
-	  return null;
-  };
-  
   get dataPrint() {
 	  let range = this.result;
 	  if (range.values.length > 0) {
@@ -52,23 +44,23 @@ class GCalSheet {
         }
   }
   
-  get debugPrint() {
+  get info() {
 	  return "sheet: " + this.sheet + " - rawSheetRange: " + this.rawSheetRange + 
 		" - beginCell: " + this.beginCell + " - beginCellChar: " + this.beginCellChar + " - beginCellNumbs: " + this.beginCellNumbs + 
 		" - endCell: " + this.endCell + " - endCellChar: " + this.endCellChar + " - endCellNumbs: " + this.endCellNumbs;
   }
   
   /**
-   * Supports only column names: from a to z or A to Z
+   * Support only column names: from 'a' to 'z' or 'A' to 'Z'
    */
   static columnRange(beginCellChar, endCellChar) {
-      var columnRange = [];
-      var supportedColumns = 'abcdefghijklmnopqrstuvwxyz';
+      let columnRange = [];
+      let supportedColumns = 'abcdefghijklmnopqrstuvwxyz';
       if(beginCellChar === beginCellChar.toUpperCase()){
           endCellChar = endCellChar.toUpperCase();
           supportedColumns = supportedColumns.toUpperCase();
       }
-      supportedColumns = supportedColumns.substring(supportedColumns.indexOf(beginCellChar), supportedColumns.indexOf(endCellChar)+ 1);
+      supportedColumns = supportedColumns.substring(supportedColumns.indexOf(beginCellChar), supportedColumns.indexOf(endCellChar) + 1);
       columnRange = supportedColumns.split('');        
       return columnRange;
   }

@@ -41,7 +41,7 @@ class Training {
         
 	}
 	
-	 get printHeaders() {
+	 get infoHeaders() {
 	      return this.headers;
 	  };
 	

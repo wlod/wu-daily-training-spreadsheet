@@ -12,7 +12,7 @@ var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 // Spreadsheet ID + name and range:
 var SPREADSHEET_ID = "1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8";
 // training name and range
-var SPREADSHEET_TRAINING_RANGE = "trening!A8:M16";
+var SPREADSHEET_TRAINING_RANGE = "trening!A8:Q40";
 
 
 
@@ -41,10 +41,6 @@ function initClient() {
     });
 }
 
-/**
- * Print the names and majors of students in a sample spreadsheet:
- * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
- */
 function initTraining(rawRange) {
     gapi.client.sheets.spreadsheets.values.get({
             spreadsheetId : SPREADSHEET_ID,
@@ -52,8 +48,8 @@ function initTraining(rawRange) {
     }).then(function(response) {
 
         let gCalSheet = new GCalSheet(rawRange, response.result);
-        console.log(gCalSheet.debugPrint);
-        console.log(gCalSheet.training.printHeaders);
+        console.log(gCalSheet.info);
+        console.log(gCalSheet.training.infoHeaders);
         gCalSheet.dataPrint;
 
     }, function(response) {
