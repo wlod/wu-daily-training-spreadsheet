@@ -35,9 +35,10 @@
          function handleClientLoad() {
              let gApiSheetProvider = new GApiSheetProvider(gapi);
              gApiSheetProvider.loadData(SPREADSHEET_TRAINING_RANGE, function() {
-                 console.log(gApiSheetProvider.gCalSheet.info);
-                 console.log(gApiSheetProvider.gCalSheet.training.infoHeaders);
-                 gApiSheetProvider.gCalSheet.dataPrint;
+                 let trainingSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_TRAINING_RANGE];
+                 console.log(trainingSheet.info);
+                 console.log(trainingSheet.training.infoHeaders);
+                 trainingSheet.dataPrint;
              });
          }
          

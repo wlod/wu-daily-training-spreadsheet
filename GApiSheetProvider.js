@@ -4,6 +4,7 @@ class GApiSheetProvider {
     
     constructor(gapi) {
         this.gapi = gapi;
+        this.gCalSheet = new Object();
       }
     
     loadData(spreadsheetRange, fDataLoaded) {
@@ -31,7 +32,7 @@ class GApiSheetProvider {
             spreadsheetId : SPREADSHEET_ID,
             range : rawRange,
         }).then(function(response) {
-            self.gCalSheet = new GCalSheet(rawRange, response.result);
+            self.gCalSheet[rawRange] = new GCalSheet(rawRange, response.result);
             fDataLoaded();
         }, function(response) {
             appendPre('Error: ' + response.result.error.message);

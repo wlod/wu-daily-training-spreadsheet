@@ -11,7 +11,6 @@ class Training {
 	
 	_init() {
         
-        
         this.dates;
         this.trainingDataHeadersMap;
         this.trainingDataDatesMap;
