@@ -24,26 +24,7 @@ class GCalSheet {
   }
   
   _initSheetData() {
-	  // TODO dodac nazwe implementacji do roznych dedykowanych arkuszy; moze
-        // prototype
-	  this.training = new Training(this);
-  }
-  
-  get dataPrint() {
-	  let range = this.result;
-	  if (range.values.length > 0) {
-          console.log("range.values.length: " + range.values.length);
-          for (let i = 0; i < range.values.length; i++) {
-            let row = range.values[i];
-            let rowAsString = "";
-            for (let j = 0; j < row.length; j++) {
-            	rowAsString += row[j] + ', ';
-            }
-            appendPre(rowAsString);
-          }
-        } else {
-          appendPre('No data found.');
-        }
+	  this.sheet = new DateSheet(this);
   }
   
   get info() {

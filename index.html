@@ -5,9 +5,9 @@
 <meta charset="UTF-8" />
 
 <script type="text/javascript" src="GConf.js"></script>
-<script type="text/javascript" src="Training.js"></script>
-<script type="text/javascript" src="GApiSheetProvider.js"></script>
+<script type="text/javascript" src="DateSheet.js"></script>
 <script type="text/javascript" src="GCalSheet.js"></script>
+<script type="text/javascript" src="GApiSheetProvider.js"></script>
 
 </head>
 <body>
@@ -28,26 +28,34 @@
             var textContent = document.createTextNode(message + '\n');
             pre.appendChild(textContent);
         }
-         
-         /**
-          *  On load, called to load API client library.
-          */
-         function handleClientLoad() {
-             let gApiSheetProvider = new GApiSheetProvider(gapi);
-             gApiSheetProvider.loadData(SPREADSHEET_TRAINING_RANGE, function() {
-                 let trainingSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_TRAINING_RANGE];
-                 console.log(trainingSheet.info);
-                 console.log(trainingSheet.training.infoHeaders);
-                 trainingSheet.dataPrint;
-             });
-         }
-         
-         
+
+        function loadData() {
+            let gApiSheetProvider = new GApiSheetProvider(gapi);
+            gApiSheetProvider.loadData(SPREADSHEET_TRAINING_RANGE, function() {
+                let trainingSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_TRAINING_RANGE];
+                console.log(trainingSheet.info);
+                console.log(trainingSheet.sheet.infoHeaders);
+                console.log(trainingSheet.sheet.infoData);
+            });
+            gApiSheetProvider.loadData(SPREADSHEET_DIET_RANGE, function() {
+                let dietSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_DIET_RANGE];
+                console.log(dietSheet.info);
+                console.log(dietSheet.sheet.infoHeaders);
+                console.log(dietSheet.sheet.infoData);
+            });
+           gApiSheetProvider.loadData(SPREADSHEET_WEIGHT_RANGE, function() {
+                let weightSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_WEIGHT_RANGE];
+                console.log(weightSheet.info);
+                console.log(weightSheet.sheet.infoHeaders);
+                console.log(weightSheet.sheet.infoData);
+            });
+        }
     </script>
 
 	<script async defer src="https://apis.google.com/js/api.js"
-		onload="this.onload=function(){};handleClientLoad()"
+		onload="this.onload=function(){};loadData()"
 		onreadystatechange="if (this.readyState === 'complete') this.onload()">
+        
     </script>
 </body>
 </html>
