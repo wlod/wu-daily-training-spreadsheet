@@ -28,26 +28,60 @@
             var textContent = document.createTextNode(message + '\n');
             pre.appendChild(textContent);
         }
-
+		
+         
+        /**
+			Below is only for review.
+        **/
         function loadData() {
             let gApiSheetProvider = new GApiSheetProvider(gapi);
             gApiSheetProvider.loadData(SPREADSHEET_TRAINING_RANGE, function() {
                 let trainingSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_TRAINING_RANGE];
-                console.log(trainingSheet.info);
-                console.log(trainingSheet.sheet.infoHeaders);
-                console.log(trainingSheet.sheet.infoData);
+                appendPre("+ Trening:");
+                
+                appendPre("| info sheet:");
+                console.debug(trainingSheet.info);
+                appendPre(trainingSheet.info);
+                
+                appendPre("| info headers:");
+                console.debug(trainingSheet.sheet.infoHeaders);
+                appendPre(trainingSheet.sheet.infoHeaders);
+                
+                appendPre("| info data:");
+                console.debug(trainingSheet.sheet.infoData);
+                appendPre(trainingSheet.sheet.infoData);
             });
             gApiSheetProvider.loadData(SPREADSHEET_DIET_RANGE, function() {
                 let dietSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_DIET_RANGE];
-                console.log(dietSheet.info);
-                console.log(dietSheet.sheet.infoHeaders);
-                console.log(dietSheet.sheet.infoData);
+				appendPre("+ Dieta:");
+                
+                appendPre("| info sheet:");
+                console.debug(dietSheet.info);
+                appendPre(dietSheet.info);
+                
+                appendPre("| info headers:");
+                console.debug(dietSheet.sheet.infoHeaders);
+                appendPre(dietSheet.sheet.infoHeaders);
+                
+                appendPre("| info data:");
+                console.debug(dietSheet.sheet.infoData);
+                appendPre(dietSheet.sheet.infoData);
             });
            gApiSheetProvider.loadData(SPREADSHEET_WEIGHT_RANGE, function() {
                 let weightSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_WEIGHT_RANGE];
-                console.log(weightSheet.info);
-                console.log(weightSheet.sheet.infoHeaders);
-                console.log(weightSheet.sheet.infoData);
+				appendPre("+ Waga:");
+                
+                appendPre("| info sheet:");
+                console.debug(weightSheet.info);
+                appendPre(weightSheet.info);
+                
+                appendPre("| info headers:");
+                console.debug(weightSheet.sheet.infoHeaders);
+                appendPre(weightSheet.sheet.infoHeaders);
+                
+                appendPre("| info data:");
+                console.debug(weightSheet.sheet.infoData);
+                appendPre(weightSheet.sheet.infoData);
             });
         }
     </script>

@@ -18,7 +18,9 @@ var SPREADSHEET_ID = "1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8";
 // Spreadsheet name and range
 // training
 var SPREADSHEET_TRAINING_RANGE = "trening!A8:Q40";
+// diet
 var SPREADSHEET_DIET_RANGE = "dieta!A4:K36";
+// weight
 var SPREADSHEET_WEIGHT_RANGE = "waga!A4:AO36";
 
 

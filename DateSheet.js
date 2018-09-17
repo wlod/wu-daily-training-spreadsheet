@@ -77,7 +77,13 @@ class DateSheet {
 	 };
 	  
 	 get infoData() {
-         return this.data;
+	     let infoData = "";
+	     for (var key in this.data) {
+	         if (this.data.hasOwnProperty(key)) {
+	            infoData += this.data[key] + "\n";
+	         }
+	      }
+         return infoData;
      };
 }
 

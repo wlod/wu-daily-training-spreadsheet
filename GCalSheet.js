@@ -28,7 +28,7 @@ class GCalSheet {
   }
   
   get info() {
-	  return "sheet: " + this.sheet + " - rawSheetRange: " + this.rawSheetRange + 
+	  return "Sheet: " + this.sheet + " - rawSheetRange: " + this.rawSheetRange + 
 		" - beginCell: " + this.beginCell + " - beginCellChar: " + this.beginCellChar + " - beginCellNumbs: " + this.beginCellNumbs + 
 		" - endCell: " + this.endCell + " - endCellChar: " + this.endCellChar + " - endCellNumbs: " + this.endCellNumbs;
   }
