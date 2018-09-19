@@ -8,33 +8,30 @@ class GApiSheetProvider {
       }
     
     loadData(spreadsheetRange, fDataLoaded) {
-        let self = this;
-        this.gapi.load('client:auth2', function() { 
-            self._initSheetConfig(spreadsheetRange, fDataLoaded);
+        this.gapi.load('client:auth2', () => { 
+            this._initSheetConfig(spreadsheetRange, fDataLoaded);
         });
     }
     
     _initSheetConfig(spreadsheetRange, fDataLoaded) {
-        let self = this;
         this.gapi.client.init({
                 apiKey : API_KEY,
                 clientId : CLIENT_ID,
                 discoveryDocs : DISCOVERY_DOCS,
                 scope : SCOPES
-        }).then(function() {
-            self._initSheetData(spreadsheetRange, fDataLoaded);
+        }).then(() => {
+            this._initSheetData(spreadsheetRange, fDataLoaded);
         });
     }
     
     _initSheetData(rawRange, fDataLoaded) {
-        let self = this;
         this.gapi.client.sheets.spreadsheets.values.get({
             spreadsheetId : SPREADSHEET_ID,
             range : rawRange,
-        }).then(function(response) {
-            self.gCalSheet[rawRange] = new GCalSheet(rawRange, response.result);
+        }).then((response) => {
+            this.gCalSheet[rawRange] = new GCalSheet(rawRange, response.result);
             fDataLoaded();
-        }, function(response) {
+        }, (response) => {
             appendPre('Error: ' + response.result.error.message);
         });
     }
