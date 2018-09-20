@@ -21,7 +21,7 @@ const SPREADSHEET_TRAINING_RANGE = "trening!A8:Q40";
 // diet
 const SPREADSHEET_DIET_RANGE = "dieta!A4:K36";
 // weight
-const SPREADSHEET_WEIGHT_RANGE = "waga!A4:AO36";
+const SPREADSHEET_WEIGHT_RANGE = "waga!A4:O36";
 
 
 // App conf

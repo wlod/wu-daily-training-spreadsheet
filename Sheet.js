@@ -1,6 +1,6 @@
 "use strict";
 
-class DateSheet {
+class Sheet {
 	
 	constructor(gCalSheet) {
 		this.gCalSheet = gCalSheet;

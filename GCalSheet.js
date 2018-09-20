@@ -1,8 +1,8 @@
 "use strict";
 
 class GCalSheet {
-  constructor(range, result) {
-    this.range = range;
+  constructor(result) {
+    this.range = result.range;
     this.result = result;
     this._initSheetConfig();
     this._initSheetData();

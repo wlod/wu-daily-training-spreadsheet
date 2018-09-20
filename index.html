@@ -4,8 +4,9 @@
 <title>Google Sheets API Quickstart</title>
 <meta charset="UTF-8" />
 
+<script type="text/javascript" src="PrototypeJsCore.js"></script>
 <script type="text/javascript" src="GConf.js"></script>
-<script type="text/javascript" src="DateSheet.js"></script>
+<script type="text/javascript" src="Sheet"></script>
 <script type="text/javascript" src="GCalSheet.js"></script>
 <script type="text/javascript" src="GApiSheetProvider.js"></script>
 
@@ -29,60 +30,61 @@
             pre.appendChild(textContent);
         }
 		
-         
         /**
 			Below is only for review.
         **/
         function loadData() {
-            let gApiSheetProvider = new GApiSheetProvider(gapi);
-            gApiSheetProvider.loadData(SPREADSHEET_TRAINING_RANGE, function() {
-                let trainingSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_TRAINING_RANGE];
-                appendPre("+ Trening:");
-                
-                appendPre("| info sheet:");
-                console.debug(trainingSheet.info);
-                appendPre(trainingSheet.info);
-                
-                appendPre("| info headers:");
-                console.debug(trainingSheet.sheet.infoHeaders);
-                appendPre(trainingSheet.sheet.infoHeaders);
-                
-                appendPre("| info data:");
-                console.debug(trainingSheet.sheet.infoData);
-                appendPre(trainingSheet.sheet.infoData);
-            });
-            gApiSheetProvider.loadData(SPREADSHEET_DIET_RANGE, function() {
-                let dietSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_DIET_RANGE];
-				appendPre("+ Dieta:");
-                
-                appendPre("| info sheet:");
-                console.debug(dietSheet.info);
-                appendPre(dietSheet.info);
-                
-                appendPre("| info headers:");
-                console.debug(dietSheet.sheet.infoHeaders);
-                appendPre(dietSheet.sheet.infoHeaders);
-                
-                appendPre("| info data:");
-                console.debug(dietSheet.sheet.infoData);
-                appendPre(dietSheet.sheet.infoData);
-            });
-           gApiSheetProvider.loadData(SPREADSHEET_WEIGHT_RANGE, function() {
-                let weightSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_WEIGHT_RANGE];
-				appendPre("+ Waga:");
-                
-                appendPre("| info sheet:");
-                console.debug(weightSheet.info);
-                appendPre(weightSheet.info);
-                
-                appendPre("| info headers:");
-                console.debug(weightSheet.sheet.infoHeaders);
-                appendPre(weightSheet.sheet.infoHeaders);
-                
-                appendPre("| info data:");
-                console.debug(weightSheet.sheet.infoData);
-                appendPre(weightSheet.sheet.infoData);
-            });
+           let gApiSheetProvider = new GApiSheetProvider(gapi);
+           
+           gApiSheetProvider.loadData([SPREADSHEET_WEIGHT_RANGE, SPREADSHEET_DIET_RANGE, SPREADSHEET_TRAINING_RANGE], function() {
+               
+               let weightSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_WEIGHT_RANGE];
+			   appendPre("+ Waga:");
+               
+               appendPre("| info sheet:");
+               console.debug(weightSheet.info);
+               appendPre(weightSheet.info);
+               
+               appendPre("| info headers:");
+               console.debug(weightSheet.sheet.infoHeaders);
+               appendPre(weightSheet.sheet.infoHeaders);
+               
+               appendPre("| info data:");
+               console.debug(weightSheet.sheet.infoData);
+               appendPre(weightSheet.sheet.infoData);
+               
+               
+               let dietSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_DIET_RANGE];
+			   appendPre("+ Dieta:");
+               
+               appendPre("| info sheet:");
+               console.debug(dietSheet.info);
+               appendPre(dietSheet.info);
+               
+               appendPre("| info headers:");
+               console.debug(dietSheet.sheet.infoHeaders);
+               appendPre(dietSheet.sheet.infoHeaders);
+               
+               appendPre("| info data:");
+               console.debug(dietSheet.sheet.infoData);
+               appendPre(dietSheet.sheet.infoData);
+               
+               let trainingSheet = gApiSheetProvider.gCalSheet[SPREADSHEET_TRAINING_RANGE];
+               appendPre("+ Trening:");
+               
+               appendPre("| info sheet:");
+               console.debug(trainingSheet.info);
+               appendPre(trainingSheet.info);
+               
+               appendPre("| info headers:");
+               console.debug(trainingSheet.sheet.infoHeaders);
+               appendPre(trainingSheet.sheet.infoHeaders);
+               
+               appendPre("| info data:");
+               console.debug(trainingSheet.sheet.infoData);
+               appendPre(trainingSheet.sheet.infoData);
+               
+           });
         }
     </script>
 
