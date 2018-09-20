@@ -24,7 +24,7 @@ class GCalSheet {
   }
   
   _initSheetData() {
-	  this.sheet = new DateSheet(this);
+	  this.sheet = new Sheet(this);
   }
   
   get info() {
