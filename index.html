@@ -20,16 +20,39 @@
 
 	<pre id="content"></pre>
    
-   <div id="app">
+   <!-- <div id="app">
      {{ message }}
+   </div> -->
+   
+   <div id="app">
+     <h2>Training</h2>
+     <h3>Row - headers</h3>
+     <ol>
+       <li v-for="header in trainingHeaders">
+         {{ header }}
+       </li>
+     </ol>
+     <h2>Diet</h2>
+     <h3>Row - headers</h3>
+     <ol>
+       <li v-for="header in dietHeaders">
+         {{ header }}
+       </li>
+     </ol>
+     <h2>Weight</h2>
+     <h3>Row - headers</h3>
+     <ol>
+       <li v-for="header in weightHeaders">
+         {{ header }}
+       </li>
+     </ol>
    </div>
 
 	<script type="text/javascript">
         function loadData() {
            let gApiSheetProvider = new GApiSheetProvider(gapi);
-           
            gApiSheetProvider.loadData([SPREADSHEET_WEIGHT_RANGE, SPREADSHEET_DIET_RANGE, SPREADSHEET_TRAINING_RANGE], function() {
-               let app = new App(gApiSheetProvider);
+               new App(gApiSheetProvider);
            });
         }
     </script>

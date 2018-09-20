@@ -11,6 +11,7 @@ class GApiSheetProvider {
         this.gapi.load('client:auth2', () => { 
             this._initSheetConfig(spreadsheetsRange, fDataLoaded);
         });
+        // fDataLoaded();
     }
     
     _initSheetConfig(spreadsheetsRange, fDataLoaded) {
@@ -33,6 +34,7 @@ class GApiSheetProvider {
                             let sheetResult = sheet.result;
                             this.gCalSheet[sheetResult.range] = new GCalSheet(sheetResult);
                         });
+                        console.log(this.gCalSheet[SPREADSHEET_TRAINING_RANGE]);
                         fDataLoaded();
                    });
         });
