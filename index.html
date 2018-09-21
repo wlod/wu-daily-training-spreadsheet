@@ -45,16 +45,13 @@
    </div>
 
 	<script type="text/javascript">
-        function loadData() {
-           let gApiSheetProvider = new GApiSheetProvider(gapi);
-           gApiSheetProvider.loadData([SPREADSHEET_WEIGHT_RANGE, SPREADSHEET_DIET_RANGE, SPREADSHEET_TRAINING_RANGE], function() {
-               new App(gApiSheetProvider);
-           });
+        function startApp() {
+           new App();
         }
     </script>
 
 	<script async defer src="https://apis.google.com/js/api.js"
-		onload="this.onload=function(){};loadData()"
+		onload="this.onload=function(){};startApp()"
 		onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
 </body>
