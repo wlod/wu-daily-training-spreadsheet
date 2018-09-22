@@ -14,10 +14,7 @@ class Sheet {
 	
 	_init() {
         // TODO
-        this.dates;
         this.dataHeadersMap;
-        this.dataDatesMap;
-        
     }
 	
 	_initHeaders() {
@@ -30,7 +27,7 @@ class Sheet {
             let headerValue = headerRow[i];
             if(typeof headerValue !== "undefined" && headerValue.length > 0) {
                 currentHeaderIndex++;
-                this.headers.push(new SheetHeader(headerValue, 1, i));
+                this.headers.push(new SheetHeader(headerValue, 1, i, this.gCalSheet.spreadsheetName));
                 continue;
             }
             if(typeof currentHeaderIndex !== "undefined" ) {
@@ -46,9 +43,10 @@ class Sheet {
 	
 	_initData() {
 	    this.data = new Object();
-	    
+	    this.dataSheetsDataMap = new Map();
 	    
 	    let sheetRows = this.gCalSheet.result.values;
+	    let spreadsheetName = this.gCalSheet.spreadsheetName;
 	    // below i = 1 and j = 1 to skip header/row with names and column with dates
 	    // using sheetRows[j][0] = date; to add date for each row/header data
 	    for (let i = 1; i < this.headers.length; i++) {
@@ -57,19 +55,31 @@ class Sheet {
 	        
 	        this.data[sheetHeader.name] = new Array();
 	        
+	        
 	        for(let j = 1; j < sheetRows.length; j++) {
 	            
-	            let rawData = "";
+	            let date = sheetRows[j][0];
+	            
+	            if(typeof this.dataSheetsDataMap.get(date) === "undefined") {
+	                this.dataSheetsDataMap.set(date, new Array());
+                }
+	            
+	            let rawDataAsArray = [];
 	            for(let k = 0; k < sheetHeader.columns; k++) {
-	                
-	                rawData += sheetRows[j][k + sheetHeader.startIndex] + SPREADSHEET_CELL_VALUE_DELIMITER;
+	                rawDataAsArray.push(sheetRows[j][k + sheetHeader.startIndex]);
 	            }
 	            
-	            this.data[sheetHeader.name].push(new SheetData(sheetHeader.name, sheetRows[j][0], rawData));
+	            let sheetData = new SheetData(sheetHeader.name, date, rawDataAsArray, spreadsheetName);
 	            
+	            this.data[sheetHeader.name].push(sheetData);
+	            this.dataSheetsDataMap.get(date).push(sheetData);
 	        }
 	    }
 	    
+	}
+	
+	get dataSheetDate() {
+	    return this.dataSheetsDataMap;
 	}
 	
 	 get infoHeaders() {
@@ -89,28 +99,59 @@ class Sheet {
 
 class SheetData {
 	
-	constructor(name, date, rawColumnsData) {
+	constructor(name, date, rawDataAsArray, spreadsheetName) {
 		this.name = name;
 		this.date = date;
-		this.rawColumnsData = rawColumnsData;
+		this.rawDataAsArray = rawDataAsArray;
+		this.spreadsheetName = spreadsheetName;
+		
+		this._initStartTime();
+	}
+	
+	// TODO split 
+	_initStartTime() {
+	    if(SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
+	        this.startTime = null;
+	        
+	        let startTimeOrDurationColumn = START_TIME_COLUMN[this.spreadsheetName];
+	        let startTimeOrDurationRaw = this.rawDataAsArray[startTimeOrDurationColumn];
+	        
+	        if(typeof startTimeOrDurationRaw === "undefined" ||
+	           startTimeOrDurationRaw === SPREADSHEET_CELL_VALUE_EMPTY) {
+	            return;
+	        }
+	        
+	        if(SPREADSHEET_TRAINING === this.spreadsheetName && TRAINING_HEADER_INFORMATION_COLUMNS === this.name) {
+	            return;
+	        }
+	        
+	        if(SPREADSHEET_TRAINING === this.spreadsheetName) {
+	            startTimeOrDurationRaw = startTimeOrDurationRaw.split("-")[0];
+	        }
+	        
+	        // remove weight marker 'b' from pool
+	        this.startTime = startTimeOrDurationRaw.replace('b','');
+	    }
+	  
 	}
 	
 	toString() {
-        return "SheetData: [name: " + this.name + ", date: " + this.date + ", rawColumnsData: " + this.rawColumnsData + "]";
+        return "SheetData: [name: " + this.name + ", date: " + this.date + ", rawDataAsArray: " + this.rawDataAsArray + ", spreadsheetName: " + this.spreadsheetName + "]";
     }
 	
 }
 
 class SheetHeader {
     
-    constructor(name, columns, startIndex) {
+    constructor(name, columns, startIndex, spreadsheetName) {
         this.name = name;
         this.columns = columns;
         this.startIndex = startIndex;
+        this.spreadsheetName = spreadsheetName;
     }
     
     toString() {
-        return "DateSheetHeader: [name: " + this.name + ", columns: " + this.columns + ", startIndex: " + this.startIndex + "]";
+        return "DateSheetHeader: [name: " + this.name + ", columns: " + this.columns + ", startIndex: " + this.startIndex + ", spreadsheetName: " + this.spreadsheetName + "]";
     }
     
 }

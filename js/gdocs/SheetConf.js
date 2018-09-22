@@ -1,0 +1,39 @@
+// TODO: following configuration should be in the spreadsheet
+
+// Spreadsheet name and range
+// training
+const SPREADSHEET_TRAINING = "trening";
+const SPREADSHEET_TRAINING_RANGE = SPREADSHEET_TRAINING + "!A8:Q33";
+// diet
+const SPREADSHEET_DIET = "dieta";
+const SPREADSHEET_DIET_RANGE = SPREADSHEET_DIET + "!A4:K29";
+// weight
+const SPREADSHEET_WEIGHT = "waga";
+const SPREADSHEET_WEIGHT_RANGE = SPREADSHEET_WEIGHT + "!A4:O29";
+
+
+// App conf
+const SPREADSHEET_CELL_VALUE_DELIMITER = "~";
+const SPREADSHEET_CELL_VALUE_EMPTY = "-";
+const SPREADSHEETS_SUPPORT_START_TIME = [SPREADSHEET_TRAINING, SPREADSHEET_DIET, SPREADSHEET_WEIGHT];
+
+// TRAINING
+const TRAINING_DURATION_COLUMN = 2;
+const TRAINING_HEADER_INFORMATION_COLUMNS = ['kroki - mi band 3'];
+
+// DIET
+const DIET_START_TIME_COLUMN = 1;
+
+// WEIGHT
+const WEIGHT_START_TIME_COLUMN = 2;
+
+// HELPERS MAP
+// -1 start from 0; configuration contains business value
+const START_TIME_COLUMN = {
+    [SPREADSHEET_TRAINING] : (TRAINING_DURATION_COLUMN - 1),
+    [SPREADSHEET_DIET] : (DIET_START_TIME_COLUMN - 1),
+    [SPREADSHEET_WEIGHT] : (WEIGHT_START_TIME_COLUMN - 1)
+}
+
+ 
+

@@ -11,7 +11,7 @@ class GCalSheet {
   _initSheetConfig() {
 	  // TODO do perf later
 	  let rawRange  = this.range;
-	  this.sheet =  rawRange.split('!')[0];
+	  this.spreadsheetName =  rawRange.split('!')[0];
 	  this.rawSheetRange = rawRange.split('!')[1];
 	  this.beginCell = this.rawSheetRange.split(':')[0];
 	  this.endCell = this.rawSheetRange.split(':')[1];
@@ -28,7 +28,7 @@ class GCalSheet {
   }
   
   get info() {
-	  return "Sheet: " + this.sheet + " - rawSheetRange: " + this.rawSheetRange + 
+	  return "Sheet: " + this.sheet + " - rawSheetRange: " + this.rawSheetRange + " - spreadsheetName: " + this.spreadsheetName + 
 		" - beginCell: " + this.beginCell + " - beginCellChar: " + this.beginCellChar + " - beginCellNumbs: " + this.beginCellNumbs + 
 		" - endCell: " + this.endCell + " - endCellChar: " + this.endCellChar + " - endCellNumbs: " + this.endCellNumbs;
   }

@@ -8,11 +8,15 @@
 
 <script type="text/javascript" src="js/PrototypeJsCore.js"></script>
 <script type="text/javascript" src="js/gdocs/GConf.js"></script>
+<script type="text/javascript" src="js/gdocs/SheetConf.js"></script>
+<script type="text/javascript" src="js/gdocs/SheetUtils.js"></script>
 <script type="text/javascript" src="js/gdocs/Sheet.js"></script>
 <script type="text/javascript" src="js/gdocs/GCalSheet.js"></script>
 <script type="text/javascript" src="js/gdocs/GApiSheetProvider.js"></script>
 
 <script type="text/javascript" src="js/vue/App.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/index.css" />
 
 </head>
 <body>
@@ -42,6 +46,21 @@
          {{ header }}
        </li>
      </ol>
+      
+     <h2>Days</h2>     
+     <div v-for="(item, key) in sheetsData">
+
+      <h3>Day {{ key }}. - {{ item.day }}</h2>
+      
+      <div class="rTable">
+         <div class="rTableRow">
+            <div class="rTableCell" v-for="sheetData in item.activities" v-if="sheetData.startTime !== null">
+               <strong>{{ sheetData.startTime }}</strong> - {{ sheetData.name }}<br /><br />
+               {{ sheetData.rawDataAsArray }}
+            </div>
+         </div>
+      </div>
+     
    </div>
 
 	<script type="text/javascript">

@@ -4,7 +4,7 @@ class GApiSheetProvider {
     
     constructor(gapi) {
         this.gapi = gapi;
-        this.gCalSheet = new Object();
+        this.gCalSheet = new Map();
       }
     
     loadData(spreadsheetsRange) {
@@ -14,6 +14,8 @@ class GApiSheetProvider {
             });
         }).then( () => {
             return this._initSheetConfig(spreadsheetsRange);
+        }).then( () => {
+            return this._prepareSheetData(spreadsheetsRange);
         });
     }
     
@@ -23,9 +25,7 @@ class GApiSheetProvider {
                 clientId : CLIENT_ID,
                 discoveryDocs : DISCOVERY_DOCS,
                 scope : SCOPES
-        }).then( () => {
-            return this._prepareSheetData(spreadsheetsRange);  
-        });
+        })
     }
     
     _prepareSheetData(spreadsheetsRange) {
@@ -39,7 +39,7 @@ class GApiSheetProvider {
                .then( (response) => {
                     response.forEach( (sheet) => {
                         let sheetResult = sheet.result;
-                        this.gCalSheet[sheetResult.range] = new GCalSheet(sheetResult);
+                        this.gCalSheet.set(sheetResult.range,  new GCalSheet(sheetResult));
                     });
                     return response;
                });
@@ -50,6 +50,33 @@ class GApiSheetProvider {
             spreadsheetId : SPREADSHEET_ID,
             range : rawRange,
         });
+    }
+    
+    dataSheetsByDate(date) {
+        const dataSheetsDate = new Array();
+        this.gCalSheet.forEach( (value, key, map) => {
+            dataSheetsDate.push(...value.sheet.dataSheetDate.get(date));
+        });
+        return dataSheetsDate
+    }
+    
+    dataSheetsGroupByDates() {
+        const dataSheetsDate = new Map();
+        const groupData = new Array();
+        this.gCalSheet.forEach( (value, key, map) => {
+            value.sheet.dataSheetDate.forEach( (inValue, inKey) => {
+                if(typeof dataSheetsDate.get(inKey) === 'undefined') {
+                    dataSheetsDate.set(inKey, new Array());
+                }
+                dataSheetsDate.get(inKey).push(...inValue);
+            });
+        });
+        
+        dataSheetsDate.forEach( (value, key, map) => {
+            SheetUtils.sortByStartTime(value);
+            groupData.push({"day": key, "activities": value});
+        });
+        return groupData
     }
     
     get gCalSheet() {
