@@ -35,5 +35,32 @@ const START_TIME_COLUMN = {
     [SPREADSHEET_WEIGHT] : (WEIGHT_START_TIME_COLUMN - 1)
 }
 
+
+// ICONS MAP
+
+const ICONS = {
+ "sniadanie" : "free_breakfast",
+ "drugie sniadanie" : "fastfood",
+ "obiad" : "room_service",
+ "podwieczorek" : "fastfood",
+ "kolacja" : "fastfood",
+ "Ważenie I" : "accessibility",
+ "Ważenie II" : "accessibility",
+ "Ważenie III" : "accessibility",
+ "Ważenie IV" : "accessibility",
+ "Ważenie V" : "accessibility",
+ "Ważenie VI" : "accessibility",
+ "Ważenie VII" : "accessibility",
+ "spacer I" : "directions_run",
+ "spacer II" : "directions_run",
+ "spacer III" : "directions_run",
+ "basen" : "pool",
+ "siłownia" : "fitness_center",
+ "squash" : "toll",
+ "tenis stołowy" : "toll",
+ "drzemka" : "local_hotel"
+}
+
+const DEFAULT_ICON = "warning";
  
 

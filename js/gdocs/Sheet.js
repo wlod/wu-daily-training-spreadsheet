@@ -106,6 +106,7 @@ class SheetData {
 		this.spreadsheetName = spreadsheetName;
 		
 		this._initStartTime();
+		this._initIcons();
 	}
 	
 	// TODO split 
@@ -132,11 +133,17 @@ class SheetData {
 	        // remove weight marker 'b' from pool
 	        this.startTime = startTimeOrDurationRaw.replace('b','');
 	    }
-	  
+	}
+	
+	_initIcons() {
+	    this.itemTitleIcon = ICONS[this.name];
+	    if(typeof this.itemTitleIcon === "undefined") {
+	        this.itemTitleIcon = DEFAULT_ICON;  
+	    }
 	}
 	
 	toString() {
-        return "SheetData: [name: " + this.name + ", date: " + this.date + ", rawDataAsArray: " + this.rawDataAsArray + ", spreadsheetName: " + this.spreadsheetName + "]";
+        return "SheetData: [name: " + this.name + ", date: " + this.date + ", rawDataAsArray: " + this.rawDataAsArray + ", spreadsheetName: " + this.spreadsheetName + ", itemTitleIcon: " + this.itemTitleIcon + "]";
     }
 	
 }

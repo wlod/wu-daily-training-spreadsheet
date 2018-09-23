@@ -11,7 +11,7 @@ class App {
     
     _renderView() {
       const allData = this.dataProvider.dataSheetsGroupByDates();
-        
+      
       new Vue({
           el: '#app',
           data: {

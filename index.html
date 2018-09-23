@@ -4,6 +4,9 @@
 <title>wu-daily-training-sheet</title>
 <meta charset="UTF-8" />
 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
 <script type="text/javascript" src="js/PrototypeJsCore.js"></script>
@@ -21,46 +24,36 @@
 </head>
 <body>
 	<p>wu-daily-training-sheet - <a href="https://github.com/wlod/wu-daily-training-sheet/" target="_blank">current version - github</a>.</p>
-
+    <p>data - <a href="https://docs.google.com/spreadsheets/d/1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8/edit#gid=1777293991" target="_blank">google docs</a>.</p> 
+   
 	<pre id="content"></pre>
    
    <div id="app">
-     <h2>Training</h2>
-     <h3>Row - headers</h3>
-     <ol>
-       <li v-for="header in trainingHeaders">
-         {{ header }}
-       </li>
-     </ol>
-     <h2>Diet</h2>
-     <h3>Row - headers</h3>
-     <ol>
-       <li v-for="header in dietHeaders">
-         {{ header }}
-       </li>
-     </ol>
-     <h2>Weight</h2>
-     <h3>Row - headers</h3>
-     <ol>
-       <li v-for="header in weightHeaders">
-         {{ header }}
-       </li>
-     </ol>
+     
       
      <h2>Days</h2>     
      <div v-for="(item, key) in sheetsData">
 
-      <h3>Day {{ key }}. - {{ item.day }}</h2>
+      <h3>Day {{ key }}. - {{ item.day }}</h3>
       
-      <div class="rTable">
-         <div class="rTableRow">
-            <div class="rTableCell" v-for="sheetData in item.activities" v-if="sheetData.startTime !== null">
-               <strong>{{ sheetData.startTime }}</strong> - {{ sheetData.name }}<br /><br />
-               {{ sheetData.rawDataAsArray }}
+      
+      <div class="item-list">
+         <div class="item" v-for="sheetData in item.activities" v-if="sheetData.startTime !== null">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">{{ sheetData.itemTitleIcon }}</i>
+               <span class="item-title-text">{{ sheetData.startTime }}</span>
             </div>
+   
+            <div class="item-content item-content-left">
+               <p>{{ sheetData.name }}</p>
+               <p>{{ sheetData.rawDataAsArray }}</p>
+            </div>
+   
          </div>
       </div>
      
+   </div>
+   
    </div>
 
 	<script type="text/javascript">
