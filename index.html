@@ -45,8 +45,10 @@
             </div>
    
             <div class="item-content item-content-left">
-               <p>{{ sheetData.name }}</p>
-               <p>{{ sheetData.rawDataAsArray }}</p>
+               <p v-for="(value, key) in sheetData.viewData">
+                  <span>{{ key }}:</span><span>{{ value }}</span>
+               </p>
+               
             </div>
    
          </div>

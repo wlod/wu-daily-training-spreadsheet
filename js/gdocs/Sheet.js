@@ -107,6 +107,7 @@ class SheetData {
 		
 		this._initStartTime();
 		this._initIcons();
+		this._initViewData();
 	}
 	
 	// TODO split 
@@ -139,6 +140,41 @@ class SheetData {
 	    this.itemTitleIcon = ICONS[this.name];
 	    if(typeof this.itemTitleIcon === "undefined") {
 	        this.itemTitleIcon = DEFAULT_ICON;  
+	    }
+	}
+	
+	// TODO
+	_initViewData() {
+	    this.viewData = new Object();
+	    if(typeof this.rawDataAsArray === "undefined" || this.rawDataAsArray === null) {
+	        console.log(this.rawDataAsArray);
+	        return;
+	    }
+	    
+	    let skipColumns = new Array();
+	    
+	    if(SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
+	        let startTimeOrDurationColumn = START_TIME_COLUMN[this.spreadsheetName];
+	        let startTimeOrDurationRaw = this.rawDataAsArray[startTimeOrDurationColumn];
+	        if(SPREADSHEET_TRAINING === this.spreadsheetName && startTimeOrDurationRaw !== SPREADSHEET_CELL_VALUE_EMPTY) {
+	            // TODO move value "duration" to confView
+	            this.viewData["duration"] = startTimeOrDurationRaw;
+             }
+	        skipColumns.push(startTimeOrDurationColumn);
+        }
+	    
+	    // TODO move hmm to confView
+	    if(SPREADSHEET_WEIGHT === this.spreadsheetName) {
+	        this.viewData["weight"] = this.rawDataAsArray[0];
+	        skipColumns.push(0);
+	    }
+	    
+	    for(let i = 0; i < this.rawDataAsArray.length; i++) {
+	        if(skipColumns.indexOf(i) !== -1) {
+	            continue;
+	        }
+	        let key = "other" + i;
+	        this.viewData[key] = this.rawDataAsArray[i];
 	    }
 	}
 	

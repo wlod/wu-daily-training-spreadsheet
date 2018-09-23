@@ -53,13 +53,20 @@ body {
 	font-size: 14px;
 }
 
-.item-content>p, span {
+/** jk to sie robilo dla kilku tagow? **/
+.item-content > p {
 	margin: 0px;
 	padding: 4px;
 	font-size: 12px;
 }
 
-.item-content-left>p, span {
+.item-content > span {
+	margin: 0px;
+	padding: 4px;
+	font-size: 12px;
+}
+
+.item-content-left > p, span {
 	text-align: left;
 }
 

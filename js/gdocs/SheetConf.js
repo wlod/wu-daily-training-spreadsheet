@@ -43,7 +43,7 @@ const ICONS = {
  "drugie sniadanie" : "fastfood",
  "obiad" : "room_service",
  "podwieczorek" : "fastfood",
- "kolacja" : "fastfood",
+ "kolacja" : "restaurant_menu",
  "Ważenie I" : "accessibility",
  "Ważenie II" : "accessibility",
  "Ważenie III" : "accessibility",
