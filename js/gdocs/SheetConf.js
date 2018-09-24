@@ -11,11 +11,17 @@ const SPREADSHEET_DIET_RANGE = SPREADSHEET_DIET + "!A4:K29";
 const SPREADSHEET_WEIGHT = "waga";
 const SPREADSHEET_WEIGHT_RANGE = SPREADSHEET_WEIGHT + "!A4:O29";
 
+// columns
+const TRAINING_TABLE_TENNIS = "tenis stołowy";
+const TRAINING_SQUASH = "squash";
 
 // App conf
 const SPREADSHEET_CELL_VALUE_DELIMITER = "~";
 const SPREADSHEET_CELL_VALUE_EMPTY = "-";
 const SPREADSHEETS_SUPPORT_START_TIME = [SPREADSHEET_TRAINING, SPREADSHEET_DIET, SPREADSHEET_WEIGHT];
+
+// For now for all spreadsheet
+const COLUMNS_TO_SHOW_NAME_IN_DETAILS = [TRAINING_TABLE_TENNIS, TRAINING_SQUASH, SPREADSHEET_WEIGHT];
 
 // TRAINING
 const TRAINING_DURATION_COLUMN = 2;
@@ -56,11 +62,29 @@ const ICONS = {
  "spacer III" : "directions_run",
  "basen" : "pool",
  "siłownia" : "fitness_center",
- "squash" : "toll",
- "tenis stołowy" : "toll",
+ [TRAINING_SQUASH] : "toll",
+ [TRAINING_TABLE_TENNIS] : "toll",
  "drzemka" : "local_hotel"
 }
 
 const DEFAULT_ICON = "warning";
  
+
+// LABELS FOR OTHER(S) INFORMATION FOR EACH COLUMNS
+const LABELS_OTHERS = {
+  "basen" : ['distance'],
+  "spacer I" : ['distance'],
+  "spacer II" : ['distance'],
+  "spacer III" : ['distance'],
+  [TRAINING_SQUASH] : ['comment'],
+  [TRAINING_TABLE_TENNIS] : ['comment'],
+  "siłownia" : ['comment'],
+  "sniadanie" : ["meal", "supplements"],
+  "drugie sniadanie" : ["meal", "supplements"],
+  "obiad" : ["meal", "supplements"],
+  "podwieczorek" : ["meal", "supplements"],
+  "kolacja" : ["meal", "supplements"]
+}
+
+const DEFAULT_LABEL = "other";
 

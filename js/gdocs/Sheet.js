@@ -143,9 +143,14 @@ class SheetData {
 	    }
 	}
 	
-	// TODO
+	// TODO split
 	_initViewData() {
 	    this.viewData = new Object();
+	    
+	    if(COLUMNS_TO_SHOW_NAME_IN_DETAILS.includes(this.name)) {
+	        this.viewData['name'] = this.name;
+	    }
+	    
 	    if(typeof this.rawDataAsArray === "undefined" || this.rawDataAsArray === null) {
 	        console.log(this.rawDataAsArray);
 	        return;
@@ -169,13 +174,34 @@ class SheetData {
 	        skipColumns.push(0);
 	    }
 	    
-	    for(let i = 0; i < this.rawDataAsArray.length; i++) {
-	        if(skipColumns.indexOf(i) !== -1) {
-	            continue;
-	        }
-	        let key = "other" + i;
-	        this.viewData[key] = this.rawDataAsArray[i];
-	    }
+            
+	    let labelNames = LABELS_OTHERS[this.name];
+        for(let i = 0; i < this.rawDataAsArray.length; i++) {
+            if(skipColumns.indexOf(i) !== -1) {
+                continue;
+            }
+            if(typeof this.rawDataAsArray[i] === 'undefined' || SPREADSHEET_CELL_VALUE_EMPTY === this.rawDataAsArray[i]) {
+                continue;
+            }
+            
+            try {
+                let multiData = this.rawDataAsArray[i].split('\n');
+                for(let j = 0; j < multiData.length; j++) {
+                    let labelName = DEFAULT_LABEL + i + "(" + j + ")";
+                    if(typeof labelNames !== "undefined" && typeof labelNames[j] !== "undefined") {
+                        labelName = labelNames[j];
+                    }
+                    this.viewData[labelName] = multiData[j];
+                }
+            } catch (e) {
+               console.warn(this.rawDataAsArray[i]);
+               console.warn(i);
+               console.warn(this.name);
+               console.error(e);
+            }
+           
+        }
+	    
 	}
 	
 	toString() {
