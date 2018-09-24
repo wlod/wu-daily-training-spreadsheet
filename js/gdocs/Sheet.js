@@ -184,22 +184,14 @@ class SheetData {
                 continue;
             }
             
-            try {
-                let multiData = this.rawDataAsArray[i].split('\n');
-                for(let j = 0; j < multiData.length; j++) {
-                    let labelName = DEFAULT_LABEL + i + "(" + j + ")";
-                    if(typeof labelNames !== "undefined" && typeof labelNames[j] !== "undefined") {
-                        labelName = labelNames[j];
-                    }
-                    this.viewData[labelName] = multiData[j];
+            let multiData = this.rawDataAsArray[i].split('\n');
+            for(let j = 0; j < multiData.length; j++) {
+                let labelName = DEFAULT_LABEL + i + "(" + j + ")";
+                if(typeof labelNames !== "undefined" && typeof labelNames[j] !== "undefined") {
+                    labelName = labelNames[j];
                 }
-            } catch (e) {
-               console.warn(this.rawDataAsArray[i]);
-               console.warn(i);
-               console.warn(this.name);
-               console.error(e);
+                this.viewData[labelName] = multiData[j];
             }
-           
         }
 	    
 	}
