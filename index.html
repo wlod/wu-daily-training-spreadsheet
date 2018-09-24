@@ -30,32 +30,35 @@
    
    <div id="app">
      
+     <div v-if="sheetsData === null">
+         <img src="assets/loading.gif" />
+     </div>
       
-     <h2>Days</h2>     
-     <div v-for="(item, key) in sheetsData">
-
-      <h3>Day {{ key }}. - {{ item.day }}</h3>
-      
-      
-      <div class="item-list">
-         <div class="item" v-for="sheetData in item.activities" v-if="sheetData.startTime !== null">
-            <div class="item-title">
-               <i class="material-icons md-36 item-title-icon">{{ sheetData.itemTitleIcon }}</i>
-               <span class="item-title-text">{{ sheetData.startTime }}</span>
-            </div>
+     <div v-if="sheetsData !== null">
+        <h2>Days</h2>     
+        <div v-for="(item, key) in sheetsData">
    
-            <div class="item-content item-content-left">
-               <p v-for="(value, key) in sheetData.viewData">
-                  <span>{{ key }}:</span><span>{{ value }}</span>
-               </p>
-               
+            <h3>Day {{ key }}. - {{ item.day }}</h3>
+            
+            
+            <div class="item-list">
+               <div class="item" v-for="sheetData in item.activities" v-if="sheetData.startTime !== null">
+                  <div class="item-title">
+                     <i class="material-icons md-36 item-title-icon">{{ sheetData.itemTitleIcon }}</i>
+                     <span class="item-title-text">{{ sheetData.startTime }}</span>
+                  </div>
+         
+                  <div class="item-content item-content-left">
+                     <p v-for="(value, key) in sheetData.viewData">
+                        <span>{{ key }}:</span><span>{{ value }}</span>
+                     </p>
+                     
+                  </div>
+         
+               </div>
             </div>
-   
          </div>
       </div>
-     
-   </div>
-   
    </div>
 
 	<script type="text/javascript">
