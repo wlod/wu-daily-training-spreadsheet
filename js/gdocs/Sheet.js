@@ -19,7 +19,7 @@ class Sheet {
 	
 	_initHeaders() {
 	    this.headers = [];
-        let headerRow = this.gCalSheet.result.values[0];
+	    const headerRow = this.gCalSheet.result.values[0];
 
         let currentHeaderIndex = -1;
         let i = 0;
@@ -45,31 +45,31 @@ class Sheet {
 	    this.data = new Object();
 	    this.dataSheetsDataMap = new Map();
 	    
-	    let sheetRows = this.gCalSheet.result.values;
-	    let spreadsheetName = this.gCalSheet.spreadsheetName;
+	    const sheetRows = this.gCalSheet.result.values;
+	    const spreadsheetName = this.gCalSheet.spreadsheetName;
 	    // below i = 1 and j = 1 to skip header/row with names and column with dates
 	    // using sheetRows[j][0] = date; to add date for each row/header data
 	    for (let i = 1; i < this.headers.length; i++) {
 	        
-	        let sheetHeader = this.headers[i];
+	        const sheetHeader = this.headers[i];
 	        
 	        this.data[sheetHeader.name] = new Array();
 	        
 	        
 	        for(let j = 1; j < sheetRows.length; j++) {
 	            
-	            let date = sheetRows[j][0];
+	            const date = sheetRows[j][0];
 	            
 	            if(typeof this.dataSheetsDataMap.get(date) === "undefined") {
 	                this.dataSheetsDataMap.set(date, new Array());
                 }
 	            
-	            let rawDataAsArray = [];
+	            const rawDataAsArray = [];
 	            for(let k = 0; k < sheetHeader.columns; k++) {
 	                rawDataAsArray.push(sheetRows[j][k + sheetHeader.startIndex]);
 	            }
 	            
-	            let sheetData = new SheetData(sheetHeader.name, date, rawDataAsArray, spreadsheetName);
+	            const sheetData = new SheetData(sheetHeader.name, date, rawDataAsArray, spreadsheetName);
 	            
 	            this.data[sheetHeader.name].push(sheetData);
 	            this.dataSheetsDataMap.get(date).push(sheetData);
@@ -100,6 +100,9 @@ class Sheet {
 class SheetData {
 	
 	constructor(name, date, rawDataAsArray, spreadsheetName) {
+	    try {
+            
+        
 		this.name = name;
 		this.date = date;
 		this.rawDataAsArray = rawDataAsArray;
@@ -108,6 +111,9 @@ class SheetData {
 		this._initStartTime();
 		this._initIcons();
 		this._initViewData();
+	    } catch (e) {
+            console.log(e);
+        }
 	}
 	
 	// TODO split 
@@ -115,7 +121,7 @@ class SheetData {
 	    if(SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
 	        this.startTime = null;
 	        
-	        let startTimeOrDurationColumn = START_TIME_COLUMN[this.spreadsheetName];
+	        const startTimeOrDurationColumn = START_TIME_COLUMN[this.spreadsheetName];
 	        let startTimeOrDurationRaw = this.rawDataAsArray[startTimeOrDurationColumn];
 	        
 	        if(typeof startTimeOrDurationRaw === "undefined" ||
@@ -156,11 +162,11 @@ class SheetData {
 	        return;
 	    }
 	    
-	    let skipColumns = new Array();
+	    const skipColumns = new Array();
 	    
 	    if(SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
-	        let startTimeOrDurationColumn = START_TIME_COLUMN[this.spreadsheetName];
-	        let startTimeOrDurationRaw = this.rawDataAsArray[startTimeOrDurationColumn];
+	        const startTimeOrDurationColumn = START_TIME_COLUMN[this.spreadsheetName];
+	        const startTimeOrDurationRaw = this.rawDataAsArray[startTimeOrDurationColumn];
 	        if(SPREADSHEET_TRAINING === this.spreadsheetName && startTimeOrDurationRaw !== SPREADSHEET_CELL_VALUE_EMPTY) {
 	            // TODO move value "duration" to confView
 	            this.viewData["duration"] = startTimeOrDurationRaw;
@@ -175,7 +181,7 @@ class SheetData {
 	    }
 	    
             
-	    let labelNames = LABELS_OTHERS[this.name];
+	    const labelNames = LABELS_OTHERS[this.name];
         for(let i = 0; i < this.rawDataAsArray.length; i++) {
             if(skipColumns.indexOf(i) !== -1) {
                 continue;
@@ -184,8 +190,13 @@ class SheetData {
                 continue;
             }
             
-            let multiData = this.rawDataAsArray[i].split('\n');
+            const multiData = this.rawDataAsArray[i].split('\n');
             for(let j = 0; j < multiData.length; j++) {
+                
+                if(typeof multiData[j] === 'undefined' || SPREADSHEET_CELL_VALUE_EMPTY === multiData[j]) {
+                    continue;
+                }
+                
                 let labelName = DEFAULT_LABEL + i + "(" + j + ")";
                 if(typeof labelNames !== "undefined" && typeof labelNames[j] !== "undefined") {
                     labelName = labelNames[j];
