@@ -17,7 +17,33 @@ class App {
               dataProvider.loadData(SPREADSHEETS_TO_LOAD).then( () => {
                   this.sheetsData = dataProvider.dataSheetsGroupByDates();
               });
-          }
+          },
+          
+          methods: {
+              filterByDayAndSpreadsheetName: function (day, spreadsheetName) {
+                this.sheetsData.forEach( (item) => {
+                    if(item.day !== day) {
+                        return;
+                    }
+                    
+                    item.activities.forEach( (activity) => {
+                        if(activity.spreadsheetName === spreadsheetName) {
+                            activity.isVisible = !activity.isVisible;
+                        }
+                    });
+                });
+              },
+              
+              filterBySpreadsheetName: function (spreadsheetName) {
+                  this.sheetsData.forEach( (item) => {
+                      item.activities.forEach( (activity) => {
+                          if(activity.spreadsheetName === spreadsheetName) {
+                              activity.isVisible = !activity.isVisible;
+                          }
+                      });
+                  });
+                }
+          },
       
       });
       

@@ -35,14 +35,30 @@
      </div>
       
      <div v-if="sheetsData !== null">
-        <h2>Days</h2>     
+        <h2>Days</h2>
+        
+        <div>
+            Shows on all days:
+            <label><input type="checkbox" @click="filterBySpreadsheetName( 'trening' )" checked="checked">'Trening' spreadsheet</label>
+            <label><input type="checkbox" @click="filterBySpreadsheetName( 'dieta' )" checked="checked">'Dieta' spreadsheet</label>
+            <label><input type="checkbox" @click="filterBySpreadsheetName( 'waga' )" checked="checked">'Waga' spreadsheet</label>
+        </div>
+        
         <div v-for="(item, key) in sheetsData">
    
             <h3>Day {{ key }}. - {{ item.day }}</h3>
             
-            
             <div class="item-list">
-               <div class="item" v-for="sheetData in item.activities" v-if="sheetData.startTime !== null">
+               
+               <div class="item-list-filter">
+                  Shows:
+                  <!-- TODO do something like this - :checked="item[spreedsheetName].isVisible === true" -->
+                  <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'trening' )" checked="checked">'Trening' spreadsheet</label>
+                  <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'dieta' )" checked="checked">'Dieta' spreadsheet</label>
+                  <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'waga' )" checked="checked">'Waga' spreadsheet</label>
+               </div>
+            
+               <div class="item" v-for="sheetData in item.activities" v-if="sheetData.startTime !== null && sheetData.isVisible === true">
                   <div class="item-title">
                      <i class="material-icons md-36 item-title-icon">{{ sheetData.itemTitleIcon }}</i>
                      <span class="item-title-text">{{ sheetData.startTime }}</span>

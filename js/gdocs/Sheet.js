@@ -107,6 +107,7 @@ class SheetData {
 		this.date = date;
 		this.rawDataAsArray = rawDataAsArray;
 		this.spreadsheetName = spreadsheetName;
+		this.isVisible = true;
 		
 		this._initStartTime();
 		this._initIcons();

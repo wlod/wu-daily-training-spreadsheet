@@ -10,10 +10,9 @@ body {
 .item-list:before {
 	content: '';
 	position: absolute;
-	top: 40px;
+	top: 60px;
 	bottom: 0px;
 	left: 0px;
-	width: 50%;
 	border-left: 1px solid #000;
 }
 
@@ -21,6 +20,10 @@ body {
 	content: "";
 	display: table;
 	clear: both;
+}
+
+.item-list-filter {
+	height: 20px;
 }
 
 .item {
@@ -54,7 +57,6 @@ body {
 	font-size: 14px;
 }
 
-/** jk to sie robilo dla kilku tagow? **/
 .item-content>p {
 	margin: 0px;
 	padding: 4px;
