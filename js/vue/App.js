@@ -9,7 +9,7 @@ class App {
         new Vue({
             el: '#app',
             data: {
-                sheetsData: null,
+                spreadsheetsData: null,
                 
                 visibleSpreadsheets: new Array(),
                 visibleSpreadsheetsPerDay: new Array(),
@@ -23,23 +23,21 @@ class App {
             },
           
             mounted() {
-                const dataProvider = new GApiSheetProvider(gapi);
+                const dataProvider = new GApiSpreadsheetProvider(gapi);
                 dataProvider.loadData(SPREADSHEETS_RANGE_TO_LOAD).then( () => {
-                    this.sheetsData = dataProvider.dataSheetsGroupByDates();
-                    
-                    this.sheetsData.forEach( (item) => {
+                    this.spreadsheetsData = dataProvider.dataSpreadsheetsGroupByDates();
+                    this.spreadsheetsData.forEach( (item) => {
                         SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {
                             this.visibleSpreadsheetsPerDay[spreadsheetName][item.day] = true;
                         });
                     } );
-                    
                 });
             },
           
             methods: {
                 filterByDayAndSpreadsheetName: function (day, spreadsheetName) {
                     let allHasTheSameVisibleValue = true;
-                    this.sheetsData.forEach( (item) => {
+                    this.spreadsheetsData.forEach( (item) => {
                         item.activities.forEach( (activity) => {
                             if(activity.spreadsheetName === spreadsheetName) {
                                 if(item.day === day) {
@@ -56,7 +54,7 @@ class App {
               
                 filterBySpreadsheetName: function (spreadsheetName) {
                     this.visibleSpreadsheets[spreadsheetName] = !this.visibleSpreadsheets[spreadsheetName];
-                    this.sheetsData.forEach( (item) => {
+                    this.spreadsheetsData.forEach( (item) => {
                         item.activities.forEach( (activity) => {
                           if(activity.spreadsheetName === spreadsheetName) {
                               activity.isVisible = this.visibleSpreadsheets[spreadsheetName];

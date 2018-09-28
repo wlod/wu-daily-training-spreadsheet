@@ -1,9 +1,9 @@
 "use strict";
 
-class Sheet {
+class Spreadsheet {
 	
-	constructor(gCalSheet) {
-		this.gCalSheet = gCalSheet;
+	constructor(gCalSpreadsheet) {
+		this.gCalSpreadsheet = gCalSpreadsheet;
 		
 		this._initHeaders();
 		this._initData();
@@ -19,7 +19,7 @@ class Sheet {
 	
 	_initHeaders() {
 	    this.headers = [];
-	    const headerRow = this.gCalSheet.result.values[0];
+	    const headerRow = this.gCalSpreadsheet.result.values[0];
 
         let currentHeaderIndex = -1;
         let i = 0;
@@ -27,7 +27,7 @@ class Sheet {
             let headerValue = headerRow[i];
             if(typeof headerValue !== "undefined" && headerValue.length > 0) {
                 currentHeaderIndex++;
-                this.headers.push(new SheetHeader(headerValue, 1, i, this.gCalSheet.spreadsheetName));
+                this.headers.push(new SpreadsheetHeader(headerValue, 1, i, this.gCalSpreadsheet.spreadsheetName));
                 continue;
             }
             if(typeof currentHeaderIndex !== "undefined" ) {
@@ -36,50 +36,50 @@ class Sheet {
             }
         }
         
-        if(GCalSheet.columnRange(this.gCalSheet.beginCellChar, this.gCalSheet.endCellChar).length > i) {
-            this.headers[currentHeaderIndex].columns += GCalSheet.columnRange(this.gCalSheet.beginCellChar, this.gCalSheet.endCellChar).length - i;
+        if(GCalSpreadsheet.columnRange(this.gCalSpreadsheet.beginCellChar, this.gCalSpreadsheet.endCellChar).length > i) {
+            this.headers[currentHeaderIndex].columns += GCalSpreadsheet.columnRange(this.gCalSpreadsheet.beginCellChar, this.gCalSpreadsheet.endCellChar).length - i;
         }
 	}
 	
 	_initData() {
 	    this.data = new Object();
-	    this.dataSheetsDataMap = new Map();
+	    this.dataSpreadsheetsDataMap = new Map();
 	    
-	    const sheetRows = this.gCalSheet.result.values;
-	    const spreadsheetName = this.gCalSheet.spreadsheetName;
+	    const spreadsheetRows = this.gCalSpreadsheet.result.values;
+	    const spreadsheetName = this.gCalSpreadsheet.spreadsheetName;
 	    // below i = 1 and j = 1 to skip header/row with names and column with dates
 	    // using sheetRows[j][0] = date; to add date for each row/header data
 	    for (let i = 1; i < this.headers.length; i++) {
 	        
-	        const sheetHeader = this.headers[i];
+	        const spreadsheetHeader = this.headers[i];
 	        
-	        this.data[sheetHeader.name] = new Array();
+	        this.data[spreadsheetHeader.name] = new Array();
 	        
 	        
-	        for(let j = 1; j < sheetRows.length; j++) {
+	        for(let j = 1; j < spreadsheetRows.length; j++) {
 	            
-	            const date = sheetRows[j][0];
+	            const date = spreadsheetRows[j][0];
 	            
-	            if(typeof this.dataSheetsDataMap.get(date) === "undefined") {
-	                this.dataSheetsDataMap.set(date, new Array());
+	            if(typeof this.dataSpreadsheetsDataMap.get(date) === "undefined") {
+	                this.dataSpreadsheetsDataMap.set(date, new Array());
                 }
 	            
 	            const rawDataAsArray = [];
-	            for(let k = 0; k < sheetHeader.columns; k++) {
-	                rawDataAsArray.push(sheetRows[j][k + sheetHeader.startIndex]);
+	            for(let k = 0; k < spreadsheetHeader.columns; k++) {
+	                rawDataAsArray.push(spreadsheetRows[j][k + spreadsheetHeader.startIndex]);
 	            }
 	            
-	            const sheetData = new SheetData(sheetHeader.name, date, rawDataAsArray, spreadsheetName);
+	            const spreadsheetData = new SpreadsheetData(spreadsheetHeader.name, date, rawDataAsArray, spreadsheetName);
 	            
-	            this.data[sheetHeader.name].push(sheetData);
-	            this.dataSheetsDataMap.get(date).push(sheetData);
+	            this.data[spreadsheetHeader.name].push(spreadsheetData);
+	            this.dataSpreadsheetsDataMap.get(date).push(spreadsheetData);
 	        }
 	    }
 	    
 	}
 	
-	get dataSheetDate() {
-	    return this.dataSheetsDataMap;
+	get dataSpreadsheetDate() {
+	    return this.dataSpreadsheetsDataMap;
 	}
 	
 	 get infoHeaders() {
@@ -97,12 +97,9 @@ class Sheet {
      };
 }
 
-class SheetData {
+class SpreadsheetData {
 	
 	constructor(name, date, rawDataAsArray, spreadsheetName) {
-	    try {
-            
-        
 		this.name = name;
 		this.date = date;
 		this.rawDataAsArray = rawDataAsArray;
@@ -112,9 +109,6 @@ class SheetData {
 		this._initStartTime();
 		this._initIcons();
 		this._initViewData();
-	    } catch (e) {
-            console.log(e);
-        }
 	}
 	
 	// TODO split 
@@ -159,7 +153,6 @@ class SheetData {
 	    }
 	    
 	    if(typeof this.rawDataAsArray === "undefined" || this.rawDataAsArray === null) {
-	        console.log(this.rawDataAsArray);
 	        return;
 	    }
 	    
@@ -214,7 +207,7 @@ class SheetData {
 	
 }
 
-class SheetHeader {
+class SpreadsheetHeader {
     
     constructor(name, columns, startIndex, spreadsheetName) {
         this.name = name;

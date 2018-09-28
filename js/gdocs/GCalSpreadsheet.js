@@ -1,14 +1,14 @@
 "use strict";
 
-class GCalSheet {
+class GCalSpreadsheet {
   constructor(result) {
     this.range = result.range;
     this.result = result;
-    this._initSheetConfig();
-    this._initSheetData();
+    this._initSpreadsheetConfig();
+    this._initSpreadsheetData();
   }
   
-  _initSheetConfig() {
+  _initSpreadsheetConfig() {
 	  // TODO do perf later
 	  let rawRange  = this.range;
 	  this.spreadsheetName =  rawRange.split('!')[0];
@@ -23,12 +23,12 @@ class GCalSheet {
 	  this.endCellNumbs = this.endCell.replace(this.endCellChar, '');
   }
   
-  _initSheetData() {
-	  this.sheet = new Sheet(this);
+  _initSpreadsheetData() {
+	  this.spreadsheet = new Spreadsheet(this);
   }
   
   get info() {
-	  return "Sheet: " + this.sheet + " - rawSheetRange: " + this.rawSheetRange + " - spreadsheetName: " + this.spreadsheetName + 
+	  return "Spreadsheet: " + this.spreadsheet + " - rawSheetRange: " + this.rawSheetRange + " - spreadsheetName: " + this.spreadsheetName + 
 		" - beginCell: " + this.beginCell + " - beginCellChar: " + this.beginCellChar + " - beginCellNumbs: " + this.beginCellNumbs + 
 		" - endCell: " + this.endCell + " - endCellChar: " + this.endCellChar + " - endCellNumbs: " + this.endCellNumbs;
   }

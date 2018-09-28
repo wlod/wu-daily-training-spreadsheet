@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>wu-daily-training-sheet</title>
+    <title>wu-daily-training-spreadsheet</title>
     <meta charset="UTF-8"/>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -11,11 +11,11 @@
 
     <script type="text/javascript" src="js/PrototypeJsCore.js"></script>
     <script type="text/javascript" src="js/gdocs/GConf.js"></script>
-    <script type="text/javascript" src="js/gdocs/SheetConf.js"></script>
-    <script type="text/javascript" src="js/gdocs/SheetUtils.js"></script>
-    <script type="text/javascript" src="js/gdocs/Sheet.js"></script>
-    <script type="text/javascript" src="js/gdocs/GCalSheet.js"></script>
-    <script type="text/javascript" src="js/gdocs/GApiSheetProvider.js"></script>
+    <script type="text/javascript" src="js/gdocs/SpreadsheetConf.js"></script>
+    <script type="text/javascript" src="js/gdocs/SpreadsheetUtils.js"></script>
+    <script type="text/javascript" src="js/gdocs/Spreadsheet.js"></script>
+    <script type="text/javascript" src="js/gdocs/GCalSpreadsheet.js"></script>
+    <script type="text/javascript" src="js/gdocs/GApiSpreadsheetProvider.js"></script>
 
     <script type="text/javascript" src="js/vue/App.js"></script>
 
@@ -23,18 +23,18 @@
 
 </head>
 <body>
-<p>wu-daily-training-sheet - <a href="https://github.com/wlod/wu-daily-training-sheet/" target="_blank">current version - github</a>.</p>
+<p>wu-daily-training-spreadsheet - <a href="https://github.com/wlod/wu-daily-training-spreadsheet/" target="_blank">current version - github</a>.</p>
 <p>data - <a href="https://docs.google.com/spreadsheets/d/1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8/edit#gid=1777293991" target="_blank">google docs</a>.</p>
 
 <pre id="content"></pre>
 
 <div id="app">
 
-    <div v-if="sheetsData === null">
+    <div v-if="spreadsheetsData === null">
         <img src="assets/loading.gif"/>
     </div>
 
-    <div v-if="sheetsData !== null">
+    <div v-if="spreadsheetsData !== null">
         <h2>Days</h2>
 
         <div>
@@ -44,7 +44,7 @@
             <label><input type="checkbox" @click="filterBySpreadsheetName( 'waga' )" v-model="visibleSpreadsheets['waga']">'Waga' spreadsheet</label>
         </div>
 
-        <div v-for="(item, key) in sheetsData">
+        <div v-for="(item, key) in spreadsheetsData">
 
             <h3>Day {{ key }}. - {{ item.day }}</h3>
 
@@ -57,14 +57,14 @@
                     <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'waga' )" v-model="visibleSpreadsheetsPerDay['waga'][item.day]">'Waga' spreadsheet</label>
                 </div>
 
-                <div class="item" v-for="sheetData in item.activities" v-if="sheetData.startTime !== null && sheetData.isVisible === true">
+                <div class="item" v-for="spreadsheetData in item.activities" v-if="spreadsheetData.startTime !== null && spreadsheetData.isVisible === true">
                     <div class="item-title">
-                        <i class="material-icons md-36 item-title-icon">{{ sheetData.itemTitleIcon }}</i>
-                        <span class="item-title-text">{{ sheetData.startTime }}</span>
+                        <i class="material-icons md-36 item-title-icon">{{ spreadsheetData.itemTitleIcon }}</i>
+                        <span class="item-title-text">{{ spreadsheetData.startTime }}</span>
                     </div>
 
                     <div class="item-content item-content-left">
-                        <p v-for="(value, key) in sheetData.viewData">
+                        <p v-for="(value, key) in spreadsheetData.viewData">
                             <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
                         </p>
 

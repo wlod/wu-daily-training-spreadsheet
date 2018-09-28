@@ -1,8 +1,8 @@
-class SheetUtils {
+class SpreadsheetUtils {
     
     
-    static removeDataWihoutStartTime(sheetsOrderByDate) {
-        return sheetsOrderByDate.filter(function( obj ) {
+    static removeDataWihoutStartTime(spreadsheetsOrderByDate) {
+        return spreadsheetsOrderByDate.filter(function( obj ) {
             let a = obj.startTime;
             return typeof a !== "undefined" && a !== null;
         });
@@ -11,8 +11,8 @@ class SheetUtils {
     /**
      * Currently support sorting only for one day
      */
-    static sortByStartTime(sheetsOrderByDate) {
-        sheetsOrderByDate = sheetsOrderByDate.sort(function(obj1, obj2) {
+    static sortByStartTime(spreadsheetsOrderByDate) {
+        spreadsheetsOrderByDate = spreadsheetsOrderByDate.sort(function(obj1, obj2) {
             let a = obj1.startTime;
             let b = obj2.startTime;
             if( (typeof a === "undefined" || a === null) && (typeof b === "undefined" || b === null)) {
