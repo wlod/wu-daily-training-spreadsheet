@@ -1,91 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>wu-daily-training-sheet</title>
-<meta charset="UTF-8" />
+    <title>wu-daily-training-sheet</title>
+    <meta charset="UTF-8"/>
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
-<script type="text/javascript" src="js/PrototypeJsCore.js"></script>
-<script type="text/javascript" src="js/gdocs/GConf.js"></script>
-<script type="text/javascript" src="js/gdocs/SheetConf.js"></script>
-<script type="text/javascript" src="js/gdocs/SheetUtils.js"></script>
-<script type="text/javascript" src="js/gdocs/Sheet.js"></script>
-<script type="text/javascript" src="js/gdocs/GCalSheet.js"></script>
-<script type="text/javascript" src="js/gdocs/GApiSheetProvider.js"></script>
+    <script type="text/javascript" src="js/PrototypeJsCore.js"></script>
+    <script type="text/javascript" src="js/gdocs/GConf.js"></script>
+    <script type="text/javascript" src="js/gdocs/SheetConf.js"></script>
+    <script type="text/javascript" src="js/gdocs/SheetUtils.js"></script>
+    <script type="text/javascript" src="js/gdocs/Sheet.js"></script>
+    <script type="text/javascript" src="js/gdocs/GCalSheet.js"></script>
+    <script type="text/javascript" src="js/gdocs/GApiSheetProvider.js"></script>
 
-<script type="text/javascript" src="js/vue/App.js"></script>
+    <script type="text/javascript" src="js/vue/App.js"></script>
 
-<link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
 
 </head>
 <body>
-	<p>wu-daily-training-sheet - <a href="https://github.com/wlod/wu-daily-training-sheet/" target="_blank">current version - github</a>.</p>
-    <p>data - <a href="https://docs.google.com/spreadsheets/d/1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8/edit#gid=1777293991" target="_blank">google docs</a>.</p> 
-   
-	<pre id="content"></pre>
-   
-   <div id="app">
-     
-     <div v-if="sheetsData === null">
-         <img src="assets/loading.gif" />
-     </div>
-      
-     <div v-if="sheetsData !== null">
+<p>wu-daily-training-sheet - <a href="https://github.com/wlod/wu-daily-training-sheet/" target="_blank">current version - github</a>.</p>
+<p>data - <a href="https://docs.google.com/spreadsheets/d/1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8/edit#gid=1777293991" target="_blank">google docs</a>.</p>
+
+<pre id="content"></pre>
+
+<div id="app">
+
+    <div v-if="sheetsData === null">
+        <img src="assets/loading.gif"/>
+    </div>
+
+    <div v-if="sheetsData !== null">
         <h2>Days</h2>
-        
+
         <div>
             Shows on all days:
-            <label><input type="checkbox" @click="filterBySpreadsheetName( 'trening' )" checked="checked">'Trening' spreadsheet</label>
-            <label><input type="checkbox" @click="filterBySpreadsheetName( 'dieta' )" checked="checked">'Dieta' spreadsheet</label>
-            <label><input type="checkbox" @click="filterBySpreadsheetName( 'waga' )" checked="checked">'Waga' spreadsheet</label>
+            <label><input type="checkbox" @click="filterBySpreadsheetName( 'trening' )" v-model="visibleSpreadsheets['trening']">'Trening' spreadsheet</label>
+            <label><input type="checkbox" @click="filterBySpreadsheetName( 'dieta' )" v-model="visibleSpreadsheets['dieta']">'Dieta' spreadsheet</label>
+            <label><input type="checkbox" @click="filterBySpreadsheetName( 'waga' )" v-model="visibleSpreadsheets['waga']">'Waga' spreadsheet</label>
         </div>
-        
-        <div v-for="(item, key) in sheetsData">
-   
-            <h3>Day {{ key }}. - {{ item.day }}</h3>
-            
-            <div class="item-list">
-               
-               <div class="item-list-filter">
-                  Shows:
-                  <!-- TODO do something like this - :checked="item[spreedsheetName].isVisible === true" -->
-                  <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'trening' )" checked="checked">'Trening' spreadsheet</label>
-                  <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'dieta' )" checked="checked">'Dieta' spreadsheet</label>
-                  <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'waga' )" checked="checked">'Waga' spreadsheet</label>
-               </div>
-            
-               <div class="item" v-for="sheetData in item.activities" v-if="sheetData.startTime !== null && sheetData.isVisible === true">
-                  <div class="item-title">
-                     <i class="material-icons md-36 item-title-icon">{{ sheetData.itemTitleIcon }}</i>
-                     <span class="item-title-text">{{ sheetData.startTime }}</span>
-                  </div>
-         
-                  <div class="item-content item-content-left">
-                     <p v-for="(value, key) in sheetData.viewData">
-                        <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
-                     </p>
-                     
-                  </div>
-         
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
 
-	<script type="text/javascript">
+        <div v-for="(item, key) in sheetsData">
+
+            <h3>Day {{ key }}. - {{ item.day }}</h3>
+
+            <div class="item-list">
+
+                <div class="item-list-filter">
+                    Shows:
+                    <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'trening' )" v-model="visibleSpreadsheetsPerDay['trening'][item.day]">'Trening' spreadsheet</label>
+                    <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'dieta' )" v-model="visibleSpreadsheetsPerDay['dieta'][item.day]">'Dieta' spreadsheet</label>
+                    <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'waga' )" v-model="visibleSpreadsheetsPerDay['waga'][item.day]">'Waga' spreadsheet</label>
+                </div>
+
+                <div class="item" v-for="sheetData in item.activities" v-if="sheetData.startTime !== null && sheetData.isVisible === true">
+                    <div class="item-title">
+                        <i class="material-icons md-36 item-title-icon">{{ sheetData.itemTitleIcon }}</i>
+                        <span class="item-title-text">{{ sheetData.startTime }}</span>
+                    </div>
+
+                    <div class="item-content item-content-left">
+                        <p v-for="(value, key) in sheetData.viewData">
+                            <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
+                        </p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
         function startApp() {
            new App();
         }
-    </script>
 
-	<script async defer src="https://apis.google.com/js/api.js"
-		onload="this.onload=function(){};startApp()"
-		onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>
+</script>
+
+<script async defer src="https://apis.google.com/js/api.js"
+        onload="this.onload=function(){};startApp()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
+
 </body>
 </html>
