@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
     <script type="text/javascript" src="js/PrototypeJsCore.js"></script>
-    <script type="text/javascript" src="js/gdocs/GConf.js"></script>
+    <script type="text/javascript" src="js/gdocs/GApiConf.js"></script>
     <script type="text/javascript" src="js/gdocs/SpreadsheetConf.js"></script>
     <script type="text/javascript" src="js/gdocs/SpreadsheetUtils.js"></script>
     <script type="text/javascript" src="js/gdocs/Spreadsheet.js"></script>
@@ -64,10 +64,16 @@
                     </div>
 
                     <div class="item-content item-content-left">
-                        <p v-for="(value, key) in spreadsheetData.viewData">
+                        <!-- Move v-if to method -->
+                        <p v-for="(value, key) in spreadsheetData.viewData" v-if="key !== 'pictures'">
                             <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
                         </p>
-
+                        <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
+                            <span>{{ key }}:</span>&nbsp;
+                            <span v-for="(value, key) in values">
+                              <a v-bind:href="value" target="_blank">{{ key }}</a>&nbsp;
+                            </span>
+                        </p>
                     </div>
 
                 </div>

@@ -7,15 +7,7 @@ class Spreadsheet {
 		
 		this._initHeaders();
 		this._initData();
-		
-		this._init();
-		
 	}
-	
-	_init() {
-        // TODO
-        this.dataHeadersMap;
-    }
 	
 	_initHeaders() {
 	    this.headers = [];
@@ -176,6 +168,7 @@ class SpreadsheetData {
 	    
             
 	    const labelNames = LABELS_OTHERS[this.name];
+	    let labelIndex = -1;
         for(let i = 0; i < this.rawDataAsArray.length; i++) {
             if(skipColumns.indexOf(i) !== -1) {
                 continue;
@@ -186,20 +179,34 @@ class SpreadsheetData {
             
             const multiData = this.rawDataAsArray[i].split('\n');
             for(let j = 0; j < multiData.length; j++) {
-                
+                labelIndex++;
                 if(typeof multiData[j] === 'undefined' || SPREADSHEET_CELL_VALUE_EMPTY === multiData[j]) {
                     continue;
                 }
                 
-                let labelName = DEFAULT_LABEL + i + "(" + j + ")";
-                if(typeof labelNames !== "undefined" && typeof labelNames[j] !== "undefined") {
-                    labelName = labelNames[j];
+                let labelName = DEFAULT_LABEL + "(" + labelIndex + ")";
+                if(typeof labelNames !== "undefined" && typeof labelNames[ labelIndex ] !== "undefined") {
+                    labelName = labelNames[ labelIndex ];
                 }
+                
+                if(PICTURE_LABEL === labelName) {
+                    multiData[j] = SpreadsheetData._prepareImageUrls(multiData[j]);
+                }
+                
                 this.viewData[labelName] = multiData[j];
             }
         }
-	    
 	}
+	
+	// TODO
+	static _prepareImageUrls(rawImageUrls) {
+	    let preparedImageUrls = new Array();
+	    const rawImageUrlsAsArray = rawImageUrls.split(";")
+	    for (let i = 0; i < rawImageUrlsAsArray.length; i++) {
+	        preparedImageUrls.push( rawImageUrlsAsArray[i].trim());
+	    }
+        return preparedImageUrls;
+    }
 	
 	toString() {
         return "SheetData: [name: " + this.name + ", date: " + this.date + ", rawDataAsArray: " + this.rawDataAsArray + ", spreadsheetName: " + this.spreadsheetName + ", itemTitleIcon: " + this.itemTitleIcon + "]";

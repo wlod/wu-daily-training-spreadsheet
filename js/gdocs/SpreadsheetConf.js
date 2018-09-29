@@ -6,7 +6,7 @@ const SPREADSHEET_TRAINING = "trening";
 const SPREADSHEET_TRAINING_RANGE = SPREADSHEET_TRAINING + "!A8:Q33";
 // diet
 const SPREADSHEET_DIET = "dieta";
-const SPREADSHEET_DIET_RANGE = SPREADSHEET_DIET + "!A4:K29";
+const SPREADSHEET_DIET_RANGE = SPREADSHEET_DIET + "!A4:L29";
 // weight
 const SPREADSHEET_WEIGHT = "waga";
 const SPREADSHEET_WEIGHT_RANGE = SPREADSHEET_WEIGHT + "!A4:O29";
@@ -71,6 +71,8 @@ const ICONS = {
 }
 
 const DEFAULT_ICON = "warning";
+
+const PICTURE_LABEL = "pictures";
  
 
 // LABELS FOR OTHER(S) INFORMATION FOR EACH COLUMNS
@@ -82,11 +84,11 @@ const LABELS_OTHERS = {
   [TRAINING_SQUASH] : ['comment'],
   [TRAINING_TABLE_TENNIS] : ['comment'],
   "siłownia" : ['comment'],
-  "sniadanie" : ["meal", "supplements"],
-  "drugie sniadanie" : ["meal", "supplements"],
-  "obiad" : ["meal", "supplements"],
-  "podwieczorek" : ["meal", "supplements"],
-  "kolacja" : ["meal", "supplements"]
+  "sniadanie" : ["meal", "supplements", PICTURE_LABEL],
+  "drugie sniadanie" : ["meal", "supplements", PICTURE_LABEL],
+  "obiad" : ["meal", "supplements", PICTURE_LABEL],
+  "podwieczorek" : ["meal", "supplements", PICTURE_LABEL],
+  "kolacja" : ["meal", "supplements", PICTURE_LABEL]
 }
 
 const DEFAULT_LABEL = "other";
