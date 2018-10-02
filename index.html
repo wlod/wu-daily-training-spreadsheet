@@ -6,7 +6,8 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
+   
+    <script src="js/vendors/views.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
     <script type="text/javascript" src="js/PrototypeJsCore.js"></script>
@@ -69,9 +70,8 @@
                             <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
                         </p>
                         <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
-                            <span>{{ key }}:</span>&nbsp;
                             <span v-for="(value, key) in values">
-                              <a v-bind:href="value" target="_blank">{{ key }}</a>&nbsp;
+                              <a v-bind:href="value" class="image-trigger"><img v-bind:src="value" class="item-image"></a>&nbsp;
                             </span>
                         </p>
                     </div>
@@ -86,6 +86,9 @@
         function startApp() {
            new App();
         }
+</script>
+
+<script>
 
 </script>
 

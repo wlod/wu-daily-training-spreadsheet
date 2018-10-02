@@ -69,12 +69,16 @@ body {
 	font-size: 12px;
 }
 
-.item-content-left>p, span {
+.item-content-left > p  {
 	text-align: left;
 }
 
-.item-content-center>p, span {
+.item-content-center > p {
 	text-align: center;
+}
+
+.item-image {
+	width: 80px
 }
 
 .material-icons.md-18 {

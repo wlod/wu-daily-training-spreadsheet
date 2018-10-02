@@ -203,7 +203,14 @@ class SpreadsheetData {
 	    let preparedImageUrls = new Array();
 	    const rawImageUrlsAsArray = rawImageUrls.split(";")
 	    for (let i = 0; i < rawImageUrlsAsArray.length; i++) {
-	        preparedImageUrls.push( rawImageUrlsAsArray[i].trim());
+	        try {
+	            let rawImageUrl = rawImageUrlsAsArray[i].trim();
+	            let imageId = rawImageUrl.match(GOOGLE_DRIVE_IMAGE_LINK_PATTERN)[1];
+	            let imageToView = GOOGLE_DRIVE_HTML_IMG_LINK_PATTERN.replace("{{ID}}", imageId);
+	            preparedImageUrls.push( imageToView );
+            } catch (e) {
+                console.warn(e);
+            }
 	    }
         return preparedImageUrls;
     }

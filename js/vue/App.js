@@ -24,14 +24,30 @@ class App {
           
             mounted() {
                 const dataProvider = new GApiSpreadsheetProvider(gapi);
-                dataProvider.loadData(SPREADSHEETS_RANGE_TO_LOAD).then( () => {
-                    this.spreadsheetsData = dataProvider.dataSpreadsheetsGroupByDates();
-                    this.spreadsheetsData.forEach( (item) => {
-                        SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {
-                            this.visibleSpreadsheetsPerDay[spreadsheetName][item.day] = true;
-                        });
-                    } );
-                });
+                dataProvider.loadData(SPREADSHEETS_RANGE_TO_LOAD)
+                            .then( () => {
+                                    this.spreadsheetsData = dataProvider.dataSpreadsheetsGroupByDates();
+                                    this.spreadsheetsData.forEach( (item) => {
+                                        SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {
+                                            this.visibleSpreadsheetsPerDay[spreadsheetName][item.day] = true;
+                                        });
+                                    } );
+                            })
+                            .then( () => {
+                                // TODO move to method
+                                var views = [];
+                                var triggers = document.querySelectorAll('.image-trigger');
+                                [].forEach.call(triggers, function(element, index) {
+                                    views[index] = new Views(element, {
+                                        defaultTheme: true,
+                                        prefix: 'light',
+                                        loader: 'Loading...',
+                                        anywhereToClose: true,
+                                        openAnimationDuration: 400,
+                                        closeAnimationDuration: 400
+                                    });
+                                });
+                            });
             },
           
             methods: {
