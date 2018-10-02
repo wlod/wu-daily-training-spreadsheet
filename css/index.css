@@ -34,7 +34,7 @@ body {
 	padding: 0px 12px 0px 12px;
 	margin-top: 40px;
 	/* below value will be calculated dynamically - max height of item on the item-list */
-	height: 185px;
+	height: 240px;
 }
 
 .item-title {
