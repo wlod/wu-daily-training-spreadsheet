@@ -34,7 +34,7 @@ class App {
                                     } );
                             })
                             .then( () => {
-                                // TODO move to method
+                                // TODO move to Promise
                                 var views = [];
                                 var triggers = document.querySelectorAll('.image-trigger');
                                 [].forEach.call(triggers, function(element, index) {
@@ -47,7 +47,10 @@ class App {
                                         closeAnimationDuration: 400
                                     });
                                 });
-                            });
+                            })
+                            .then( () => {
+                                WebUtil.updateItemHeight();
+                            })
             },
           
             methods: {

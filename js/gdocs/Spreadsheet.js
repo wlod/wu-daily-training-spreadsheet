@@ -205,10 +205,16 @@ class SpreadsheetData {
 	    for (let i = 0; i < rawImageUrlsAsArray.length; i++) {
 	        try {
 	            let rawImageUrl = rawImageUrlsAsArray[i].trim();
+	            
+	            if(!rawImageUrl) {
+	                continue;
+	            }
+	            
 	            let imageId = rawImageUrl.match(GOOGLE_DRIVE_IMAGE_LINK_PATTERN)[1];
 	            let imageToView = GOOGLE_DRIVE_HTML_IMG_LINK_PATTERN.replace("{{ID}}", imageId);
 	            preparedImageUrls.push( imageToView );
             } catch (e) {
+                console.warn(rawImageUrlsAsArray.length + " - " + rawImageUrlsAsArray);
                 console.warn(e);
             }
 	    }
