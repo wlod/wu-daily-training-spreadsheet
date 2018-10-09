@@ -34,19 +34,7 @@ class App {
                                     } );
                             })
                             .then( () => {
-                                // TODO move to Promise
-                                var views = [];
-                                var triggers = document.querySelectorAll('.image-trigger');
-                                [].forEach.call(triggers, function(element, index) {
-                                    views[index] = new Views(element, {
-                                        defaultTheme: true,
-                                        prefix: 'light',
-                                        loader: 'Loading...',
-                                        anywhereToClose: true,
-                                        openAnimationDuration: 400,
-                                        closeAnimationDuration: 400
-                                    });
-                                });
+                                WebUtil.appendViewsToImage();
                             })
                             .then( () => {
                                 WebUtil.updateItemHeight();

@@ -15,9 +15,7 @@ class GApiSpreadsheetProvider {
         }).then( () => {
             return this._initSpreadsheetConfig(spreadsheetsRange);
         }).then( () => {
-            let test = this._prepareSpreadsheetData(spreadsheetsRange);
-            
-            return test;
+            return this._prepareSpreadsheetData(spreadsheetsRange);
         });
     }
     
