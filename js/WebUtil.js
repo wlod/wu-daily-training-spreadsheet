@@ -22,14 +22,13 @@ class WebUtil {
     }
     
     /**
-     * Append Views library to each image with '.image-trigger' selector
+     * Append Views library to each images with '.image-trigger' selector
      */
     static appendViewsToImage() {
         return new Promise( (resolve, reject) => {
-            var views = [];
-            var triggers = document.querySelectorAll('.image-trigger');
-            [].forEach.call(triggers, function(element, index) {
-                views[index] = new Views(element, {
+            const triggers = document.querySelectorAll('.image-trigger');
+            triggers.forEach( (img) => {
+                new Views(img, {
                     defaultTheme: true,
                     prefix: 'light',
                     loader: 'Loading...',
@@ -40,5 +39,6 @@ class WebUtil {
             });
         });
     }
+    
     
 }
