@@ -74,7 +74,7 @@
                         </p>
                         <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
                             <span v-for="(value, key) in values">
-                              	<a v-bind:href="value" class="image-trigger"><img v-bind:src="value" class="item-image"></a>&nbsp;
+                              	<a v-bind:href="value" class="image-trigger"><img v-bind:src="value" class="item-image"><img src="assets/loading.gif" class="item-image-loading"/></a>&nbsp;
                             </span>
                         </p>
                     </div>

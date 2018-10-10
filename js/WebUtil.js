@@ -41,4 +41,17 @@ class WebUtil {
     }
     
     
+    static removeImageLoading() {
+        return new Promise( (resolve, reject) => {
+            const imgages = document.querySelectorAll("img.item-image");
+            imgages.forEach( (img) => {
+                img.addEventListener("load", function(git) {
+                    // remove loading img
+                    img.nextSibling.remove();
+                });
+            });
+        });
+    }
+
+    
 }
