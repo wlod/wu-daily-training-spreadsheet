@@ -32,6 +32,9 @@
 
 <pre id="content"></pre>
 
+<!-- non-responsive: -->
+<img src="assets/loading.gif" data-src="https://drive.google.com/uc?id=1VMchOspzoH0CG5dX9X0gjHI4ZTn-6iFH&amp;export=download" class="lazyload item-image" />
+
 <div id="app">
 
     <div v-if="spreadsheetsData === null">
@@ -74,7 +77,7 @@
                         </p>
                         <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
                             <span v-for="(value, key) in values">
-                              	<a v-bind:href="value" class="image-trigger"><img v-bind:src="value" class="item-image"><img src="assets/loading.gif" class="item-image-loading"/></a>&nbsp;
+                              	<a v-bind:href="value" class="image-trigger"><img src="assets/loading.gif" v-bind:data-src="value" class="lazyload item-image"/></a>&nbsp;
                             </span>
                         </p>
                     </div>
@@ -91,14 +94,13 @@
         }
 </script>
 
-<script>
-
-</script>
-
 <script async defer src="https://apis.google.com/js/api.js"
         onload="this.onload=function(){};startApp()"
         onreadystatechange="if (this.readyState === 'complete') this.onload()">
 </script>
+
+<script src="js/vendors/lazysizes.min.js"></script>
+<script src="js/vendors/ls.attrchange.min.js"></script>
 
 </body>
 </html>

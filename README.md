@@ -8,6 +8,7 @@ JS Libraries:
 - Vue.js
 - Google API
 - Views (https://github.com/adrianklimek/views)
+- lazysizes (https://github.com/aFarkas/lazysizes)
 
 CSS:
 

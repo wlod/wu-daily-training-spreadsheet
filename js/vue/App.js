@@ -38,10 +38,7 @@ class App {
                             })
                             .then( () => {
                                 WebUtil.updateItemHeight();
-                            })
-                            .then( () => {
-                                WebUtil.removeImageLoading();
-                            })
+                            });
             },
           
             methods: {
