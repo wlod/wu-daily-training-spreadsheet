@@ -5,6 +5,8 @@ body {
 
 .item-list {
 	position: relative;
+	margin: 0;
+	padding: 0;
 }
 
 .item-list:before {
@@ -28,6 +30,7 @@ body {
 
 .item {
 	float: left;
+	list-style: none;
 	min-width: 100px;
 	max-width: 200px;
 	border-top: 1px solid #000;

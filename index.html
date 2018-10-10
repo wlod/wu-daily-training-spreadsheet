@@ -52,7 +52,7 @@
 
             <h3>Day {{ key }}. - {{ item.day }}</h3>
 
-            <div class="item-list">
+            <ul class="item-list">
 
                 <div class="item-list-filter">
                     Shows:
@@ -61,26 +61,25 @@
                     <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'waga' )" v-model="visibleSpreadsheetsPerDay['waga'][item.day]">'Waga' spreadsheet</label>
                 </div>
 
-                <div class="item" v-for="spreadsheetData in item.activities" v-if="spreadsheetData.startTime !== null && spreadsheetData.isVisible === true">
+                <li class="item" v-for="spreadsheetData in item.activities" v-if="spreadsheetData.startTime !== null && spreadsheetData.isVisible === true">
                     <div class="item-title">
                         <i class="material-icons md-36 item-title-icon">{{ spreadsheetData.itemTitleIcon }}</i>
                         <span class="item-title-text">{{ spreadsheetData.startTime }}</span>
                     </div>
 
                     <div class="item-content item-content-left">
-                        <!-- Move v-if to method -->
+                        <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
+                            <span v-for="(value, key) in values">
+                                 <a v-bind:href="value" class="image-trigger"><img src="assets/loading.gif" v-bind:data-src="value" class="lazyload item-image"/></a>&nbsp;
+                            </span>
+                        </p>
                         <p v-for="(value, key) in spreadsheetData.viewData" v-if="key !== 'pictures'">
                             <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
                         </p>
-                        <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
-                            <span v-for="(value, key) in values">
-                              	<a v-bind:href="value" class="image-trigger"><img src="assets/loading.gif" v-bind:data-src="value" class="lazyload item-image"/></a>&nbsp;
-                            </span>
-                        </p>
                     </div>
 
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
