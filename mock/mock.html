@@ -5,99 +5,141 @@
 <meta charset="UTF-8" />
 
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-   rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Roboto"
-   rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 <style>
 body {
-	background-color: #FFF;
-	font-family: 'Roboto', sans-serif;
+   background-color: #FFF;
+   font-family: 'Roboto', sans-serif;
+}
+
+.day-container {
+   position: relative;
+   margin: 0;
+   padding: 0;
+}
+
+.day-container:after {
+   content: "";
+   display: table;
+   clear: both;
+}
+
+.day-summary {
+   position: relative;
+   margin: 0;
+   padding: 0;
+   width: 150px;
+   float: left;
+}
+
+.day-summary-title {
+   height: 20px;
+}
+
+.day-summary-date {
+   margin-left: 10px;
+   position: absolute;
+   top: 0;
 }
 
 .item-list {
-	position: relative;
+   position: relative;
+   margin: 0;
+   padding: 0;
+   margin-left: 150px; /* day-summary */
 }
 
 .item-list:before {
-	content: '';
-	position: absolute;
-	top: 60px;
-	bottom: 0px;
-	left: 0px;
-	border-left: 1px solid #000;
+   content: '';
+   position: absolute;
+   top: 60px;
+   bottom: 0px;
+   left: 0px;
+   border-left: 1px solid #000;
 }
 
 .item-list:after {
-	content: "";
-	display: table;
-	clear: both;
+   content: "";
+   display: table;
+   clear: both;
 }
 
 .item-list-filter {
-	height: 20px;
+   height: 20px;
 }
 
 .item {
-	float: left;
-	min-width: 100px;
-	max-width: 200px;
-	border-top: 1px solid #000;
-	padding: 0px 12px 0px 12px;
-	margin-top: 40px;
-	/* this will be calculated dynamically - max height of item on the item-list */
-	height: 185px
+   float: left;
+   list-style: none;
+   min-width: 100px;
+   max-width: 200px;
+   border-top: 1px solid #000;
+   padding: 0px 12px 0px 12px;
+   margin-top: 40px;
+   /* this will be calculated dynamically - max height of item on the item-list */
+   height: 185px
 }
 
 .item-title {
-	margin-top: -10px;
-	margin-left: 24px;
-	margin-right: 24px;
-	text-align: left;
-	position: relative;
-	background-color: #FFF;
-	width: 82px;
+   margin-top: -10px;
+   margin-left: 24px;
+   margin-right: 24px;
+   text-align: left;
+   position: relative;
+   background-color: #FFF;
+   width: 82px;
 }
 
 .item-title-icon {
-	
+   
 }
 
 .item-title-text {
-	position: absolute;
-	top: 0;
-	font-size: 14px;
+   position: absolute;
+   top: 0;
+   font-size: 14px;
 }
 
-.item-content>p, span {
-	margin: 0px;
-	padding: 4px;
-	font-size: 12px;
+.item-content > p {
+   margin: 0px;
+   padding: 4px;
+   font-size: 12px;
 }
 
-.item-content-left>p, span {
-	text-align: left;
+.item-content > span {
+   margin: 0px;
+   padding: 4px;
+   font-size: 12px;
 }
 
-.item-content-center>p, span {
-	text-align: center;
+.item-content-left > p  {
+   text-align: left;
+}
+
+.item-content-center > p {
+   text-align: center;
+}
+
+.item-image {
+   height: 60px;
 }
 
 .material-icons.md-18 {
-	font-size: 18px;
+   font-size: 18px;
 }
 
 .material-icons.md-24 {
-	font-size: 24px;
+   font-size: 24px;
 }
 
 .material-icons.md-36 {
-	font-size: 36px;
+   font-size: 36px;
 }
 
 .material-icons.md-48 {
-	font-size: 48px;
+   font-size: 48px;
 }
 </style>
 
@@ -109,179 +151,194 @@ body {
          href="https://github.com/wlod/wu-daily-training-spreadsheet/"
          target="_blank">current version - github</a>.
    </p>
-
-   <div class="item-list">
-
-      <div class="item-list-filter">
-         Shows: <label><input type="checkbox" checked="checked">'Trening'
-            spreadsheet</label> <label><input type="checkbox"
-            checked="checked">'Dieta' spreadsheet</label> <label><input
-            type="checkbox" checked="checked">'Waga' spreadsheet</label>
-      </div>
-
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">fastfood</i>
-            <span class="item-title-text">24:30</span>
-         </div>
-
-         <div class="item-content item-content-left">
-            <p>Posiłek dsasd salkd laskd lasd</p>
-         </div>
-
-      </div>
-
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">accessibility</i>
-            <span class="item-title-text">24:30</span>
-         </div>
-
-         <div class="item-content item-content-center">
-            <p>75,60 kg</p>
-         </div>
-
-      </div>
-
-
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">pool</i> <span
-               class="item-title-text">24:30</span>
-         </div>
-
-         <div class="item-content item-content-left">
-            <span>Distance:</span><span>10 km</span><br /> <span>Duration:</span><span>09:50-11:50</span>
+   
+   
+   <div class="day-container">
+   
+      <div class="day-summary">
+         <div class="day-summary-title">
+            <i class="material-icons md-24 item-title-icon">insert_invitation</i><span class="day-summary-date">21.08.2018</span>
          </div>
       </div>
-
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">fastfood</i>
-            <span class="item-title-text">24:30</span>
+      
+      <div class="item-list">
+   
+         <div class="item-list-filter">
+            Shows: <label><input type="checkbox" checked="checked">'Trening'
+               spreadsheet</label> <label><input type="checkbox"
+               checked="checked">'Dieta' spreadsheet</label> <label><input
+               type="checkbox" checked="checked">'Waga' spreadsheet</label>
          </div>
-
-         <div class="item-content item-content-left">
-            <p>Posiłek: dsasd salkd laskd lasd</p>
-            <p>Suplementy: dsasd salkd laskd lasd</p>
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">fastfood</i>
+               <span class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-left">
+               <p>Posiłek dsasd salkd laskd lasd</p>
+            </div>
+   
          </div>
-
-      </div>
-
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">directions_run</i>
-            <span class="item-title-text">24:30</span>
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">accessibility</i>
+               <span class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-center">
+               <p>75,60 kg</p>
+            </div>
+   
          </div>
-
-         <div class="item-content item-content-left">
-            <span>Distance:</span><span>10 km</span><br /> <span>Duration:</span><span>09:50-11:50</span>
+   
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">pool</i> <span
+                  class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-left">
+               <span>Distance:</span><span>10 km</span><br /> <span>Duration:</span><span>09:50-11:50</span>
+            </div>
          </div>
-
-      </div>
-
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">fitness_center</i>
-            <span class="item-title-text">24:30</span>
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">fastfood</i>
+               <span class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-left">
+               <p>Posiłek: dsasd salkd laskd lasd</p>
+               <p>Suplementy: dsasd salkd laskd lasd</p>
+            </div>
+   
          </div>
-
-         <div class="item-content item-content-left">
-            <span>Duration:</span><span>09:50-11:50</span>
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">directions_run</i>
+               <span class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-left">
+               <span>Distance:</span><span>10 km</span><br /> <span>Duration:</span><span>09:50-11:50</span>
+            </div>
+   
          </div>
-
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">fitness_center</i>
+               <span class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-left">
+               <span>Duration:</span><span>09:50-11:50</span>
+            </div>
+   
+         </div>
+   
       </div>
 
    </div>
-
-
 
    <hr>
 
-   <div class="item-list">
-
-      <div class="item-list-filter">
-         Shows: <label><input type="checkbox" checked="checked">'Trening'
-            spreadsheet</label> <label><input type="checkbox"
-            checked="checked">'Dieta' spreadsheet</label> <label><input
-            type="checkbox" checked="checked">'Waga' spreadsheet</label>
+   <div class="day-container">
+   
+      <div class="day-summary">
+         test
       </div>
+      
+      <div class="item-list">
 
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">fastfood</i>
-            <span class="item-title-text">24:30</span>
+         <div class="item-list-filter">
+            Shows: <label><input type="checkbox" checked="checked">'Trening'
+               spreadsheet</label> <label><input type="checkbox"
+               checked="checked">'Dieta' spreadsheet</label> <label><input
+               type="checkbox" checked="checked">'Waga' spreadsheet</label>
          </div>
-
-         <div class="item-content item-content-left">
-            <p>Posiłek dsasd salkd laskd lasd</p>
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">fastfood</i>
+               <span class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-left">
+               <p>Posiłek dsasd salkd laskd lasd</p>
+            </div>
+   
          </div>
-
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">accessibility</i>
+               <span class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-center">
+               <p>75,60 kg</p>
+            </div>
+   
+         </div>
+   
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">pool</i> <span
+                  class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-left">
+               <span>Distance:</span><span>10 km</span><br /> <span>Duration:</span><span>09:50-11:50</span>
+            </div>
+         </div>
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">fastfood</i>
+               <span class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-left">
+               <p>Posiłek: dsasd salkd laskd lasd</p>
+               <p>Suplementy: dsasd salkd laskd lasd</p>
+            </div>
+   
+         </div>
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">directions_run</i>
+               <span class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-left">
+               <span>Distance:</span><span>10 km</span><br /> <span>Duration:</span><span>09:50-11:50</span>
+            </div>
+   
+         </div>
+   
+         <div class="item">
+            <div class="item-title">
+               <i class="material-icons md-36 item-title-icon">fitness_center</i>
+               <span class="item-title-text">24:30</span>
+            </div>
+   
+            <div class="item-content item-content-left">
+               <span>Duration:</span><span>09:50-11:50</span>
+            </div>
+   
+         </div>
+   
       </div>
-
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">accessibility</i>
-            <span class="item-title-text">24:30</span>
-         </div>
-
-         <div class="item-content item-content-center">
-            <p>75,60 kg</p>
-         </div>
-
-      </div>
-
-
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">pool</i> <span
-               class="item-title-text">24:30</span>
-         </div>
-
-         <div class="item-content item-content-left">
-            <span>Distance:</span><span>10 km</span><br /> <span>Duration:</span><span>09:50-11:50</span>
-         </div>
-      </div>
-
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">fastfood</i>
-            <span class="item-title-text">24:30</span>
-         </div>
-
-         <div class="item-content item-content-left">
-            <p>Posiłek: dsasd salkd laskd lasd</p>
-            <p>Suplementy: dsasd salkd laskd lasd</p>
-         </div>
-
-      </div>
-
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">directions_run</i>
-            <span class="item-title-text">24:30</span>
-         </div>
-
-         <div class="item-content item-content-left">
-            <span>Distance:</span><span>10 km</span><br /> <span>Duration:</span><span>09:50-11:50</span>
-         </div>
-
-      </div>
-
-      <div class="item">
-         <div class="item-title">
-            <i class="material-icons md-36 item-title-icon">fitness_center</i>
-            <span class="item-title-text">24:30</span>
-         </div>
-
-         <div class="item-content item-content-left">
-            <span>Duration:</span><span>09:50-11:50</span>
-         </div>
-
-      </div>
-
    </div>
-
 
 </body>
 </html>

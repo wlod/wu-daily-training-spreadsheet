@@ -41,21 +41,25 @@
     <div v-if="spreadsheetsData !== null">
         <h2>Days</h2>
 
-        <div>
+        <div style="margin-bottom: 25px;">
             Shows on all days:
             <label><input type="checkbox" @click="filterBySpreadsheetName( 'trening' )" v-model="visibleSpreadsheets['trening']">'Trening' spreadsheet</label>
             <label><input type="checkbox" @click="filterBySpreadsheetName( 'dieta' )" v-model="visibleSpreadsheets['dieta']">'Dieta' spreadsheet</label>
             <label><input type="checkbox" @click="filterBySpreadsheetName( 'waga' )" v-model="visibleSpreadsheets['waga']">'Waga' spreadsheet</label>
         </div>
 
-        <div v-for="(item, key) in spreadsheetsData">
+        <div v-for="(item, key) in spreadsheetsData" class="day-container">
 
-            <h3>Day {{ key }}. - {{ item.day }}</h3>
+            <div class="day-summary">
+               <div class="day-summary-title">
+                  <i class="material-icons md-24 item-title-icon">insert_invitation</i><span class="day-summary-date">{{ item.day }}</span>
+               </div>
+            </div>
 
             <ul class="item-list">
 
                 <div class="item-list-filter">
-                    Shows:
+                    Show:
                     <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'trening' )" v-model="visibleSpreadsheetsPerDay['trening'][item.day]">'Trening' spreadsheet</label>
                     <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'dieta' )" v-model="visibleSpreadsheetsPerDay['dieta'][item.day]">'Dieta' spreadsheet</label>
                     <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'waga' )" v-model="visibleSpreadsheetsPerDay['waga'][item.day]">'Waga' spreadsheet</label>

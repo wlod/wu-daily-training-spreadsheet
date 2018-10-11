@@ -7,10 +7,9 @@ class WebUtil {
      */
     static updateItemHeight() {
         return new Promise( (resolve, reject) => {
+            let maxHeight = 0;
             document.querySelectorAll('ul.item-list').forEach( (itemList) => {
                 const itemsContent = itemList.querySelectorAll('li.item > div.item-content');
-                let maxHeight = 0;
-                
                 itemsContent.forEach( (itemContent) => {
                    if(maxHeight < itemContent.clientHeight) {
                         maxHeight = itemContent.clientHeight;
@@ -20,11 +19,14 @@ class WebUtil {
                     itemContent.style.height = maxHeight + "px";
                 });
             });
+            document.querySelectorAll('div.day-container .day-summary').forEach( (daySummary) => {
+                daySummary.style.height = maxHeight + "px";
+            });
         });
     }
     
     /**
-     * Add js files to end of index.hml
+     * Add js files to end of head tag in index.hml
      * Append Views library to each images with '.image-trigger' selector
      */
     static appendViewsToImage() {

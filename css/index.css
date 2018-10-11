@@ -3,10 +3,42 @@ body {
 	font-family: 'Roboto', sans-serif;
 }
 
+.day-container {
+   position: relative;
+   margin: 0;
+   padding: 0;
+   margin-bottom: 25px;
+}
+
+.day-container:after {
+   content: "";
+   display: table;
+   clear: both;
+}
+
+.day-summary {
+   position: relative;
+   margin: 0;
+   padding: 0;
+   width: 150px;
+   float: left;
+}
+
+.day-summary-title {
+   height: 20px;
+}
+
+.day-summary-date {
+   margin-left: 10px;
+   position: absolute;
+   top: 0;
+}
+
 .item-list {
 	position: relative;
 	margin: 0;
 	padding: 0;
+	margin-left: 150px; /* day-summary */
 }
 
 .item-list:before {
