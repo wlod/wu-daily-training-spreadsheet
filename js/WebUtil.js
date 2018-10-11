@@ -7,14 +7,16 @@ class WebUtil {
      */
     static updateItemHeight() {
         return new Promise( (resolve, reject) => {
-            document.querySelectorAll('div.item-list').forEach( (itemList) => {
+            document.querySelectorAll('ul.item-list').forEach( (itemList) => {
+                const itemsContent = itemList.querySelectorAll('li.item > div.item-content');
                 let maxHeight = 0;
-                itemList.querySelectorAll('div.item > div.item-content').forEach( (itemContent) => {
+                
+                itemsContent.forEach( (itemContent) => {
                    if(maxHeight < itemContent.clientHeight) {
                         maxHeight = itemContent.clientHeight;
                     }
                 });
-                itemList.querySelectorAll('div.item > div.item-content').forEach( (itemContent) => {
+                itemsContent.forEach( (itemContent) => {
                     itemContent.style.height = maxHeight + "px";
                 });
             });
