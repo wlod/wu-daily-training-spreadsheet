@@ -42,4 +42,15 @@ class WebUtil {
         });
     }
     
+    /**
+     * Check developer options
+     */
+    static isDevOptionIsOn(devOption) {
+        var url = new URL(window.location.href);
+        var param = url.searchParams.get("devopt");
+        if(typeof param !== "undefined" && param !== null) {
+            return param.includes(devOption);
+        }
+        return false;
+    }
 }

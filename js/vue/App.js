@@ -34,6 +34,9 @@ class App {
                                     } );
                             })
                             .then( () => {
+                                if(WebUtil.isDevOptionIsOn("noimage") === true) {
+                                    return;
+                                }
                                 WebUtil.appendViewsToImage();
                             })
                             .then( () => {
