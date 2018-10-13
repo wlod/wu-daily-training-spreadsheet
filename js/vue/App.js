@@ -38,9 +38,6 @@ class App {
                                     return;
                                 }
                                 WebUtil.appendViewsToImage();
-                            })
-                            .then( () => {
-                                WebUtil.updateItemHeight();
                             });
             },
           

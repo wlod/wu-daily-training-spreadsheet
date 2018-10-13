@@ -55,35 +55,37 @@
                   <i class="material-icons md-24 item-title-icon">insert_invitation</i><span class="day-summary-date">{{ item.day }}</span>
                </div>
             </div>
-
-            <ul class="item-list">
-
-                <div class="item-list-filter">
+            
+            <div class="item-list-container">
+               <div class="item-list-filter">
                     Show:
                     <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'trening' )" v-model="visibleSpreadsheetsPerDay['trening'][item.day]">'Trening' spreadsheet</label>
                     <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'dieta' )" v-model="visibleSpreadsheetsPerDay['dieta'][item.day]">'Dieta' spreadsheet</label>
                     <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'waga' )" v-model="visibleSpreadsheetsPerDay['waga'][item.day]">'Waga' spreadsheet</label>
                 </div>
-
-                <li class="item" v-for="spreadsheetData in item.activities" v-if="spreadsheetData.startTime !== null && spreadsheetData.isVisible === true">
-                    <div class="item-title">
-                        <i class="material-icons md-36 item-title-icon">{{ spreadsheetData.itemTitleIcon }}</i>
-                        <span class="item-title-text">{{ spreadsheetData.startTime }}</span>
-                    </div>
-
-                    <div class="item-content item-content-left">
-                        <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
-                            <span v-for="(value, key) in values">
-                                 <a v-bind:href="value" class="image-trigger"><img src="assets/loading.gif" v-bind:data-src="value" class="lazyload item-image"/></a>&nbsp;
-                            </span>
-                        </p>
-                        <p v-for="(value, key) in spreadsheetData.viewData" v-if="key !== 'pictures'">
-                            <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
-                        </p>
-                    </div>
-
-                </li>
-            </ul>
+               
+               <ul class="item-list">
+   
+                   <li class="item" v-for="spreadsheetData in item.activities" v-if="spreadsheetData.startTime !== null && spreadsheetData.isVisible === true">
+                       <div class="item-title">
+                           <i class="material-icons md-36 item-title-icon">{{ spreadsheetData.itemTitleIcon }}</i>
+                           <span class="item-title-text">{{ spreadsheetData.startTime }}</span>
+                       </div>
+   
+                       <div class="item-content item-content-left">
+                           <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
+                               <span v-for="(value, key) in values">
+                                    <a v-bind:href="value" class="image-trigger"><img src="assets/loading.gif" v-bind:data-src="value" class="lazyload item-image"/></a>&nbsp;
+                               </span>
+                           </p>
+                           <p v-for="(value, key) in spreadsheetData.viewData" v-if="key !== 'pictures'">
+                               <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
+                           </p>
+                       </div>
+   
+                   </li>
+               </ul>
+            </div>
         </div>
     </div>
 </div>
