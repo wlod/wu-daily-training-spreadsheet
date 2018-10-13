@@ -35,6 +35,8 @@ const DIET_START_TIME_COLUMN = 1;
 
 // WEIGHT
 const WEIGHT_START_TIME_COLUMN = 2;
+const WEIGHT_UNIT = "kg";
+const WEIGHT_VIEW_KEY = "weight";
 
 // HELPERS MAP
 // -1 start from 0; configuration contains business value

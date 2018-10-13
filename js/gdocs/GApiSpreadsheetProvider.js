@@ -55,14 +55,6 @@ class GApiSpreadsheetProvider {
         });
     }
     
-    dataSpreadsheetsByDate(date) {
-        const dataSpreadsheetsDate = new Array();
-        this.gCalSpreadsheet.forEach( (value, key, map) => {
-            dataSpreadsheetsDate.push(...value.spreadsheet.dataSpreadsheetDate.get(date));
-        });
-        return dataSpreadsheetsDate
-    }
-    
     dataSpreadsheetsGroupByDates() {
         const dataSpreadsheetsDate = new Map();
         const groupData = new Array();
@@ -77,7 +69,8 @@ class GApiSpreadsheetProvider {
         
         dataSpreadsheetsDate.forEach( (value, key, map) => {
             SpreadsheetUtils.sortByStartTime(value);
-            groupData.push({"day": key, "activities": value});
+            let daySummary = SpreadsheetUtils.prepareDaySummary(key, value);
+            groupData.push({"day": key, "activities": value, "daySummary": daySummary});
         });
         return groupData
     }

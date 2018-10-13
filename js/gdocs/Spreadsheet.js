@@ -162,7 +162,7 @@ class SpreadsheetData {
 	    
 	    // TODO move hmm to confView
 	    if(SPREADSHEET_WEIGHT === this.spreadsheetName) {
-	        this.viewData["weight"] = this.rawDataAsArray[0];
+	        this.viewData[WEIGHT_VIEW_KEY] = this.rawDataAsArray[0];
 	        skipColumns.push(0);
 	    }
 	    

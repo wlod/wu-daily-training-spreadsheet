@@ -7,6 +7,7 @@ body {
    position: relative;
    margin: 0;
    padding: 0;
+   margin-bottom: 20px;
 }
 
 .day-container:after {
@@ -19,7 +20,7 @@ body {
    position: relative;
    margin: 0;
    padding: 0;
-   width: 150px;
+   width: 200px;
    height: 100px;
    float: left;
 }
@@ -35,13 +36,14 @@ body {
 }
 
 .item-list-container {
+   margin-bottom: 20px;
 }
 
 .item-list {
    position: relative;
    margin: 0;
    padding: 0;
-   margin-left: 150px; /* day-summary */
+   margin-left: 200px; /* day-summary */
    
    display: -webkit-box;
    display: -moz-box;
@@ -55,7 +57,7 @@ body {
 .item-list:before {
    content: '';
    position: absolute;
-   top: 40px;
+   top: 20px;
    bottom: 0px;
    left: 0px;
    border-left: 1px solid #000;
@@ -71,7 +73,7 @@ body {
    max-width: 200px;
    border-top: 1px solid #000;
    padding: 0px 12px 0px 12px;
-   margin-top: 40px;
+   margin-top: 20px;
 }
 
 .item-title {
@@ -116,6 +118,27 @@ body {
 
 .item-image {
 	height: 60px;
+}
+
+.day-summary-content {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+   margin-top: 20px;
+}
+
+.day-summary-content > li {
+  position: relative;
+} 
+
+.day-summary-content-label {
+	position: absolute;
+	top: -1px;
+	margin-left: 4px; 
+}
+
+.material-icons.md-14 {
+	font-size: 14px;
 }
 
 .material-icons.md-18 {
