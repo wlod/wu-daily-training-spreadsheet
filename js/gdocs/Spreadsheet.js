@@ -105,22 +105,22 @@ class SpreadsheetData {
 	
 	// TODO split 
 	_initStartTime() {
-	    if(SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
+	    if(SPREADSHEET_CONF.SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
 	        this.startTime = null;
 	        
-	        const startTimeOrDurationColumn = START_TIME_COLUMN[this.spreadsheetName];
+	        const startTimeOrDurationColumn = SPREADSHEET_CONF.START_TIME_COLUMN[this.spreadsheetName];
 	        let startTimeOrDurationRaw = this.rawDataAsArray[startTimeOrDurationColumn];
 	        
 	        if(typeof startTimeOrDurationRaw === "undefined" ||
-	           startTimeOrDurationRaw === SPREADSHEET_CELL_VALUE_EMPTY) {
+	           startTimeOrDurationRaw === SPREADSHEET_CONF.SPREADSHEET_CELL_VALUE_EMPTY) {
 	            return;
 	        }
 	        
-	        if(SPREADSHEET_TRAINING === this.spreadsheetName && TRAINING_HEADER_INFORMATION_COLUMNS === this.name) {
+	        if(SPREADSHEET_CONF.SPREADSHEET_TRAINING === this.spreadsheetName && SPREADSHEET_CONF.TRAINING_HEADER_INFORMATION_COLUMNS === this.name) {
 	            return;
 	        }
 	        
-	        if(SPREADSHEET_TRAINING === this.spreadsheetName) {
+	        if(SPREADSHEET_CONF.SPREADSHEET_TRAINING === this.spreadsheetName) {
 	            startTimeOrDurationRaw = startTimeOrDurationRaw.split("-")[0];
 	        }
 	        
@@ -130,9 +130,9 @@ class SpreadsheetData {
 	}
 	
 	_initIcons() {
-	    this.itemTitleIcon = ICONS[this.name];
+	    this.itemTitleIcon = SPREADSHEET_CONF.ICONS[this.name];
 	    if(typeof this.itemTitleIcon === "undefined") {
-	        this.itemTitleIcon = DEFAULT_ICON;  
+	        this.itemTitleIcon = SPREADSHEET_CONF.DEFAULT_ICON;  
 	    }
 	}
 	
@@ -140,7 +140,7 @@ class SpreadsheetData {
 	_initViewData() {
 	    this.viewData = new Object();
 	    
-	    if(COLUMNS_TO_SHOW_NAME_IN_DETAILS.includes(this.name)) {
+	    if(SPREADSHEET_CONF.COLUMNS_TO_SHOW_NAME_IN_DETAILS.includes(this.name)) {
 	        this.viewData['name'] = this.name;
 	    }
 	    
@@ -150,10 +150,10 @@ class SpreadsheetData {
 	    
 	    const skipColumns = new Array();
 	    
-	    if(SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
-	        const startTimeOrDurationColumn = START_TIME_COLUMN[this.spreadsheetName];
+	    if(SPREADSHEET_CONF.SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
+	        const startTimeOrDurationColumn = SPREADSHEET_CONF.START_TIME_COLUMN[this.spreadsheetName];
 	        const startTimeOrDurationRaw = this.rawDataAsArray[startTimeOrDurationColumn];
-	        if(SPREADSHEET_TRAINING === this.spreadsheetName && startTimeOrDurationRaw !== SPREADSHEET_CELL_VALUE_EMPTY) {
+	        if(SPREADSHEET_CONF.SPREADSHEET_TRAINING === this.spreadsheetName && startTimeOrDurationRaw !== SPREADSHEET_CONF.SPREADSHEET_CELL_VALUE_EMPTY) {
 	            // TODO move value "duration" to confView
 	            this.viewData["duration"] = startTimeOrDurationRaw;
              }
@@ -161,35 +161,35 @@ class SpreadsheetData {
         }
 	    
 	    // TODO move hmm to confView
-	    if(SPREADSHEET_WEIGHT === this.spreadsheetName) {
-	        this.viewData[WEIGHT_VIEW_KEY] = this.rawDataAsArray[0];
+	    if(SPREADSHEET_CONF.SPREADSHEET_WEIGHT === this.spreadsheetName) {
+	        this.viewData[SPREADSHEET_CONF.WEIGHT_VIEW_KEY] = this.rawDataAsArray[0];
 	        skipColumns.push(0);
 	    }
 	    
             
-	    const labelNames = LABELS_OTHERS[this.name];
+	    const labelNames = SPREADSHEET_CONF.LABELS_OTHERS[this.name];
 	    let labelIndex = -1;
         for(let i = 0; i < this.rawDataAsArray.length; i++) {
             if(skipColumns.indexOf(i) !== -1) {
                 continue;
             }
-            if(typeof this.rawDataAsArray[i] === 'undefined' || SPREADSHEET_CELL_VALUE_EMPTY === this.rawDataAsArray[i]) {
+            if(typeof this.rawDataAsArray[i] === 'undefined' || SPREADSHEET_CONF.SPREADSHEET_CELL_VALUE_EMPTY === this.rawDataAsArray[i]) {
                 continue;
             }
             
             const multiData = this.rawDataAsArray[i].split('\n');
             for(let j = 0; j < multiData.length; j++) {
                 labelIndex++;
-                if(typeof multiData[j] === 'undefined' || SPREADSHEET_CELL_VALUE_EMPTY === multiData[j]) {
+                if(typeof multiData[j] === 'undefined' || SPREADSHEET_CONF.SPREADSHEET_CELL_VALUE_EMPTY === multiData[j]) {
                     continue;
                 }
                 
-                let labelName = DEFAULT_LABEL + "(" + labelIndex + ")";
+                let labelName = SPREADSHEET_CONF.DEFAULT_LABEL + "(" + labelIndex + ")";
                 if(typeof labelNames !== "undefined" && typeof labelNames[ labelIndex ] !== "undefined") {
                     labelName = labelNames[ labelIndex ];
                 }
                 
-                if(PICTURE_LABEL === labelName) {
+                if(SPREADSHEET_CONF.PICTURE_LABEL === labelName) {
                     multiData[j] = SpreadsheetData._prepareImageUrls(multiData[j]);
                 }
                 

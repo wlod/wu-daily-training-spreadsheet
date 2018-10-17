@@ -19,18 +19,18 @@ class SpreadsheetUtils {
                 return;
             }
             
-            if(SPREADSHEET_DIET === activity.spreadsheetName) {
+            if(SPREADSHEET_CONF.SPREADSHEET_DIET === activity.spreadsheetName) {
                 mealsCount++;
                 return;
             }
             
-            if(SPREADSHEET_TRAINING === activity.spreadsheetName) {
+            if(SPREADSHEET_CONF.SPREADSHEET_TRAINING === activity.spreadsheetName) {
                 trainingCount++;
                 return;
             }
             
-            if(SPREADSHEET_WEIGHT === activity.spreadsheetName) {
-                let weightRawValue = activity.viewData[WEIGHT_VIEW_KEY].replace(WEIGHT_UNIT, "");
+            if(SPREADSHEET_CONF.SPREADSHEET_WEIGHT === activity.spreadsheetName) {
+                let weightRawValue = activity.viewData[SPREADSHEET_CONF.WEIGHT_VIEW_KEY].replace(SPREADSHEET_CONF.WEIGHT_UNIT, "");
                 if(minWeight > weightRawValue || minWeight === 0) {
                     minWeight = weightRawValue;
                 }
@@ -43,8 +43,8 @@ class SpreadsheetUtils {
         return {
             "meals": mealsCount,
             "training" : trainingCount,
-            "minWeight": minWeight + WEIGHT_UNIT,
-            "maxWeight": maxWeight + WEIGHT_UNIT,
+            "minWeight": minWeight + SPREADSHEET_CONF.WEIGHT_UNIT,
+            "maxWeight": maxWeight + SPREADSHEET_CONF.WEIGHT_UNIT,
         }
     }
     

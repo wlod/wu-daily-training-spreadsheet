@@ -1,97 +1,112 @@
 // TODO: following configuration should be in the spreadsheet
+var SPREADSHEET_CONF = {
+                
+    appendProperty: function(name, value) {
+        Object.defineProperty(this, name,
+            {
+                value : value,
+                writable : false,
+                enumerable : true,
+                configurable : true
+            });
+    },
+    
+    appendConfiguration: function() {
+        
+        // Spreadsheet name and range
+        // training
+        this.appendProperty('SPREADSHEET_TRAINING', "trening");
+        this.appendProperty('SPREADSHEET_TRAINING_RANGE', this.SPREADSHEET_TRAINING + "!A8:Q33");
+        
+        // diet
+        this.appendProperty('SPREADSHEET_DIET',"dieta");
+        this.appendProperty('SPREADSHEET_DIET_RANGE', this.SPREADSHEET_DIET + "!A4:P29");
+        
+        this.appendProperty('SPREADSHEET_WEIGHT', "waga");
+        this.appendProperty('SPREADSHEET_WEIGHT_RANGE', this.SPREADSHEET_WEIGHT + "!A4:O29");
+        
+        // columns
+        this.appendProperty('TRAINING_TABLE_TENNIS',"tenis stołowy");
+        this.appendProperty('TRAINING_SQUASH',"squash");
+        
+        // App conf
+        this.appendProperty('SPREADSHEETS_TO_LOAD', [this.SPREADSHEET_WEIGHT, this.SPREADSHEET_DIET, this.SPREADSHEET_TRAINING]);
+        this.appendProperty('SPREADSHEETS_RANGE_TO_LOAD', [this.SPREADSHEET_WEIGHT_RANGE, this.SPREADSHEET_DIET_RANGE, this.SPREADSHEET_TRAINING_RANGE]);
 
-// Spreadsheet name and range
-// training
-const SPREADSHEET_TRAINING = "trening";
-const SPREADSHEET_TRAINING_RANGE = SPREADSHEET_TRAINING + "!A8:Q33";
-// diet
-const SPREADSHEET_DIET = "dieta";
-const SPREADSHEET_DIET_RANGE = SPREADSHEET_DIET + "!A4:P29";
-// weight
-const SPREADSHEET_WEIGHT = "waga";
-const SPREADSHEET_WEIGHT_RANGE = SPREADSHEET_WEIGHT + "!A4:O29";
+        this.appendProperty('SPREADSHEET_CELL_VALUE_DELIMITER', "~");
+        this.appendProperty('SPREADSHEET_CELL_VALUE_EMPTY', "-");
+        this.appendProperty('SPREADSHEETS_SUPPORT_START_TIME', [this.SPREADSHEET_TRAINING, this.SPREADSHEET_DIET, this.SPREADSHEET_WEIGHT]);
 
-// columns
-const TRAINING_TABLE_TENNIS = "tenis stołowy";
-const TRAINING_SQUASH = "squash";
+        // For now for all spreadsheet
+        this.appendProperty('COLUMNS_TO_SHOW_NAME_IN_DETAILS', [this.TRAINING_TABLE_TENNIS, this.TRAINING_SQUASH, this.SPREADSHEET_WEIGHT]);
 
-// App conf
-const SPREADSHEETS_TO_LOAD = [SPREADSHEET_WEIGHT, SPREADSHEET_DIET, SPREADSHEET_TRAINING];
-const SPREADSHEETS_RANGE_TO_LOAD = [SPREADSHEET_WEIGHT_RANGE, SPREADSHEET_DIET_RANGE, SPREADSHEET_TRAINING_RANGE];
+        // TRAINING
+        this.appendProperty('TRAINING_DURATION_COLUMN', 2);
+        this.appendProperty('TRAINING_HEADER_INFORMATION_COLUMNS', ['kroki - mi band 3']);
 
-const SPREADSHEET_CELL_VALUE_DELIMITER = "~";
-const SPREADSHEET_CELL_VALUE_EMPTY = "-";
-const SPREADSHEETS_SUPPORT_START_TIME = [SPREADSHEET_TRAINING, SPREADSHEET_DIET, SPREADSHEET_WEIGHT];
+        // DIET
+        this.appendProperty('DIET_START_TIME_COLUMN', 1);
 
-// For now for all spreadsheet
-const COLUMNS_TO_SHOW_NAME_IN_DETAILS = [TRAINING_TABLE_TENNIS, TRAINING_SQUASH, SPREADSHEET_WEIGHT];
+        // WEIGHT
+        this.appendProperty('WEIGHT_START_TIME_COLUMN', 2);
+        this.appendProperty('WEIGHT_UNIT', "kg");
+        this.appendProperty('WEIGHT_VIEW_KEY', "weight");
+        
+        // HELPERS MAP
+        const startTimeColumn = {
+            [this.SPREADSHEET_TRAINING] : (this.TRAINING_DURATION_COLUMN - 1),
+            [this.SPREADSHEET_DIET] : (this.DIET_START_TIME_COLUMN - 1),
+            [this.SPREADSHEET_WEIGHT] : (this.WEIGHT_START_TIME_COLUMN - 1)
+        }
+        this.appendProperty('START_TIME_COLUMN', startTimeColumn);
+        
+        
+        // ICONS
+        const icons = {
+            "sniadanie" : "free_breakfast",
+            "drugie sniadanie" : "fastfood",
+            "obiad" : "room_service",
+            "podwieczorek" : "fastfood",
+            "kolacja" : "restaurant_menu",
+            "Ważenie I" : "accessibility",
+            "Ważenie II" : "accessibility",
+            "Ważenie III" : "accessibility",
+            "Ważenie IV" : "accessibility",
+            "Ważenie V" : "accessibility",
+            "Ważenie VI" : "accessibility",
+            "Ważenie VII" : "accessibility",
+            "spacer I" : "directions_run",
+            "spacer II" : "directions_run",
+            "spacer III" : "directions_run",
+            "basen" : "pool",
+            "siłownia" : "fitness_center",
+            [this.TRAINING_SQUASH] : "toll",
+            [this.TRAINING_TABLE_TENNIS] : "toll",
+            "drzemka" : "local_hotel"
+        }
+        this.appendProperty('ICONS', icons);
+        this.appendProperty('DEFAULT_ICON', "warning");
+        this.appendProperty('PICTURE_LABEL', "pictures");
+        
+        // OTHER
+        const labelsOthers = {
+            "basen" : ['distance'],
+            "spacer I" : ['distance'],
+            "spacer II" : ['distance'],
+            "spacer III" : ['distance'],
+            [this.TRAINING_SQUASH] : ['comment'],
+            [this.TRAINING_TABLE_TENNIS] : ['comment'],
+            "siłownia" : ['comment'],
+            "sniadanie" : ["meal", "supplements", this.PICTURE_LABEL],
+            "drugie sniadanie" : ["meal", "supplements", this.PICTURE_LABEL],
+            "obiad" : ["meal", "supplements", this.PICTURE_LABEL],
+            "podwieczorek" : ["meal", "supplements", this.PICTURE_LABEL],
+            "kolacja" : ["meal", "supplements", this.PICTURE_LABEL]
+        }
+        this.appendProperty('LABELS_OTHERS', labelsOthers);
+        
+        this.appendProperty('DEFAULT_LABEL', "other");
+    }
+};
 
-// TRAINING
-const TRAINING_DURATION_COLUMN = 2;
-const TRAINING_HEADER_INFORMATION_COLUMNS = ['kroki - mi band 3'];
-
-// DIET
-const DIET_START_TIME_COLUMN = 1;
-
-// WEIGHT
-const WEIGHT_START_TIME_COLUMN = 2;
-const WEIGHT_UNIT = "kg";
-const WEIGHT_VIEW_KEY = "weight";
-
-// HELPERS MAP
-// -1 start from 0; configuration contains business value
-const START_TIME_COLUMN = {
-    [SPREADSHEET_TRAINING] : (TRAINING_DURATION_COLUMN - 1),
-    [SPREADSHEET_DIET] : (DIET_START_TIME_COLUMN - 1),
-    [SPREADSHEET_WEIGHT] : (WEIGHT_START_TIME_COLUMN - 1)
-}
-
-
-// ICONS MAP
-
-const ICONS = {
- "sniadanie" : "free_breakfast",
- "drugie sniadanie" : "fastfood",
- "obiad" : "room_service",
- "podwieczorek" : "fastfood",
- "kolacja" : "restaurant_menu",
- "Ważenie I" : "accessibility",
- "Ważenie II" : "accessibility",
- "Ważenie III" : "accessibility",
- "Ważenie IV" : "accessibility",
- "Ważenie V" : "accessibility",
- "Ważenie VI" : "accessibility",
- "Ważenie VII" : "accessibility",
- "spacer I" : "directions_run",
- "spacer II" : "directions_run",
- "spacer III" : "directions_run",
- "basen" : "pool",
- "siłownia" : "fitness_center",
- [TRAINING_SQUASH] : "toll",
- [TRAINING_TABLE_TENNIS] : "toll",
- "drzemka" : "local_hotel"
-}
-
-const DEFAULT_ICON = "warning";
-
-const PICTURE_LABEL = "pictures";
- 
-
-// LABELS FOR OTHER(S) INFORMATION FOR EACH COLUMNS
-const LABELS_OTHERS = {
-  "basen" : ['distance'],
-  "spacer I" : ['distance'],
-  "spacer II" : ['distance'],
-  "spacer III" : ['distance'],
-  [TRAINING_SQUASH] : ['comment'],
-  [TRAINING_TABLE_TENNIS] : ['comment'],
-  "siłownia" : ['comment'],
-  "sniadanie" : ["meal", "supplements", PICTURE_LABEL],
-  "drugie sniadanie" : ["meal", "supplements", PICTURE_LABEL],
-  "obiad" : ["meal", "supplements", PICTURE_LABEL],
-  "podwieczorek" : ["meal", "supplements", PICTURE_LABEL],
-  "kolacja" : ["meal", "supplements", PICTURE_LABEL]
-}
-
-const DEFAULT_LABEL = "other";
-
+SPREADSHEET_CONF.appendConfiguration();

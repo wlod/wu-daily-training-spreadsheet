@@ -7,25 +7,31 @@ class GApiSpreadsheetProvider {
         this.gCalSpreadsheet = new Map();
       }
     
-    loadData(spreadsheetsRange) {
+    loadData(spreadsheetsConfig) {
         return new Promise( (resolve, reject) => {
             this.gapi.load('client:auth2', () => { 
                 resolve();
             });
         }).then( () => {
-            return this._initSpreadsheetConfig(spreadsheetsRange);
+            return this._initSpreadsheetConnection();
         }).then( () => {
+            return this._initSpreadsheetConfig(spreadsheetsConfig)
+        }).then( (spreadsheetsRange) => {
             return this._prepareSpreadsheetData(spreadsheetsRange);
         });
     }
     
-    _initSpreadsheetConfig(spreadsheetsRange) {
+    _initSpreadsheetConnection() {
         return this.gapi.client.init({
                 apiKey : API_KEY,
                 clientId : CLIENT_ID,
                 discoveryDocs : DISCOVERY_DOCS,
                 scope : SCOPES
         })
+    }
+    
+    _initSpreadsheetConfig(spreadsheetsConfig) {
+        return SPREADSHEET_CONF.SPREADSHEETS_RANGE_TO_LOAD;
     }
     
     _prepareSpreadsheetData(spreadsheetsRange) {
@@ -37,12 +43,8 @@ class GApiSpreadsheetProvider {
         return Promise.all(promises)
                .then( (response) => {
                     response.forEach( (spreadsheet) => {
-                        try {
-                            let spreadsheetResult = spreadsheet.result;
-                            this.gCalSpreadsheet.set(spreadsheetResult.range,  new GCalSpreadsheet(spreadsheetResult));
-                        } catch (e) {
-                            console.log(e);
-                        }
+                        const spreadsheetResult = spreadsheet.result;
+                        this.gCalSpreadsheet.set(spreadsheetResult.range,  new GCalSpreadsheet(spreadsheetResult));
                     });
                     return response;
                });

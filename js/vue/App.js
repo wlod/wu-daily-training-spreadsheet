@@ -16,7 +16,7 @@ class App {
             },
 
             created() {
-                SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {
+                SPREADSHEET_CONF.SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {
                     this.visibleSpreadsheets[spreadsheetName] = true;
                     this.visibleSpreadsheetsPerDay[spreadsheetName] = new Array();
                 });
@@ -24,11 +24,11 @@ class App {
           
             mounted() {
                 const dataProvider = new GApiSpreadsheetProvider(gapi);
-                dataProvider.loadData(SPREADSHEETS_RANGE_TO_LOAD)
+                dataProvider.loadData(SPREADSHEET_CONF.SPREADSHEETS_RANGE_TO_LOAD)
                             .then( () => {
                                     this.spreadsheetsData = dataProvider.dataSpreadsheetsGroupByDates();
                                     this.spreadsheetsData.forEach( (item) => {
-                                        SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {
+                                        SPREADSHEET_CONF.SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {
                                             this.visibleSpreadsheetsPerDay[spreadsheetName][item.day] = true;
                                         });
                                     } );

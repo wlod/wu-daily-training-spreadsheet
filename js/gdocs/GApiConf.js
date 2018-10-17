@@ -15,5 +15,7 @@ const SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 // Public doc: https://docs.google.com/spreadsheets/d/1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8/edit#gid=1777293991
 const SPREADSHEET_ID = "1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8";
 
+const SPREADSHEET_CONFIGURATION = "cfg";
+
 const GOOGLE_DRIVE_HTML_IMG_LINK_PATTERN = "https://drive.google.com/uc?id={{ID}}&export=download"
 const GOOGLE_DRIVE_IMAGE_LINK_PATTERN = /https:\/\/drive.google.com\/file\/d\/(.*?)\/view\?usp=sharing/;
