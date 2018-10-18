@@ -11,11 +11,13 @@ var SPREADSHEET_CONF = {
             });
     },
     
+    /**
+     * This method should be invoke after basic configuration is loaded from external sources - GApiSpreadsheetProvider
+     */
     appendConfiguration: function() {
-        
         // Spreadsheet name and range
         // training
-        this.appendProperty('SPREADSHEET_TRAINING', "trening");
+        /*this.appendProperty('SPREADSHEET_TRAINING', "trening");
         this.appendProperty('SPREADSHEET_TRAINING_RANGE', this.SPREADSHEET_TRAINING + "!A8:Q33");
         
         // diet
@@ -23,7 +25,7 @@ var SPREADSHEET_CONF = {
         this.appendProperty('SPREADSHEET_DIET_RANGE', this.SPREADSHEET_DIET + "!A4:P29");
         
         this.appendProperty('SPREADSHEET_WEIGHT', "waga");
-        this.appendProperty('SPREADSHEET_WEIGHT_RANGE', this.SPREADSHEET_WEIGHT + "!A4:O29");
+        this.appendProperty('SPREADSHEET_WEIGHT_RANGE', this.SPREADSHEET_WEIGHT + "!A4:O29");*/
         
         // columns
         this.appendProperty('TRAINING_TABLE_TENNIS',"tenis stołowy");
@@ -108,5 +110,3 @@ var SPREADSHEET_CONF = {
         this.appendProperty('DEFAULT_LABEL', "other");
     }
 };
-
-SPREADSHEET_CONF.appendConfiguration();

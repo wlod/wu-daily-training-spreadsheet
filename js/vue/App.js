@@ -15,17 +15,15 @@ class App {
                 visibleSpreadsheetsPerDay: new Array(),
             },
 
-            created() {
-                SPREADSHEET_CONF.SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {
-                    this.visibleSpreadsheets[spreadsheetName] = true;
-                    this.visibleSpreadsheetsPerDay[spreadsheetName] = new Array();
-                });
-            },
-          
             mounted() {
                 const dataProvider = new GApiSpreadsheetProvider(gapi);
-                dataProvider.loadData(SPREADSHEET_CONF.SPREADSHEETS_RANGE_TO_LOAD)
+                dataProvider.loadData(SPREADSHEET_CONFIGURATION_APPLY_SPREADSHEATS_RANGE)
                             .then( () => {
+                                    SPREADSHEET_CONF.SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {
+                                        this.visibleSpreadsheets[spreadsheetName] = true;
+                                        this.visibleSpreadsheetsPerDay[spreadsheetName] = new Array();
+                                    });
+                                
                                     this.spreadsheetsData = dataProvider.dataSpreadsheetsGroupByDates();
                                     this.spreadsheetsData.forEach( (item) => {
                                         SPREADSHEET_CONF.SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {

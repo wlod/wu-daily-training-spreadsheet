@@ -15,7 +15,9 @@ class GApiSpreadsheetProvider {
         }).then( () => {
             return this._initSpreadsheetConnection();
         }).then( () => {
-            return this._initSpreadsheetConfig(spreadsheetsConfig)
+            return this._initSpreadsheetDataPromise(spreadsheetsConfig)
+        }).then( (configuration) => {
+            return this._initSpreadsheetConfig(configuration);
         }).then( (spreadsheetsRange) => {
             return this._prepareSpreadsheetData(spreadsheetsRange);
         });
@@ -31,7 +33,16 @@ class GApiSpreadsheetProvider {
     }
     
     _initSpreadsheetConfig(spreadsheetsConfig) {
-        return SPREADSHEET_CONF.SPREADSHEETS_RANGE_TO_LOAD;
+        return new Promise( (resolve, reject) => {
+            spreadsheetsConfig.result.values.forEach( (row) => {
+                if(row.length != 2) {
+                    return;
+                }
+                SPREADSHEET_CONF.appendProperty(row[0], row[1]);
+            });
+            SPREADSHEET_CONF.appendConfiguration();
+            resolve( SPREADSHEET_CONF.SPREADSHEETS_RANGE_TO_LOAD );
+        });
     }
     
     _prepareSpreadsheetData(spreadsheetsRange) {
@@ -40,6 +51,7 @@ class GApiSpreadsheetProvider {
         spreadsheetsRange.forEach( (spreadsheetRange) => {
             promises.push(this._initSpreadsheetDataPromise(spreadsheetRange));
         });
+        
         return Promise.all(promises)
                .then( (response) => {
                     response.forEach( (spreadsheet) => {
