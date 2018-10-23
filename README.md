@@ -27,42 +27,54 @@ DEV:
 
 ### Install on AppEngine
 
-0. Create Google project
+1. Create Google project
 
-1. Hosting a static website on Google App Engine
+2. Hosting a static website on Google App Engine
  
 Use instruction on website "Hosting a static website on Google App Engine":
 - https://cloud.google.com/appengine/docs/standard/python/getting-started/hosting-a-static-website
 
 Example commands on Ubuntu or Windows Ubuntu Bash:
 
-> // Create an environment variable for the correct distribution
-> export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+Create an environment variable for the correct distribution
+```sh
+export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+```
 
-> // Add the Cloud SDK distribution URI as a package source
-> echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+Add the Cloud SDK distribution URI as a package source
+```sh
+echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+```
 
-> Import the Google Cloud public key
-> curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+Import the Google Cloud public key
+```sh
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+```
+Update and install the Cloud SDK:
+```sh
+sudo apt-get update && sudo apt-get install google-cloud-sdk
+```
+Init gcloud - run in project
+```sh
+gcloud init
+```
 
-> // Update and install the Cloud SDK: 
-> sudo apt-get update && sudo apt-get install google-cloud-sdk
+Deploy app or deploy with other path XXX.yaml
+```sh
+gcloud app deploy
+gcloud app deploy XXX.yaml
+```
 
-> // Init gcloud - run in project
-> gcloud init
+Link to web browser
+```sh
+gcloud app browse
+```
 
-> // Deploy app or deploy with other path XXX.yaml
-> gcloud app deploy
-> gcloud app deploy XXX.yaml
+3. Copy Spreadsheet from https://docs.google.com/spreadsheets/d/1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8/edit#gid=1777293991 (for this example it should be public)  
 
-> // Link to web browser
-> gcloud app browse
+4. Clone code by Git or [Download ZIP](https://github.com/wlod/wu-daily-training-spreadsheet/archive/master.zip)
 
-2. Copy Spreadsheet from https://docs.google.com/spreadsheets/d/1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8/edit#gid=1777293991 (for this example it should be public)  
-
-3. Clone code by Git or [Download ZIP](https://github.com/wlod/wu-daily-training-spreadsheet/archive/master.zip)
-
-4. Change settings in js/gdocs/GApiConf.js, below values should be change: 
+5. Change settings in js/gdocs/GApiConf.js, below values should be change: 
 
 - CLIENT_ID
 - API_KEY
