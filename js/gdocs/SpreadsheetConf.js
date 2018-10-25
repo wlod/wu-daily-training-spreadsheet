@@ -15,10 +15,6 @@ var SPREADSHEET_CONF = {
      * This method should be invoke after basic configuration is loaded from external sources - GApiSpreadsheetProvider
      */
     appendConfiguration: function() {
-        // columns
-        this.appendProperty('TRAINING_TABLE_TENNIS',"tenis stołowy");
-        this.appendProperty('TRAINING_SQUASH',"squash");
-        
         // App conf
         this.appendProperty('SPREADSHEETS_TO_LOAD', [this.SPREADSHEET_WEIGHT, this.SPREADSHEET_DIET, this.SPREADSHEET_TRAINING]);
         this.appendProperty('SPREADSHEETS_RANGE_TO_LOAD', [this.SPREADSHEET_WEIGHT_RANGE, this.SPREADSHEET_DIET_RANGE, this.SPREADSHEET_TRAINING_RANGE]);
@@ -41,6 +37,9 @@ var SPREADSHEET_CONF = {
         this.appendProperty('WEIGHT_START_TIME_COLUMN', 2);
         this.appendProperty('WEIGHT_UNIT', "kg");
         this.appendProperty('WEIGHT_VIEW_KEY', "weight");
+        
+        
+        this.appendProperty('TIME_UNIT', "min.");
         
         // HELPERS MAP
         const startTimeColumn = {

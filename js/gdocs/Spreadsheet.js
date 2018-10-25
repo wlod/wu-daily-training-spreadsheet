@@ -156,6 +156,12 @@ class SpreadsheetData {
 	        if(SPREADSHEET_CONF.SPREADSHEET_TRAINING === this.spreadsheetName && startTimeOrDurationRaw !== SPREADSHEET_CONF.SPREADSHEET_CELL_VALUE_EMPTY) {
 	            // TODO move value "duration" to confView
 	            this.viewData["duration"] = startTimeOrDurationRaw;
+	            try {
+	                const startTimeOrDurationRawAsArray = startTimeOrDurationRaw.split("-");
+	                this.viewData["time(min.)"] = SpreadsheetUtils.minutesBetweenHours(startTimeOrDurationRawAsArray[0].trim(), startTimeOrDurationRawAsArray[1].trim());
+                } catch (e) {
+                    console.log(e);
+                }
              }
 	        skipColumns.push(startTimeOrDurationColumn);
         }

@@ -17,7 +17,7 @@ const SPREADSHEET_ID = "1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8";
 
 // Configuration
 const SPREADSHEET_CONFIGURATION = "cfg";
-const SPREADSHEET_CONFIGURATION_APPLY_SPREADSHEATS_RANGE = [SPREADSHEET_CONFIGURATION + "!A2:B26"]; // related with GCalSpreadsheet.columnRange -1 for cfg
+const SPREADSHEET_CONFIGURATION_APPLY_SPREADSHEATS_RANGE = [SPREADSHEET_CONFIGURATION + "!A2:B1000"];
 
 const GOOGLE_DRIVE_HTML_IMG_LINK_PATTERN = "https://drive.google.com/uc?id={{ID}}&export=download"
 const GOOGLE_DRIVE_IMAGE_LINK_PATTERN = /https:\/\/drive.google.com\/file\/d\/(.*?)\/view\?usp=sharing/;

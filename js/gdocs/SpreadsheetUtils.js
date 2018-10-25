@@ -11,6 +11,7 @@ class SpreadsheetUtils {
     static prepareDaySummary(day, activities) {
         let mealsCount = 0;
         let trainingCount = 0;
+        let trainingTime = 0;
         let minWeight = 0;
         let maxWeight = 0;
         
@@ -26,6 +27,7 @@ class SpreadsheetUtils {
             
             if(SPREADSHEET_CONF.SPREADSHEET_TRAINING === activity.spreadsheetName) {
                 trainingCount++;
+                trainingTime += activity.viewData["time(min.)"];
                 return;
             }
             
@@ -43,6 +45,7 @@ class SpreadsheetUtils {
         return {
             "meals": mealsCount,
             "training" : trainingCount,
+            "trainingTime" : trainingTime + SPREADSHEET_CONF.TIME_UNIT,
             "minWeight": minWeight + SPREADSHEET_CONF.WEIGHT_UNIT,
             "maxWeight": maxWeight + SPREADSHEET_CONF.WEIGHT_UNIT,
         }
@@ -73,6 +76,13 @@ class SpreadsheetUtils {
             }
             
         })
+    }
+    
+    static minutesBetweenHours(startHour, endHour) {
+        const startDate = new Date('2000/01/01 ' + startHour); 
+        const endDate = new Date('2000/01/01 ' + endHour);
+        const diff = endDate.getTime() - startDate.getTime();
+        return (diff / 60000);
     }
     
 }
