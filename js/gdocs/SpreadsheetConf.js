@@ -12,15 +12,15 @@ var SPREADSHEET_CONF = {
     },
     
     /**
-     * This method should be invoke after basic configuration is loaded from external sources - GApiSpreadsheetProvider
+     * This method should be invoke after technical configuration is loaded from external sources - GApiSpreadsheetProvider
      */
     appendConfiguration: function() {
         // App conf
-        this.appendProperty('SPREADSHEETS_TO_LOAD', [this.SPREADSHEET_WEIGHT, this.SPREADSHEET_DIET, this.SPREADSHEET_TRAINING]);
-        this.appendProperty('SPREADSHEETS_RANGE_TO_LOAD', [this.SPREADSHEET_WEIGHT_RANGE, this.SPREADSHEET_DIET_RANGE, this.SPREADSHEET_TRAINING_RANGE]);
-
+        // TODO  split load configuration to two steps: technical and business data. Currently can't use SPREADSHEET_CELL_* to load 'cfg' spreadsheet
         this.appendProperty('SPREADSHEET_CELL_VALUE_DELIMITER', "~");
         this.appendProperty('SPREADSHEET_CELL_VALUE_EMPTY', "-");
+        this.appendProperty('SPREADSHEET_CELL_MULTIDATA_DELIMITER', "\n");
+        
         this.appendProperty('SPREADSHEETS_SUPPORT_START_TIME', [this.SPREADSHEET_TRAINING, this.SPREADSHEET_DIET, this.SPREADSHEET_WEIGHT]);
 
         // For now for all spreadsheet

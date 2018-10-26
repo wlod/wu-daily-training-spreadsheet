@@ -183,7 +183,7 @@ class SpreadsheetData {
                 continue;
             }
             
-            const multiData = this.rawDataAsArray[i].split('\n');
+            const multiData = this.rawDataAsArray[i].split(SPREADSHEET_CONF.SPREADSHEET_CELL_MULTIDATA_DELIMITER);
             for(let j = 0; j < multiData.length; j++) {
                 labelIndex++;
                 if(typeof multiData[j] === 'undefined' || SPREADSHEET_CONF.SPREADSHEET_CELL_VALUE_EMPTY === multiData[j]) {

@@ -38,7 +38,16 @@ class GApiSpreadsheetProvider {
                 if(row.length != 2) {
                     return;
                 }
-                SPREADSHEET_CONF.appendProperty(row[0], row[1]);
+                if(row[0].startsWith("#") || row[1].startsWith("#")) {
+                    console.log(row);
+                    return;
+                }
+                
+                let value = row[1];
+                if(row[1].includes('\n')) {
+                    value = row[1].split('\n');
+                }
+                SPREADSHEET_CONF.appendProperty(row[0], value);
             });
             SPREADSHEET_CONF.appendConfiguration();
             resolve( SPREADSHEET_CONF.SPREADSHEETS_RANGE_TO_LOAD );
