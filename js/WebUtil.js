@@ -26,30 +26,6 @@ class WebUtil {
     }
     
     /**
-     * Add js files to end of head tag in index.hml
-     * Append Views library to each images with '.image-trigger' selector
-     */
-    static appendViewsToImage() {
-        return new Promise( (resolve, reject) => {
-            
-            WebUtil.appendScriptToDOM('js/vendors/lazysizes.min.js');
-            WebUtil.appendScriptToDOM('js/vendors/ls.attrchange.min.js');
-            
-            const triggers = document.querySelectorAll('.image-trigger');
-            triggers.forEach( (img) => {
-                new Views(img, {
-                    defaultTheme: true,
-                    prefix: 'light',
-                    loader: 'Loading...',
-                    anywhereToClose: true,
-                    openAnimationDuration: 400,
-                    closeAnimationDuration: 400
-                });
-            });
-        });
-    }
-    
-    /**
      * Append js script file to DOM
      */
     static appendScriptToDOM(path){
@@ -70,4 +46,26 @@ class WebUtil {
         }
         return false;
     }
+    
+    /**
+     * Waiting to load DOM element by selector.
+     * Default value for attempt is 5. Other parameters should be set directly.
+     */
+    static waitForDomElement(selector, time, func, attempt) {
+        let inAttempt = (typeof attempt !== "undefined" && attempt !== null) ? attempt : 5;
+        let loadedElement = document.querySelector(selector);
+        if(loadedElement !== null) {
+            func(loadedElement);
+            return;
+        }
+        else if (inAttempt < 0) {
+            console.error("Cannot load element: " + selector);
+            return;
+        }
+        else {
+            inAttempt -= 1;
+            setTimeout(() => { WebUtil.waitForDomElement(selector, time, func, inAttempt); }, time);
+        }
+    }
+    
 }

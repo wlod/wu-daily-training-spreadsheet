@@ -35,7 +35,7 @@ class App {
                                 if(WebUtil.isDevOptionIsOn("noimage") === true) {
                                     return;
                                 }
-                                WebUtil.appendViewsToImage();
+                                ExtViews.appendViewsToImage();
                             });
             },
           
