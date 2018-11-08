@@ -11,16 +11,31 @@ var SPREADSHEET_CONF = {
             });
     },
     
+    
+    appendPropertyFromRow: function(row) {
+        if(row.length != 2) {
+            return;
+        }
+        if(row[0].startsWith("#") || row[1].startsWith("#")) {
+            console.log(row);
+            return;
+        }
+        
+        let value = row[1];
+        if(row[1].includes('\n')) {
+            value = row[1].split('\n');
+        }
+        console.log("Invoke with row " + row[0] + " value: " + value);
+        this.appendProperty(row[0], value);
+    },
+    
     /**
      * This method should be invoke after technical configuration is loaded from external sources - GApiSpreadsheetProvider
      */
     appendConfiguration: function() {
-        // App conf
-        // TODO  split load configuration to two steps: technical and business data. Currently can't use SPREADSHEET_CELL_* to load 'cfg' spreadsheet
-        this.appendProperty('SPREADSHEET_CELL_VALUE_DELIMITER', "~");
-        this.appendProperty('SPREADSHEET_CELL_VALUE_EMPTY', "-");
         this.appendProperty('SPREADSHEET_CELL_MULTIDATA_DELIMITER', "\n");
         
+        // App conf
         this.appendProperty('SPREADSHEETS_SUPPORT_START_TIME', [this.SPREADSHEET_TRAINING, this.SPREADSHEET_DIET, this.SPREADSHEET_WEIGHT]);
 
         // For now for all spreadsheet

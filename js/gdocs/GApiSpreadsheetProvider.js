@@ -7,13 +7,17 @@ class GApiSpreadsheetProvider {
         this.gCalSpreadsheet = new Map();
       }
     
-    loadData(spreadsheetsConfig) {
+    loadData(applicationConfig, spreadsheetsConfig) {
         return new Promise( (resolve, reject) => {
             this.gapi.load('client:auth2', () => { 
                 resolve();
             });
         }).then( () => {
             return this._initSpreadsheetConnection();
+        }).then( () => {
+            return this._initSpreadsheetDataPromise(applicationConfig)
+        }).then( (configuration) => {
+            return this._initAppConfig(configuration);
         }).then( () => {
             return this._initSpreadsheetDataPromise(spreadsheetsConfig)
         }).then( (configuration) => {
@@ -32,22 +36,19 @@ class GApiSpreadsheetProvider {
         })
     }
     
+    _initAppConfig(appConfig) {
+        return new Promise( (resolve, reject) => {
+            appConfig.result.values.forEach( (row) => {
+                SPREADSHEET_CONF.appendPropertyFromRow(row);
+            });
+            resolve();
+        });
+    }
+    
     _initSpreadsheetConfig(spreadsheetsConfig) {
         return new Promise( (resolve, reject) => {
             spreadsheetsConfig.result.values.forEach( (row) => {
-                if(row.length != 2) {
-                    return;
-                }
-                if(row[0].startsWith("#") || row[1].startsWith("#")) {
-                    console.log(row);
-                    return;
-                }
-                
-                let value = row[1];
-                if(row[1].includes('\n')) {
-                    value = row[1].split('\n');
-                }
-                SPREADSHEET_CONF.appendProperty(row[0], value);
+                SPREADSHEET_CONF.appendPropertyFromRow(row);
             });
             SPREADSHEET_CONF.appendConfiguration();
             resolve( SPREADSHEET_CONF.SPREADSHEETS_RANGE_TO_LOAD );
