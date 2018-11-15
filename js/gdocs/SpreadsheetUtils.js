@@ -32,7 +32,7 @@ class SpreadsheetUtils {
             }
             
             if(SPREADSHEET_CONF.SPREADSHEET_WEIGHT === activity.spreadsheetName) {
-                let weightRawValue = activity.viewData[SPREADSHEET_CONF.WEIGHT_VIEW_KEY].replace(SPREADSHEET_CONF.WEIGHT_UNIT, "");
+                let weightRawValue = activity.viewData[WEIGHT_VIEW_KEY].replace(SPREADSHEET_CONF[LABELS_KEY]['WEIGHT_UNIT'], "");
                 if(minWeight > weightRawValue || minWeight === 0) {
                     minWeight = weightRawValue;
                 }
@@ -45,9 +45,9 @@ class SpreadsheetUtils {
         return {
             "meals": mealsCount,
             "training" : trainingCount,
-            "trainingTime" : trainingTime + SPREADSHEET_CONF.TIME_UNIT,
-            "minWeight": minWeight + SPREADSHEET_CONF.WEIGHT_UNIT,
-            "maxWeight": maxWeight + SPREADSHEET_CONF.WEIGHT_UNIT,
+            "trainingTime" : trainingTime + SPREADSHEET_CONF[LABELS_KEY]['TIME_UNIT'],
+            "minWeight": minWeight + SPREADSHEET_CONF[LABELS_KEY]['WEIGHT_UNIT'],
+            "maxWeight": maxWeight + SPREADSHEET_CONF[LABELS_KEY]['WEIGHT_UNIT'],
         }
     }
     

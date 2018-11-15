@@ -5,6 +5,7 @@ class ExtViews {
      * Append Views library to each images with '.image-trigger' selector
      * Append navigation to Views library by viewer.on('open'... and viewer.on('close',...
      */
+    // TODO move 'copy' to configuration
     static appendViewsToImage() {
         return new Promise( (resolve, reject) => {
             

@@ -7,7 +7,8 @@ class GApiSpreadsheetProvider {
         this.gCalSpreadsheet = new Map();
       }
     
-    loadData(applicationConfig, spreadsheetsConfig) {
+    // TODO labelsConfig and spreadsheetsConfig should be get by parallel call
+    loadData(applicationConfig, labelsConfig, spreadsheetsConfig) {
         return new Promise( (resolve, reject) => {
             this.gapi.load('client:auth2', () => { 
                 resolve();
@@ -18,6 +19,10 @@ class GApiSpreadsheetProvider {
             return this._initSpreadsheetDataPromise(applicationConfig)
         }).then( (configuration) => {
             return this._initAppConfig(configuration);
+        }).then( () => {
+            return this._initSpreadsheetDataPromise(labelsConfig)
+        }).then( (configuration) => {
+            return this._initLabelConfig(configuration);
         }).then( () => {
             return this._initSpreadsheetDataPromise(spreadsheetsConfig)
         }).then( (configuration) => {
@@ -40,6 +45,15 @@ class GApiSpreadsheetProvider {
         return new Promise( (resolve, reject) => {
             appConfig.result.values.forEach( (row) => {
                 SPREADSHEET_CONF.appendPropertyFromRow(row);
+            });
+            resolve();
+        });
+    }
+    
+    _initLabelConfig(labelConfig) {
+        return new Promise( (resolve, reject) => {
+            labelConfig.result.values.forEach( (row) => {
+                SPREADSHEET_CONF.appendPropertyFromRow(row, LABELS_KEY);
             });
             resolve();
         });

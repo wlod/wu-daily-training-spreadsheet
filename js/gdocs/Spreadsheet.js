@@ -168,12 +168,10 @@ class SpreadsheetData {
 	    
 	    // TODO move hmm to confView
 	    if(SPREADSHEET_CONF.SPREADSHEET_WEIGHT === this.spreadsheetName) {
-	        this.viewData[SPREADSHEET_CONF.WEIGHT_VIEW_KEY] = this.rawDataAsArray[0];
+	        this.viewData[WEIGHT_VIEW_KEY] = this.rawDataAsArray[0];
 	        skipColumns.push(0);
 	    }
-	    
-            
-	    const labelNames = SPREADSHEET_CONF.LABELS_OTHERS[this.name];
+	    const labelNames = SPREADSHEET_CONF[LABELS_KEY][this.name];
 	    let labelIndex = -1;
         for(let i = 0; i < this.rawDataAsArray.length; i++) {
             if(skipColumns.indexOf(i) !== -1) {
@@ -183,19 +181,19 @@ class SpreadsheetData {
                 continue;
             }
             
-            const multiData = this.rawDataAsArray[i].split(SPREADSHEET_CONF.SPREADSHEET_CELL_MULTIDATA_DELIMITER);
+            const multiData = this.rawDataAsArray[i].split(SPREADSHEET_CELL_MULTIDATA_DELIMITER);
             for(let j = 0; j < multiData.length; j++) {
                 labelIndex++;
                 if(typeof multiData[j] === 'undefined' || SPREADSHEET_CONF.SPREADSHEET_CELL_VALUE_EMPTY === multiData[j]) {
                     continue;
                 }
                 
-                let labelName = SPREADSHEET_CONF.DEFAULT_LABEL + "(" + labelIndex + ")";
+                let labelName = SPREADSHEET_CONF[LABELS_KEY]['DEFAULT_LABEL'] + "(" + labelIndex + ")";
                 if(typeof labelNames !== "undefined" && typeof labelNames[ labelIndex ] !== "undefined") {
                     labelName = labelNames[ labelIndex ];
                 }
                 
-                if(SPREADSHEET_CONF.PICTURE_LABEL === labelName) {
+                if(SPREADSHEET_CONF[LABELS_KEY]['PICTURE_LABEL'] === labelName) {
                     multiData[j] = SpreadsheetData._prepareImageUrls(multiData[j]);
                 }
                 
