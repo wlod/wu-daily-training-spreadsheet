@@ -17,8 +17,10 @@ const SPREADSHEET_ID = "1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8";
 
 // Configuration
 const APP_CONFIGURATION_SPREADSHEET = ["cfg!D2:E1000"];
-const LABEL_CONFIGURATION_SPREADSHEET = ["cfg!G2:H1000"];
 const RANGE_CONFIGURATION_SPREADSHEET = ["cfg!A2:B1000"];
+const LABEL_CONFIGURATION_SPREADSHEET = ["cfg!G2:H1000"];
+const ICON_CONFIGURATION_SPREADSHEET = ["cfg!J2:K1000"];
+
 
 
 const GOOGLE_DRIVE_HTML_IMG_LINK_PATTERN = "https://drive.google.com/uc?id={{ID}}&export=download"
@@ -31,3 +33,4 @@ const SPREADSHEET_CELL_KEY_VALUE_DELIMITER = ":";
 
 const WEIGHT_VIEW_KEY = "weight";
 const LABELS_KEY = "labels";
+const ICONS_KEY = "icons";

@@ -130,7 +130,7 @@ class SpreadsheetData {
 	}
 	
 	_initIcons() {
-	    this.itemTitleIcon = SPREADSHEET_CONF.ICONS[this.name];
+	    this.itemTitleIcon = SPREADSHEET_CONF[ICONS_KEY][this.name];
 	    if(typeof this.itemTitleIcon === "undefined") {
 	        this.itemTitleIcon = SPREADSHEET_CONF.DEFAULT_ICON;  
 	    }

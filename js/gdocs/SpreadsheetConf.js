@@ -1,4 +1,3 @@
-// TODO: following configuration should be in the spreadsheet
 var SPREADSHEET_CONF = {
                 
     appendProperty: function(name, value) {
@@ -70,33 +69,6 @@ var SPREADSHEET_CONF = {
             [this.SPREADSHEET_WEIGHT] : (this.WEIGHT_START_TIME_COLUMN - 1)
         }
         this.appendProperty('START_TIME_COLUMN', startTimeColumn);
-        
-        
-        // ICONS
-        const icons = {
-            "sniadanie" : "free_breakfast",
-            "drugie sniadanie" : "fastfood",
-            "obiad" : "room_service",
-            "podwieczorek" : "fastfood",
-            "kolacja" : "restaurant_menu",
-            "Ważenie I" : "accessibility",
-            "Ważenie II" : "accessibility",
-            "Ważenie III" : "accessibility",
-            "Ważenie IV" : "accessibility",
-            "Ważenie V" : "accessibility",
-            "Ważenie VI" : "accessibility",
-            "Ważenie VII" : "accessibility",
-            "spacer I" : "directions_run",
-            "spacer II" : "directions_run",
-            "spacer III" : "directions_run",
-            "basen" : "pool",
-            "siłownia" : "fitness_center",
-            [this.TRAINING_SQUASH] : "toll",
-            [this.TRAINING_TABLE_TENNIS] : "toll",
-            "drzemka" : "local_hotel"
-        }
-        this.appendProperty('ICONS', icons);
-        this.appendProperty('DEFAULT_ICON', "warning");
-        
     }
+    
 };

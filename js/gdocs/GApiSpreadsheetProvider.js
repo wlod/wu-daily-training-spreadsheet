@@ -7,8 +7,8 @@ class GApiSpreadsheetProvider {
         this.gCalSpreadsheet = new Map();
       }
     
-    // TODO labelsConfig and spreadsheetsConfig should be get by parallel call
-    loadData(applicationConfig, labelsConfig, spreadsheetsConfig) {
+    // TODO labelsConfig and iconsConfig and spreadsheetsConfig should be get by parallel call
+    loadData(applicationConfig, labelsConfig, iconsConfig, spreadsheetsConfig) {
         return new Promise( (resolve, reject) => {
             this.gapi.load('client:auth2', () => { 
                 resolve();
@@ -22,7 +22,11 @@ class GApiSpreadsheetProvider {
         }).then( () => {
             return this._initSpreadsheetDataPromise(labelsConfig)
         }).then( (configuration) => {
-            return this._initLabelConfig(configuration);
+            return this._initConfigForParent(configuration, LABELS_KEY);
+        }).then( () => {
+            return this._initSpreadsheetDataPromise(iconsConfig)
+        }).then( (configuration) => {
+            return this._initConfigForParent(configuration, ICONS_KEY);
         }).then( () => {
             return this._initSpreadsheetDataPromise(spreadsheetsConfig)
         }).then( (configuration) => {
@@ -42,18 +46,13 @@ class GApiSpreadsheetProvider {
     }
     
     _initAppConfig(appConfig) {
-        return new Promise( (resolve, reject) => {
-            appConfig.result.values.forEach( (row) => {
-                SPREADSHEET_CONF.appendPropertyFromRow(row);
-            });
-            resolve();
-        });
+        return this._initConfigForParent(appConfig);
     }
     
-    _initLabelConfig(labelConfig) {
+    _initConfigForParent(config, parentConfig) {
         return new Promise( (resolve, reject) => {
-            labelConfig.result.values.forEach( (row) => {
-                SPREADSHEET_CONF.appendPropertyFromRow(row, LABELS_KEY);
+            config.result.values.forEach( (row) => {
+                SPREADSHEET_CONF.appendPropertyFromRow(row, parentConfig);
             });
             resolve();
         });

@@ -17,7 +17,8 @@ JS Libraries:
 
 CSS:
 
-- Icons & font from Google (Material+Icons, Roboto)
+- Material Icons (https://material.io/tools/icons/?style=baseline)
+- Font from Google (https://fonts.google.com/specimen/Roboto)
 
 DEV:
 
