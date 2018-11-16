@@ -190,7 +190,7 @@ class SpreadsheetData {
                 
                 let labelName = SPREADSHEET_CONF[LABELS_KEY]['DEFAULT_LABEL'] + "(" + labelIndex + ")";
                 if(typeof labelNames !== "undefined" && typeof labelNames[ labelIndex ] !== "undefined") {
-                    labelName = labelNames[ labelIndex ];
+                    labelName = typeof labelNames === "string" ? labelNames : labelNames[ labelIndex ];
                 }
                 
                 if(SPREADSHEET_CONF[LABELS_KEY]['PICTURE_LABEL'] === labelName) {
