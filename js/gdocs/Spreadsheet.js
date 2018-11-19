@@ -202,10 +202,10 @@ class SpreadsheetData {
         }
 	}
 	
-	// TODO
 	static _prepareImageUrls(rawImageUrls) {
-	    let preparedImageUrls = new Array();
+	    const preparedImageUrls = new Array();
 	    const rawImageUrlsAsArray = rawImageUrls.split(";")
+	    
 	    for (let i = 0; i < rawImageUrlsAsArray.length; i++) {
 	        try {
 	            let rawImageUrl = rawImageUrlsAsArray[i].trim();
@@ -214,8 +214,8 @@ class SpreadsheetData {
 	                continue;
 	            }
 	            
-	            let imageId = rawImageUrl.match(GOOGLE_DRIVE_IMAGE_LINK_PATTERN)[1];
-	            let imageToView = GOOGLE_DRIVE_HTML_IMG_LINK_PATTERN.replace("{{ID}}", imageId);
+	            const imageId = rawImageUrl.match(GOOGLE_DRIVE_IMAGE_LINK_PATTERN)[1];
+	            const imageToView = GOOGLE_DRIVE_HTML_IMG_LINK_PATTERN.replace("{{ID}}", imageId);
 	            preparedImageUrls.push( imageToView );
             } catch (e) {
                 console.warn(rawImageUrlsAsArray.length + " - " + rawImageUrlsAsArray);

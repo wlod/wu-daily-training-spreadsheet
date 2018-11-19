@@ -1,4 +1,4 @@
-var SPREADSHEET_CONF = {
+const SPREADSHEET_CONF = {
                 
     appendProperty: function(name, value) {
         Object.defineProperty(this, name,
@@ -10,58 +10,51 @@ var SPREADSHEET_CONF = {
             });
     },
     
-    // TODO please
-    appendPropertyFromRow: function(row, propertiesParent) {
-        if(row.length != 2) {
+    appendPropertyFromRow: function(rowPropertyKeyValue, propertiesParent) {
+        if(rowPropertyKeyValue.length != 2) {
             return;
         }
-        if(row[0].startsWith(SPREADSHEET_CELL_MULTIDATA_COMMENT) || row[1].startsWith(SPREADSHEET_CELL_MULTIDATA_COMMENT)) {
+        if(rowPropertyKeyValue[0].startsWith(SPREADSHEET_CELL_MULTIDATA_COMMENT) || rowPropertyKeyValue[1].startsWith(SPREADSHEET_CELL_MULTIDATA_COMMENT)) {
             return;
         }
         
-        let propertyName = row[0];
-        let propertyKey = null;
-        let isObject = false;
-        let indexValue = 1;
+        const propertyName = rowPropertyKeyValue[0];
+        const propertyValue = this._getSingleOrMultiValue( rowPropertyKeyValue[1] );
         
         if(typeof propertiesParent !== "undefined" && propertiesParent !== null) {
-            isObject = true;
-            propertyKey = propertyName;
-            propertyName = propertiesParent;
+            this.appendObjectProperty(propertiesParent, propertyName, propertyValue);
         }
-        
-        let value = row[indexValue];
-        
-        let isArray = false;
-        if(row[indexValue].includes(SPREADSHEET_CELL_MULTIDATA_DELIMITER)) {
-            value = row[indexValue].split(SPREADSHEET_CELL_MULTIDATA_DELIMITER);
-            isArray = true;
+        else {
+            this.appendPrimitiveProperty(propertyName, propertyValue);
         }
-        
-        if(typeof SPREADSHEET_CONF[propertyName] === 'undefined') {
-            if(isObject) {
-                const objectValue = { [propertyKey] : value };
-                this.appendProperty(propertyName,  objectValue);
-            }
-            else {
-                this.appendProperty(propertyName, value);
-            }
-            return;
+    },
+    
+    appendObjectProperty: function(propertiesParent, propertyKey, propertyValue) {
+        if(typeof SPREADSHEET_CONF[propertiesParent] === 'undefined') {
+            const objectValue = { [propertyKey] : propertyValue };
+            this.appendProperty(propertiesParent,  objectValue);
         }
-        
-        if(typeof SPREADSHEET_CONF[propertyName] === 'object') {
-            const currentValue = SPREADSHEET_CONF[propertyName];
-            currentValue[propertyKey] = value;
-            return;
+        else if(typeof SPREADSHEET_CONF[propertiesParent] === 'object') {
+            const currentValue = SPREADSHEET_CONF[propertiesParent];
+            currentValue[propertyKey] = propertyValue;
         }
+    },
+    
+    appendPrimitiveProperty: function( propertyName, propertyValue ) {
+        this.appendProperty(propertyName, propertyValue);
+    },
+    
+    _getSingleOrMultiValue(rawPropertyValue) {
+        if(rawPropertyValue.includes(SPREADSHEET_CELL_MULTIDATA_DELIMITER)) {
+            return rawPropertyValue.split(SPREADSHEET_CELL_MULTIDATA_DELIMITER);
+        }
+        return rawPropertyValue;
     },
     
     /**
      * This method should be invoke after technical configuration is loaded from external sources - GApiSpreadsheetProvider
      */
     appendConfiguration: function() {
-        // App conf
-        
         // HELPERS MAP
         const startTimeColumn = {
             [this.SPREADSHEET_TRAINING] : (this.TRAINING_DURATION_COLUMN - 1),
@@ -70,5 +63,4 @@ var SPREADSHEET_CONF = {
         }
         this.appendProperty('START_TIME_COLUMN', startTimeColumn);
     }
-    
 };
