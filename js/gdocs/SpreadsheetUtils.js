@@ -1,13 +1,5 @@
 class SpreadsheetUtils {
     
-    
-    static removeDataWihoutStartTime(spreadsheetsOrderByDate) {
-        return spreadsheetsOrderByDate.filter(function( obj ) {
-            let a = obj.startTime;
-            return typeof a !== "undefined" && a !== null;
-        });
-    }
-    
     static prepareDaySummary(day, activities) {
         let mealsCount = 0;
         let trainingCount = 0;
@@ -16,7 +8,7 @@ class SpreadsheetUtils {
         let maxWeight = 0;
         
         activities.forEach( (activity) => {
-            if(activity.startTime === null) {
+            if(typeof activity.startTime === "undefined" || activity.startTime === null) {
                 return;
             }
             
@@ -56,15 +48,15 @@ class SpreadsheetUtils {
      */
     static sortByStartTime(spreadsheetsOrderByDate) {
         spreadsheetsOrderByDate.sort(function(obj1, obj2) {
-            let a = obj1.startTime;
-            let b = obj2.startTime;
-            if( (typeof a === "undefined" || a === null) && (typeof b === "undefined" || b === null) ) {
+            let a = typeof obj1.startTime === "undefined" ? null : obj1.startTime;
+            let b = typeof obj2.startTime === "undefined" ? null : obj2.startTime;
+            if( a === null && b === null ) {
                 return 0;
             }
-            if( (typeof a === "undefined" || a === null) ) {
+            if( a === null ) {
                 return -1;
             }
-            if( (typeof b === "undefined" || b === null) ) {
+            if( b === null ) {
                 return 1;
             }
             let checkHours = parseInt(a.split(":")[0]) - parseInt(b.split(":")[0]);

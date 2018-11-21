@@ -45,9 +45,9 @@
 
         <div style="margin-bottom: 25px;">
             Shows on all days:
-            <label><input type="checkbox" @click="filterBySpreadsheetName( 'trening' )" v-model="visibleSpreadsheets['trening']">'Trening' spreadsheet</label>
-            <label><input type="checkbox" @click="filterBySpreadsheetName( 'dieta' )" v-model="visibleSpreadsheets['dieta']">'Dieta' spreadsheet</label>
-            <label><input type="checkbox" @click="filterBySpreadsheetName( 'waga' )" v-model="visibleSpreadsheets['waga']">'Waga' spreadsheet</label>
+            <label v-for="spreadsheet in spreadsheets">
+              <input type="checkbox" @click="filterBySpreadsheetName( spreadsheet )" v-model="visibleSpreadsheets[ spreadsheet ]">'{{ spreadsheet }}' spreadsheet
+            </label>
         </div>
 
         <div v-for="(item, key) in spreadsheetsData" class="day-container">
@@ -70,14 +70,14 @@
             <div class="item-list-container">
                <div class="item-list-filter">
                     Show:
-                    <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'trening' )" v-model="visibleSpreadsheetsPerDay['trening'][item.day]">'Trening' spreadsheet</label>
-                    <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'dieta' )" v-model="visibleSpreadsheetsPerDay['dieta'][item.day]">'Dieta' spreadsheet</label>
-                    <label><input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, 'waga' )" v-model="visibleSpreadsheetsPerDay['waga'][item.day]">'Waga' spreadsheet</label>
+                    <label v-for="spreadsheet in spreadsheets">
+                        <input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, spreadsheet )" v-model="visibleSpreadsheetsPerDay[spreadsheet][item.day]">'{{ spreadsheet }}' spreadsheet
+                    </label>
                 </div>
                
                <ul class="item-list">
    
-                   <li class="item" v-for="spreadsheetData in item.activities" v-if="spreadsheetData.startTime !== null && spreadsheetData.isVisible === true">
+                   <li class="item" v-for="spreadsheetData in item.activities" v-if="spreadsheetData.containsStartTime === true && spreadsheetData.isVisible === true">
                        <div class="item-title">
                            <i class="material-icons md-36 item-title-icon">{{ spreadsheetData.itemTitleIcon }}</i>
                            <span class="item-title-text">{{ spreadsheetData.startTime }}</span>

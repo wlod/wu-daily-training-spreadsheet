@@ -13,6 +13,7 @@ class App {
                 
                 visibleSpreadsheets: new Array(),
                 visibleSpreadsheetsPerDay: new Array(),
+                spreadsheets: new Array(),
             },
 
             mounted() {
@@ -22,6 +23,7 @@ class App {
                                     SPREADSHEET_CONF.SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {
                                         this.visibleSpreadsheets[spreadsheetName] = true;
                                         this.visibleSpreadsheetsPerDay[spreadsheetName] = new Array();
+                                        this.spreadsheets.push(spreadsheetName);
                                     });
                                 
                                     this.spreadsheetsData = dataProvider.dataSpreadsheetsGroupByDates();

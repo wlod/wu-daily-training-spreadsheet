@@ -97,6 +97,7 @@ class SpreadsheetData {
 		this.rawDataAsArray = rawDataAsArray;
 		this.spreadsheetName = spreadsheetName;
 		this.isVisible = true;
+		this.containsStartTime = false;
 		
 		this._initStartTime();
 		this._initIcons();
@@ -106,13 +107,10 @@ class SpreadsheetData {
 	// TODO split 
 	_initStartTime() {
 	    if(SPREADSHEET_CONF.SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
-	        this.startTime = null;
-	        
 	        const startTimeOrDurationColumn = SPREADSHEET_CONF.START_TIME_COLUMN[this.spreadsheetName];
 	        let startTimeOrDurationRaw = this.rawDataAsArray[startTimeOrDurationColumn];
 	        
-	        if(typeof startTimeOrDurationRaw === "undefined" ||
-	           startTimeOrDurationRaw === SPREADSHEET_CONF.SPREADSHEET_CELL_VALUE_EMPTY) {
+	        if(typeof startTimeOrDurationRaw === "undefined" || startTimeOrDurationRaw === SPREADSHEET_CONF.SPREADSHEET_CELL_VALUE_EMPTY) {
 	            return;
 	        }
 	        
@@ -126,6 +124,7 @@ class SpreadsheetData {
 	        
 	        // remove weight marker 'b' from pool
 	        this.startTime = startTimeOrDurationRaw.replace('b','');
+	        this.containsStartTime = true;
 	    }
 	}
 	
@@ -208,7 +207,7 @@ class SpreadsheetData {
 	    
 	    for (let i = 0; i < rawImageUrlsAsArray.length; i++) {
 	        try {
-	            let rawImageUrl = rawImageUrlsAsArray[i].trim();
+	            const rawImageUrl = rawImageUrlsAsArray[i].trim();
 	            
 	            if(!rawImageUrl) {
 	                continue;
