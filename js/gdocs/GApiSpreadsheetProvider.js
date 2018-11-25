@@ -5,10 +5,9 @@ class GApiSpreadsheetProvider {
     constructor(gapi) {
         this.gapi = gapi;
         this.gCalSpreadsheet = new Map();
-      }
+    }
     
-    // TODO labelsConfig and iconsConfig and spreadsheetsConfig should be get by parallel call
-    loadData(applicationConfig, labelsConfig, iconsConfig, spreadsheetsConfig) {
+    loadData(loadApplicationConfig, loadContentConfig) {
         return new Promise( (resolve, reject) => {
             this.gapi.load('client:auth2', () => { 
                 resolve();
@@ -16,23 +15,50 @@ class GApiSpreadsheetProvider {
         }).then( () => {
             return this._initSpreadsheetConnection();
         }).then( () => {
-            return this._initSpreadsheetDataPromise(applicationConfig)
-        }).then( (configuration) => {
-            return this._initAppConfig(configuration);
+            // Load application configuration from spreadsheets
+            const promises = new Array();
+            loadApplicationConfig.forEach( (spreadsheetConfig) => {
+                promises.push(this._initSpreadsheetDataPromise(spreadsheetConfig.spreadsheet));
+            });
+            
+            return Promise.all(promises);
+            
+        }).then( (applicationConfigurations) => {
+            // Apply application configuration
+            const promises = new Array();
+            applicationConfigurations.forEach( (loadedSpreadsheet) => {
+                promises.push(this._initConfig(loadedSpreadsheet));
+            });
+            
+            return Promise.all(promises);
+            
         }).then( () => {
-            return this._initSpreadsheetDataPromise(labelsConfig)
-        }).then( (configuration) => {
-            return this._initConfigForParent(configuration, LABELS_KEY);
+            // Load content configuration from spreadsheets
+            const promises = new Array();
+            loadContentConfig.forEach( (spreadsheetConfig) => {
+                promises.push(this._initSpreadsheetDataPromise(spreadsheetConfig.spreadsheet));
+            });
+            
+            return Promise.all(promises);
+        
+        }).then( (contentConfigurations) => {
+            // Apply content configuration
+            const promises = new Array();
+            contentConfigurations.forEach( (loadedSpreadsheet) => {
+                let parentConfig;
+                loadContentConfig.forEach( (loadContentConfig) => {
+                    if(typeof loadContentConfig.parent !== "undefined" && loadContentConfig.spreadsheet === loadedSpreadsheet.result.range) {
+                        parentConfig = loadContentConfig.parent;
+                        return;
+                    }
+                });
+                promises.push(this._initConfig(loadedSpreadsheet, parentConfig));
+            });
+            
+            return Promise.all(promises);
+            
         }).then( () => {
-            return this._initSpreadsheetDataPromise(iconsConfig)
-        }).then( (configuration) => {
-            return this._initConfigForParent(configuration, ICONS_KEY);
-        }).then( () => {
-            return this._initSpreadsheetDataPromise(spreadsheetsConfig)
-        }).then( (configuration) => {
-            return this._initSpreadsheetConfig(configuration);
-        }).then( (spreadsheetsRange) => {
-            return this._prepareSpreadsheetData(spreadsheetsRange);
+            return this._prepareSpreadsheetData( SPREADSHEET_CONF.SPREADSHEETS_RANGE_TO_LOAD );
         });
     }
     
@@ -45,26 +71,23 @@ class GApiSpreadsheetProvider {
         })
     }
     
-    _initAppConfig(appConfig) {
-        return this._initConfigForParent(appConfig);
-    }
-    
-    _initConfigForParent(config, parentConfig) {
+    _initConfig(config, parentConfig) {
         return new Promise( (resolve, reject) => {
-            config.result.values.forEach( (row) => {
-                SPREADSHEET_CONF.appendPropertyFromRow(row, parentConfig);
-            });
+            try {
+                config.result.values.forEach( (row) => {
+                    try {
+                        SPREADSHEET_CONF.appendPropertyFromRow(row, parentConfig);
+                    } catch (e) {
+                        console.log("Problem with append property to spreadsheet configuration.", row);
+                        console.log(e);
+                    }
+                });
+            } catch (e) {
+                console.log("Problem with get configuration.", config);
+                console.log(e);
+            }
+            
             resolve();
-        });
-    }
-    
-    _initSpreadsheetConfig(spreadsheetsConfig) {
-        return new Promise( (resolve, reject) => {
-            spreadsheetsConfig.result.values.forEach( (row) => {
-                SPREADSHEET_CONF.appendPropertyFromRow(row);
-            });
-            SPREADSHEET_CONF.appendConfiguration();
-            resolve( SPREADSHEET_CONF.SPREADSHEETS_RANGE_TO_LOAD );
         });
     }
     
@@ -97,7 +120,7 @@ class GApiSpreadsheetProvider {
         const groupData = new Array();
         this.gCalSpreadsheet.forEach( (value, key, map) => {
             value.spreadsheet.dataSpreadsheetDate.forEach( (inValue, inKey) => {
-                if(typeof dataSpreadsheetsDate.get(inKey) === 'undefined') {
+                if(typeof dataSpreadsheetsDate.get(inKey) === "undefined") {
                     dataSpreadsheetsDate.set(inKey, new Array());
                 }
                 dataSpreadsheetsDate.get(inKey).push(...inValue);

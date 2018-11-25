@@ -50,17 +50,4 @@ const SPREADSHEET_CONF = {
         }
         return rawPropertyValue;
     },
-    
-    /**
-     * This method should be invoke after technical configuration is loaded from external sources - GApiSpreadsheetProvider
-     */
-    appendConfiguration: function() {
-        // HELPERS MAP
-        const startTimeColumn = {
-            [this.SPREADSHEET_TRAINING] : (this.TRAINING_DURATION_COLUMN - 1),
-            [this.SPREADSHEET_DIET] : (this.DIET_START_TIME_COLUMN - 1),
-            [this.SPREADSHEET_WEIGHT] : (this.WEIGHT_START_TIME_COLUMN - 1)
-        }
-        this.appendProperty('START_TIME_COLUMN', startTimeColumn);
-    }
 };

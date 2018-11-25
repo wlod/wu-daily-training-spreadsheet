@@ -18,7 +18,11 @@ class App {
 
             mounted() {
                 const dataProvider = new GApiSpreadsheetProvider(gapi);
-                dataProvider.loadData(APP_CONFIGURATION_SPREADSHEET, LABEL_CONFIGURATION_SPREADSHEET, ICON_CONFIGURATION_SPREADSHEET, RANGE_CONFIGURATION_SPREADSHEET)
+                
+                const loadApplicationConfig = [{spreadsheet: APP_CONFIGURATION_SPREADSHEET}];
+                const loadContentConfig = [{spreadsheet: LABEL_CONFIGURATION_SPREADSHEET, parent: LABELS_KEY}, {spreadsheet: ICON_CONFIGURATION_SPREADSHEET, parent: ICONS_KEY}, {spreadsheet: RANGE_CONFIGURATION_SPREADSHEET}];
+                
+                dataProvider.loadData(loadApplicationConfig, loadContentConfig)
                             .then( () => {
                                     SPREADSHEET_CONF.SPREADSHEETS_TO_LOAD.forEach( (spreadsheetName) => {
                                         this.visibleSpreadsheets[spreadsheetName] = true;

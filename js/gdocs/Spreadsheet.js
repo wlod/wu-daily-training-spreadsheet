@@ -107,7 +107,7 @@ class SpreadsheetData {
 	// TODO split 
 	_initStartTime() {
 	    if(SPREADSHEET_CONF.SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
-	        const startTimeOrDurationColumn = SPREADSHEET_CONF.START_TIME_COLUMN[this.spreadsheetName];
+	        const startTimeOrDurationColumn = SPREADSHEET_CONF[START_TIME_COLUMN_PREFIX + this.spreadsheetName];
 	        let startTimeOrDurationRaw = this.rawDataAsArray[startTimeOrDurationColumn];
 	        
 	        if(typeof startTimeOrDurationRaw === "undefined" || startTimeOrDurationRaw === SPREADSHEET_CONF.SPREADSHEET_CELL_VALUE_EMPTY) {
@@ -150,7 +150,7 @@ class SpreadsheetData {
 	    const skipColumns = new Array();
 	    
 	    if(SPREADSHEET_CONF.SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
-	        const startTimeOrDurationColumn = SPREADSHEET_CONF.START_TIME_COLUMN[this.spreadsheetName];
+	        const startTimeOrDurationColumn = SPREADSHEET_CONF[START_TIME_COLUMN_PREFIX + this.spreadsheetName];
 	        const startTimeOrDurationRaw = this.rawDataAsArray[startTimeOrDurationColumn];
 	        if(SPREADSHEET_CONF.SPREADSHEET_TRAINING === this.spreadsheetName && startTimeOrDurationRaw !== SPREADSHEET_CONF.SPREADSHEET_CELL_VALUE_EMPTY) {
 	            // TODO move value "duration" to confView
@@ -162,7 +162,7 @@ class SpreadsheetData {
                     console.log(e);
                 }
              }
-	        skipColumns.push(startTimeOrDurationColumn);
+	        skipColumns.push(parseInt(startTimeOrDurationColumn));
         }
 	    
 	    // TODO move hmm to confView
