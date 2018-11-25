@@ -37,7 +37,7 @@
 <div id="app">
 
     <div v-if="spreadsheetsData === null">
-        <img src="assets/loading.gif"/>
+        <img src="assets/loader-3.gif"/>
     </div>
 
     <div v-if="spreadsheetsData !== null">
@@ -86,7 +86,7 @@
                        <div class="item-content item-content-left">
                            <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
                                <span v-for="(value, key) in values">
-                                    <a v-bind:href="value" class="image-trigger"><img src="assets/loading.gif" v-bind:data-src="value" class="lazyload item-image"/></a>&nbsp;
+                                    <a v-bind:href="value" class="image-trigger"><img src="assets/loader-2.gif" v-bind:data-src="value" class="lazyload item-image"/></a>&nbsp;
                                </span>
                            </p>
                            <p v-for="(value, key) in spreadsheetData.viewData" v-if="key !== 'pictures'">
