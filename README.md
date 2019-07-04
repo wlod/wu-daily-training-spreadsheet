@@ -6,6 +6,15 @@ Demo:
 - https://wu-daily-training-sheet.wlodi.net
 - https://wu-daily-training-sheet.wlodi.net/index.html?devopt=no-image (without images from google drive)
 
+Why is it so great?!
+1. Free 'CMS'.
+2. Just simple frontend app - without js dependencies.
+3. Publication/editingis provide by external sources google-docs - 'CMS' clients are available for browser and mobile, free, provide tools to manage access for users (by link or gmail account), parallel data management.
+4. Developer can switch beetwen 'prod' and 'dev' data by change a link to another gdocs with limited privileges.
+5. Free tools to check traffic from google.
+
+Above points it's not glorification google - I jut describe idea - for some simple/free solution to provide cheaper solutions and more available for user and developers - 'Excel' as a CMS. In this type of solutions - I think the biggest challenge is the parallel access to resources and user roles (and their management) - in my example you've it for free.
+
 ## Dependencies
 
 JS Libraries:
