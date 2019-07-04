@@ -25,11 +25,21 @@ class ExtViews {
                 viewer.on('open', () => {
                     WebUtil.waitForDomElement('#wu-images-views-wrapper > div.wu-images-views-content', 40, (element) => {
                         
-                        let nextImageDom = triggers[index+1];
-                        let prevImageDom = triggers[index-1];
+                        const nextImageDom = triggers[index+1];
+                        const prevImageDom = triggers[index-1];
                         
-                        ExtViews.createNavigation(viewer, "Next", element, nextImageDom, "right: 10%");
-                        ExtViews.createNavigation(viewer, "Prev", element, prevImageDom, "left: 10%");
+                        const prevNavigation = ExtViews.createNavigation(viewer, "Prev", element, prevImageDom, "left: 10%");
+                        const nextNavigation = ExtViews.createNavigation(viewer, "Next", element, nextImageDom, "right: 10%");
+                        
+                        // TODO for now "document.onkeydown" is only used in this place
+                        document.onkeydown = function(e) {
+                           if(e.keyCode === 37 && typeof prevNavigation !== "undefined") {
+                              prevNavigation !== prevNavigation.click();
+                           }
+                           if(e.keyCode === 39 && typeof nextNavigation !== "undefined") {
+                              nextNavigation.click();
+                           }
+                        }
                         
                     });
                 });
@@ -40,7 +50,7 @@ class ExtViews {
     
     static createNavigation(viewer, label, parent, imageDom, position) {
         if(typeof imageDom !== "undefined" && imageDom !== null) {
-            let container = document.createElement("div");
+            const container = document.createElement("div");
             container.setAttribute("id", "wu-images-views-next");
             container.setAttribute("style", "z-index: 10090 !important; width: 24px; height: 24px; position: absolute; top: 45%; color: #FFF; " + position);
             container.addEventListener("click", () => {
@@ -48,10 +58,12 @@ class ExtViews {
                 imageDom.click();
             });
             
-            let nextText = document.createTextNode(label); 
-            container.appendChild(nextText); 
+            const textNodeLabel = document.createTextNode(label); 
+            container.appendChild(textNodeLabel); 
             
             parent.appendChild(container);
+            
+            return container;
         }
     }
 
