@@ -4,7 +4,7 @@ Experimental google docs/drive and vuejs
 
 Demo:
 - https://wu-daily-training-sheet.wlodi.net
-- https://wu-daily-training-sheet.wlodi.net/index.html?devopt=noimage (without images from google drive)
+- https://wu-daily-training-sheet.wlodi.net/index.html?devopt=no-image (without images from google drive)
 
 ## Dependencies
 
@@ -23,6 +23,22 @@ CSS:
 DEV:
 
 - http-server (https://github.com/indexzero/http-server)
+
+## Developer notes
+
+Website URL contains [devopt] parameter - it can be used for developers to skip following operations:
+
+- no-image - skip call for images from external resource
+- no-data - skip call for all data from external resource
+
+You can use any delimiter in query (order is no matter) - excluding RFC standard (&, ? etc.), for example:
+
+```sh
+(...)?devopt=no-image||no-data
+(...)?devopt=no-image_no-data
+(...)?devopt=no-data_no-image
+(...)?devopt=no-datano-image
+```
 
 ## Google
 

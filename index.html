@@ -20,6 +20,7 @@
     <script type="text/javascript" src="js/gdocs/SpreadsheetUtils.js"></script>
     <script type="text/javascript" src="js/gdocs/Spreadsheet.js"></script>
     <script type="text/javascript" src="js/gdocs/GCalSpreadsheet.js"></script>
+    <script type="text/javascript" src="js/gdocs/GCalSpreadsheetLink.js"></script>
     <script type="text/javascript" src="js/gdocs/GApiSpreadsheetProvider.js"></script>
 
     <script type="text/javascript" src="js/vue/App.js"></script>
@@ -30,74 +31,87 @@
 <body>
 <!-- TODO Add information from github https://api.github.com/repos/wlod/wu-daily-training-spreadsheet  -->
 <p>wu-daily-training-spreadsheet - <a href="https://github.com/wlod/wu-daily-training-spreadsheet/" target="_blank">current version - github</a>.</p>
-<p>data - <a href="https://docs.google.com/spreadsheets/d/1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8/edit#gid=1777293991" target="_blank">google docs</a>.</p>
+<p>data - <a href="https://docs.google.com/spreadsheets/d/1jx7v_zyb4hIDSaa1IxXIUuUgPEFRxqORYn0_g9AqJas/edit#gid=1777293991" target="_blank">google docs</a>.</p>
 
 <pre id="content"></pre>
 
 <div id="app">
-
-    <div v-if="spreadsheetsData === null">
+    
+    <div v-if="spreadsheetsLink === null">
         <img src="assets/loader-3.gif"/>
     </div>
-
-    <div v-if="spreadsheetsData !== null">
-        <h2>Days</h2>
-
-        <div style="margin-bottom: 25px;">
-            Shows on all days:
-            <label v-for="spreadsheet in spreadsheets">
-              <input type="checkbox" @click="filterBySpreadsheetName( spreadsheet )" v-model="visibleSpreadsheets[ spreadsheet ]">'{{ spreadsheet }}' spreadsheet
-            </label>
-        </div>
-
-        <div v-for="(item, key) in spreadsheetsData" class="day-container">
-
-            <div class="day-summary">
-               <div class="day-summary-title">
-                  <i class="material-icons md-24 item-title-icon">insert_invitation</i><span class="day-summary-date">{{ item.day }}</span>
+    
+    <div v-if="spreadsheetsLink !== null">
+      <h2>Training</h2>
+        
+        <ul class="training-summary-content">
+            <li v-for="spreadsheetLink in spreadsheetsLink"><a href="#" v-bind:class="{ 'selected': spreadsheetLink.data.isSelected }" @click="loadSpreadsheet( spreadsheetLink )"><i class="material-icons md-48 item-title-icon">view_list</i><div><strong>{{ spreadsheetLink.data.label }}</strong><br/><em>{{ spreadsheetLink.data.startDate }}</em> - <em>{{ spreadsheetLink.data.endDate }}</em></div></a></li>
+        </ul>
+    
+       <div v-if="spreadsheetsData === null && dataLoading === true">
+           <img src="assets/loader-3.gif"/>
+       </div>
+         
+       <div v-if="spreadsheetsData !== null">
+               
+           <h2>Days - {{ spreadsheetsData.label }}</h2>
+   
+           <div style="margin-bottom: 25px;">
+               Shows on all days:
+               <label v-for="spreadsheet in spreadsheets">
+                 <input type="checkbox" @click="filterBySpreadsheetName( spreadsheet )" v-model="visibleSpreadsheets[ spreadsheet ]">'{{ spreadsheet }}' spreadsheet
+               </label>
+           </div>
+   
+           <div v-for="(item, key) in spreadsheetsData" class="day-container">
+   
+               <div class="day-summary">
+                  <div class="day-summary-title">
+                     <i class="material-icons md-24 item-title-icon">insert_invitation</i><span class="day-summary-date">{{ item.day }}</span>
+                  </div>
+                  
+                  <ul class="day-summary-content">
+                     <li><i class="material-icons md-14 item-title-icon">restaurant_menu</i><span class="day-summary-content-label">Meals: {{ item.daySummary.meals }}</span></li>
+                     <li><i class="material-icons md-14 item-title-icon">directions_run</i><span class="day-summary-content-label">Training: {{ item.daySummary.training }}</span></li>
+                     <li><i class="material-icons md-14 item-title-icon">directions_run</i><span class="day-summary-content-label">Training time: {{ item.daySummary.trainingTime }}</span></li>
+                     <li><i class="material-icons md-14 item-title-icon">accessibility</i><span class="day-summary-content-label">Min weight: {{ item.daySummary.minWeight }}</span></li>
+                     <li><i class="material-icons md-14 item-title-icon">accessibility</i><span class="day-summary-content-label">Max weight: {{ item.daySummary.maxWeight }}</span></li>
+                  </ul>
+                  
                </div>
                
-               <ul class="day-summary-content">
-                  <li><i class="material-icons md-14 item-title-icon">restaurant_menu</i><span class="day-summary-content-label">Meals: {{ item.daySummary.meals }}</span></li>
-                  <li><i class="material-icons md-14 item-title-icon">directions_run</i><span class="day-summary-content-label">Training: {{ item.daySummary.training }}</span></li>
-                  <li><i class="material-icons md-14 item-title-icon">directions_run</i><span class="day-summary-content-label">Training time: {{ item.daySummary.trainingTime }}</span></li>
-                  <li><i class="material-icons md-14 item-title-icon">accessibility</i><span class="day-summary-content-label">Min weight: {{ item.daySummary.minWeight }}</span></li>
-                  <li><i class="material-icons md-14 item-title-icon">accessibility</i><span class="day-summary-content-label">Max weight: {{ item.daySummary.maxWeight }}</span></li>
-               </ul>
-               
-            </div>
-            
-            <div class="item-list-container">
-               <div class="item-list-filter">
-                    Show:
-                    <label v-for="spreadsheet in spreadsheets">
-                        <input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, spreadsheet )" v-model="visibleSpreadsheetsPerDay[spreadsheet][item.day]">'{{ spreadsheet }}' spreadsheet
-                    </label>
-                </div>
-               
-               <ul class="item-list">
-   
-                   <li class="item" v-for="spreadsheetData in item.activities" v-if="spreadsheetData.containsStartTime === true && spreadsheetData.isVisible === true">
-                       <div class="item-title">
-                           <i class="material-icons md-36 item-title-icon">{{ spreadsheetData.itemTitleIcon }}</i>
-                           <span class="item-title-text">{{ spreadsheetData.startTime }}</span>
-                       </div>
-   
-                       <div class="item-content item-content-left">
-                           <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
-                               <span v-for="(value, key) in values">
-                                    <a v-bind:href="value" class="image-trigger"><img src="assets/loader-2.gif" v-bind:data-src="value" class="lazyload item-image"/></a>&nbsp;
-                               </span>
-                           </p>
-                           <p v-for="(value, key) in spreadsheetData.viewData" v-if="key !== 'pictures'">
-                               <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
-                           </p>
-                       </div>
-   
-                   </li>
-               </ul>
-            </div>
-        </div>
+               <div class="item-list-container">
+                  <div class="item-list-filter">
+                       Show:
+                       <label v-for="spreadsheet in spreadsheets">
+                           <input type="checkbox" @click="filterByDayAndSpreadsheetName( item.day, spreadsheet )" v-model="visibleSpreadsheetsPerDay[spreadsheet][item.day]">'{{ spreadsheet }}' spreadsheet
+                       </label>
+                   </div>
+                  
+                  <ul class="item-list">
+      
+                      <li class="item" v-for="spreadsheetData in item.activities" v-if="spreadsheetData.containsStartTime === true && spreadsheetData.isVisible === true">
+                          <div class="item-title">
+                              <i class="material-icons md-36 item-title-icon">{{ spreadsheetData.itemTitleIcon }}</i>
+                              <span class="item-title-text">{{ spreadsheetData.startTime }}</span>
+                          </div>
+      
+                          <div class="item-content item-content-left">
+                              <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
+                                  <span v-for="(value, key) in values">
+                                       <a v-bind:href="value" class="image-trigger"><img src="assets/loader-2.gif" v-bind:data-src="value" class="lazyload item-image"/></a>&nbsp;
+                                  </span>
+                              </p>
+                              <p v-for="(value, key) in spreadsheetData.viewData" v-if="key !== 'pictures'">
+                                  <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
+                              </p>
+                          </div>
+      
+                      </li>
+                  </ul>
+               </div>
+           </div>
+       </div>
     </div>
 </div>
 

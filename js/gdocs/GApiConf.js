@@ -11,11 +11,14 @@ const DISCOVERY_DOCS = [ "https://sheets.googleapis.com/$discovery/rest?version=
 // included, separated by spaces.
 const SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
-// Spreadsheet ID
-// Public doc: https://docs.google.com/spreadsheets/d/1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8/edit#gid=1777293991
-const SPREADSHEET_ID = "1W2lIqTBXORVBdAM1AaGQIY4KzDRYCqTDN8NUYEm4jt8";
+// Spreadsheet with list other spreadsheet' IDs
+// Public doc: https://docs.google.com/spreadsheets/d/1jx7v_zyb4hIDSaa1IxXIUuUgPEFRxqORYn0_g9AqJas/edit#gid=157262058
+const SPREADSHEET_LIST_ID = "1jx7v_zyb4hIDSaa1IxXIUuUgPEFRxqORYn0_g9AqJas";
 
-// Configuration
+//Spreadsheet list configuration
+const LIST_CONFIGURATION_SPREADSHEET = "cfg!A2:E1000";
+
+// Spreadsheet configuration - TODO below ranges should be move to SPREADSHEET_LIST_ID (each training may contains different configuration)
 const APP_CONFIGURATION_SPREADSHEET = "cfg!D2:E1000";
 const RANGE_CONFIGURATION_SPREADSHEET = "cfg!A2:B1000";
 const LABEL_CONFIGURATION_SPREADSHEET = "cfg!G2:H1000";

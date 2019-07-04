@@ -4,10 +4,43 @@ class GApiSpreadsheetProvider {
     
     constructor(gapi) {
         this.gapi = gapi;
-        this.gCalSpreadsheet = new Map();
+        this.gCalSpreadsheetsCache = new Map();
     }
     
-    loadData(loadApplicationConfig, loadContentConfig) {
+    
+    loadSpreadsheetsLink(loadSpreadsheetListConfig) {
+       return new Promise( (resolve, reject) => {
+           this.gapi.load('client:auth2', () => { 
+               resolve();
+           });
+       }).then( () => {
+           return this._initSpreadsheetConnection();
+       }).then( () => {
+           // Load spreadsheets id from configuration
+           return this._initSpreadsheetDataPromise(SPREADSHEET_LIST_ID, loadSpreadsheetListConfig);
+       }).then( (spreadsheetResult) => {
+          // TODO It should be used GCalSpreadsheet - but configuration to parsing is providing by each spreadsheet.
+          // For now - spreadsheet with links to training spreadsheet doesn't contains any configuration.
+          const spreadsheetsLink = new Array();
+            
+          // TODO Null-safe for spreadsheetResult.result.values
+          spreadsheetResult.result.values.forEach( (spreadsheetLink) => {
+             spreadsheetsLink.push( new GCalSpreadsheetLink(spreadsheetLink) );
+          });
+          
+          return spreadsheetsLink;
+       });
+   }
+    
+    loadData(spreadsheetId, loadApplicationConfig, loadContentConfig) {
+        if(typeof this.gCalSpreadsheetsCache.get(spreadsheetId) !== "undefined") {
+            console.debug("Return prepared data from cache for spreadsheetId", spreadsheetId);
+            return new Promise( (resolve, reject) => {
+               resolve();
+            });
+        }
+       
+       
         return new Promise( (resolve, reject) => {
             this.gapi.load('client:auth2', () => { 
                 resolve();
@@ -18,7 +51,7 @@ class GApiSpreadsheetProvider {
             // Load application configuration from spreadsheets
             const promises = new Array();
             loadApplicationConfig.forEach( (spreadsheetConfig) => {
-                promises.push(this._initSpreadsheetDataPromise(spreadsheetConfig.spreadsheet));
+                promises.push(this._initSpreadsheetDataPromise(spreadsheetId, spreadsheetConfig.spreadsheet));
             });
             
             return Promise.all(promises);
@@ -36,7 +69,7 @@ class GApiSpreadsheetProvider {
             // Load content configuration from spreadsheets
             const promises = new Array();
             loadContentConfig.forEach( (spreadsheetConfig) => {
-                promises.push(this._initSpreadsheetDataPromise(spreadsheetConfig.spreadsheet));
+                promises.push(this._initSpreadsheetDataPromise(spreadsheetId, spreadsheetConfig.spreadsheet));
             });
             
             return Promise.all(promises);
@@ -58,7 +91,7 @@ class GApiSpreadsheetProvider {
             return Promise.all(promises);
             
         }).then( () => {
-            return this._prepareSpreadsheetData( SPREADSHEET_CONF.SPREADSHEETS_RANGE_TO_LOAD );
+            return this._prepareSpreadsheetData( spreadsheetId, SPREADSHEET_CONF.SPREADSHEETS_RANGE_TO_LOAD );
         });
     }
     
@@ -91,34 +124,38 @@ class GApiSpreadsheetProvider {
         });
     }
     
-    _prepareSpreadsheetData(spreadsheetsRange) {
+    _prepareSpreadsheetData(spreadsheetId, spreadsheetsRange) {
+        console.debug("Prepare and return data from server for spreadsheetId", spreadsheetId);
         const promises = new Array();
-        
         spreadsheetsRange.forEach( (spreadsheetRange) => {
-            promises.push(this._initSpreadsheetDataPromise(spreadsheetRange));
+            promises.push(this._initSpreadsheetDataPromise(spreadsheetId, spreadsheetRange));
         });
         
         return Promise.all(promises)
                .then( (response) => {
                     response.forEach( (spreadsheet) => {
                         const spreadsheetResult = spreadsheet.result;
-                        this.gCalSpreadsheet.set(spreadsheetResult.range,  new GCalSpreadsheet(spreadsheetResult));
+                        if(typeof this.gCalSpreadsheetsCache.get(spreadsheetId) === "undefined") {
+                           this.gCalSpreadsheetsCache.set(spreadsheetId, new Map());
+                        }
+                        this.gCalSpreadsheetsCache.get(spreadsheetId).set(spreadsheetResult.range,  new GCalSpreadsheet(spreadsheetResult));
                     });
                     return response;
                });
     }
     
-    _initSpreadsheetDataPromise(rawRange) {
-        return this.gapi.client.sheets.spreadsheets.values.get({
-            spreadsheetId : SPREADSHEET_ID,
+    _initSpreadsheetDataPromise(spreadsheetId, rawRange) {
+        const spreadsheetData = this.gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId : spreadsheetId,
             range : rawRange,
         });
+        return spreadsheetData;
     }
     
-    dataSpreadsheetsGroupByDates() {
+    dataSpreadsheetsGroupByDates(spreadsheetId) {
         const dataSpreadsheetsDate = new Map();
         const groupData = new Array();
-        this.gCalSpreadsheet.forEach( (value, key, map) => {
+        this.gCalSpreadsheetsCache.get(spreadsheetId).forEach( (value, key, map) => {
             value.spreadsheet.dataSpreadsheetDate.forEach( (inValue, inKey) => {
                 if(typeof dataSpreadsheetsDate.get(inKey) === "undefined") {
                     dataSpreadsheetsDate.set(inKey, new Array());
@@ -133,13 +170,5 @@ class GApiSpreadsheetProvider {
             groupData.push({"day": key, "activities": value, "daySummary": daySummary});
         });
         return groupData
-    }
-    
-    get gCalSpreadsheet() {
-        return this._gCalSpreadsheet;
-    }
-    
-    set gCalSpreadsheet(gCalSpreadsheet) {
-        this._gCalSpreadsheet = gCalSpreadsheet;
     }
 }
