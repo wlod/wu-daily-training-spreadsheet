@@ -5,9 +5,9 @@ const CLIENT_ID = '418597576423-5nv3ndftur1f3n8avthqq1o4uopjaf01.apps.googleuser
 const API_KEY = 'AIzaSyDMgqOEObXEA-nSA7rr19IGZziiuEJAwu0';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
-const DISCOVERY_DOCS = [ "https://sheets.googleapis.com/$discovery/rest?version=v4" ];
+const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 
-// Authorization scopes required by the API; multiple scopes can be
+// Authorization scopes required by the API; multiple scopes can bep
 // included, separated by spaces.
 const SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
@@ -23,7 +23,6 @@ const APP_CONFIGURATION_SPREADSHEET = "cfg!D2:E1000";
 const RANGE_CONFIGURATION_SPREADSHEET = "cfg!A2:B1000";
 const LABEL_CONFIGURATION_SPREADSHEET = "cfg!G2:H1000";
 const ICON_CONFIGURATION_SPREADSHEET = "cfg!J2:K1000";
-
 
 
 const GOOGLE_DRIVE_HTML_IMG_LINK_PATTERN = "https://drive.google.com/uc?id={{ID}}&export=download"

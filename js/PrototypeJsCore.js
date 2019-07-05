@@ -1,5 +1,5 @@
 if (!Array.prototype.forEach) {
-    Array.prototype.forEach = function(fun /* , thisp */) {
+    Array.prototype.forEach = function (fun /* , thisp */) {
         var len = this.length;
         if (typeof fun != "function")
             throw new TypeError();
@@ -10,11 +10,12 @@ if (!Array.prototype.forEach) {
                 fun.call(thisp, this[i], i, this);
         }
     };
-};
+}
+;
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf#Polyfill
 if (!Array.prototype.indexOf) {
-    Array.prototype.indexOf = (function(Object, max, min) {
+    Array.prototype.indexOf = (function (Object, max, min) {
         "use strict";
         return function indexOf(member, fromIndex) {
             if (this === null || this === undefined)
@@ -42,8 +43,9 @@ if (!Array.prototype.indexOf) {
             return -1; // if the value was not found, then return -1
         };
     })(Object, Math.max, Math.min);
-};
+}
+;
 
-String.prototype.inList = function(list) {
+String.prototype.inList = function (list) {
     return (Array.apply(null, arguments).indexOf(this.toString()) != -1)
 }
