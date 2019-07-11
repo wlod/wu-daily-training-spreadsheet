@@ -5,7 +5,6 @@ class ExtViews {
      * Append Views library to each images with '.image-trigger' selector
      * Append navigation to Views library by viewer.on('open'... and viewer.on('close',...
      */
-    // TODO move 'copy' to configuration
     static appendViewsToImage() {
         return new Promise((resolve, reject) => {
 
@@ -16,27 +15,29 @@ class ExtViews {
             triggers.forEach((img, index) => {
                 const viewer = new Views(img, {
                     defaultTheme: true,
-                    prefix: 'wu-images',
-                    loader: 'Loading...',
+                    prefix: 'ext',
+                    loader: '<img src="assets/loader-2.gif" class="ext-views-loader"/>',
                     anywhereToClose: true,
                     openAnimationDuration: 0,
                     closeAnimationDuration: 0
                 });
                 viewer.on('open', () => {
-                    WebUtil.waitForDomElement('#wu-images-views-wrapper > div.wu-images-views-content', 40, (element) => {
+                    WebUtil.waitForDomElement('#ext-views-wrapper > div.ext-views-content', 40, (element) => {
+
+                        console.log(triggers[index]);
 
                         const nextImageDom = triggers[index + 1];
                         const prevImageDom = triggers[index - 1];
 
-                        const prevNavigation = ExtViews.createNavigation(viewer, "Prev", element, prevImageDom, "left: 10%");
-                        const nextNavigation = ExtViews.createNavigation(viewer, "Next", element, nextImageDom, "right: 10%");
+                        const prevNavigation = ExtViews.createNavigation(viewer, "Prev", element, prevImageDom, "ext-views-navigation-prev");
+                        const nextNavigation = ExtViews.createNavigation(viewer, "Next", element, nextImageDom, "ext-views-navigation-next");
 
                         // TODO for now "document.onkeydown" is only used in this place
                         document.onkeydown = function (e) {
-                            if (e.keyCode === 37 && typeof prevNavigation !== "undefined") {
+                            if (e.key  === 'ArrowLeft' && typeof prevNavigation !== "undefined") {
                                 prevNavigation !== prevNavigation.click();
                             }
-                            if (e.keyCode === 39 && typeof nextNavigation !== "undefined") {
+                            if (e.key  === 'ArrowRight' && typeof nextNavigation !== "undefined") {
                                 nextNavigation.click();
                             }
                         }
@@ -48,18 +49,19 @@ class ExtViews {
     }
 
 
-    static createNavigation(viewer, label, parent, imageDom, position) {
+    static createNavigation(viewer, label, parent, imageDom, clazz) {
         if (typeof imageDom !== "undefined" && imageDom !== null) {
             const container = document.createElement("div");
-            container.setAttribute("id", "wu-images-views-next");
-            container.setAttribute("style", "z-index: 10090 !important; width: 24px; height: 24px; position: absolute; top: 45%; color: #FFF; " + position);
+            container.setAttribute("class", "ext-views-navigation " + clazz);
             container.addEventListener("click", () => {
                 viewer.close();
                 imageDom.click();
             });
 
+            const textNodeLabelContainer = document.createElement("span");
             const textNodeLabel = document.createTextNode(label);
-            container.appendChild(textNodeLabel);
+            textNodeLabelContainer.append(textNodeLabel);
+            container.appendChild(textNodeLabelContainer);
 
             parent.appendChild(container);
 
