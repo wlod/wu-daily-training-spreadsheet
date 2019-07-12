@@ -5,9 +5,8 @@ body {
 
 .day-container {
     position: relative;
-    margin: 0;
+    margin: 0 0 40px 0;
     padding: 0;
-    margin-bottom: 20px;
 }
 
 .day-container:after {
@@ -33,10 +32,6 @@ body {
     margin-left: 10px;
     position: absolute;
     top: 0;
-}
-
-.item-list-container {
-    margin-bottom: 20px;
 }
 
 .item-list {

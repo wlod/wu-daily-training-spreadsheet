@@ -74,13 +74,11 @@ class ExtViews {
         }
 
         const imageContainer = document.querySelector("#ext-views-wrapper > div.ext-views-content");
-        console.log("imageContainer", imageContainer);
         if (typeof imageContainer === "undefined" || imageContainer == null) {
             return;
         }
 
         imageContainer.setAttribute("data-image-description", sourceImageDom.firstChild.getAttribute("data-image-description"));
-
     }
 
 }

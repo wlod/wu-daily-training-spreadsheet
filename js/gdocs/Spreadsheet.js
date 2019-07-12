@@ -193,7 +193,7 @@ class SpreadsheetData {
                 }
 
                 if (SPREADSHEET_CONF[LABELS_KEY]['PICTURE_LABEL'] === labelName) {
-                    multiData[j] = SpreadsheetData._prepareSpreadsheetImageUrl(multiData[j], this.name + " - " + this.startTime + " (" + this.date + ")");
+                    multiData[j] = SpreadsheetData._prepareSpreadsheetImage(multiData[j], this.name + " - " + this.startTime + " (" + this.date + ")");
                 }
 
                 this.viewData[labelName] = multiData[j];
@@ -201,7 +201,7 @@ class SpreadsheetData {
         }
     }
 
-    static _prepareSpreadsheetImageUrl(rawImageUrls, activityDescription) {
+    static _prepareSpreadsheetImage(rawImageUrls, activityDescription) {
         const preparedImageUrls = new Array();
         const rawImageUrlsAsArray = rawImageUrls.split(";")
 
