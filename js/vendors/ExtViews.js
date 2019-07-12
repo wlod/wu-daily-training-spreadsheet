@@ -24,7 +24,7 @@ class ExtViews {
                 viewer.on('open', () => {
                     WebUtil.waitForDomElement('#ext-views-wrapper > div.ext-views-content', 40, (element) => {
 
-                        console.log(triggers[index]);
+                        ExtViews.createDescription(triggers[index])
 
                         const nextImageDom = triggers[index + 1];
                         const prevImageDom = triggers[index - 1];
@@ -48,7 +48,6 @@ class ExtViews {
         });
     }
 
-
     static createNavigation(viewer, label, parent, imageDom, clazz) {
         if (typeof imageDom !== "undefined" && imageDom !== null) {
             const container = document.createElement("div");
@@ -67,6 +66,21 @@ class ExtViews {
 
             return container;
         }
+    }
+
+    static createDescription(sourceImageDom) {
+        if (typeof sourceImageDom === "undefined" || sourceImageDom == null) {
+            return;
+        }
+
+        const imageContainer = document.querySelector("#ext-views-wrapper > div.ext-views-content");
+        console.log("imageContainer", imageContainer);
+        if (typeof imageContainer === "undefined" || imageContainer == null) {
+            return;
+        }
+
+        imageContainer.setAttribute("data-image-description", sourceImageDom.firstChild.getAttribute("data-image-description"));
+
     }
 
 }

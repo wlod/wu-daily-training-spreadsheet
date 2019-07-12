@@ -62,3 +62,15 @@ img.ext-views-loader {
 img.ext-views-image {
 
 }
+
+[data-image-description]::after {
+    content: attr(data-image-description);
+    background-color: #000;
+    color: #FFF;
+    padding: 2px;
+    opacity: 0.75;
+    text-align: center;
+    width: 320px;
+    position: absolute;
+    left: calc(50% - 160px);
+}

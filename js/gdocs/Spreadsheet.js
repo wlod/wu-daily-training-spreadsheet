@@ -122,7 +122,7 @@ class SpreadsheetData {
                 startTimeOrDurationRaw = startTimeOrDurationRaw.split("-")[0];
             }
 
-            // remove weight marker 'b' from pool
+            // TODO remove weight marker 'b' from pool
             this.startTime = startTimeOrDurationRaw.replace('b', '');
             this.containsStartTime = true;
         }
@@ -193,7 +193,7 @@ class SpreadsheetData {
                 }
 
                 if (SPREADSHEET_CONF[LABELS_KEY]['PICTURE_LABEL'] === labelName) {
-                    multiData[j] = SpreadsheetData._prepareImageUrls(multiData[j]);
+                    multiData[j] = SpreadsheetData._prepareSpreadsheetImageUrl(multiData[j], this.name + " - " + this.startTime + " (" + this.date + ")");
                 }
 
                 this.viewData[labelName] = multiData[j];
@@ -201,7 +201,7 @@ class SpreadsheetData {
         }
     }
 
-    static _prepareImageUrls(rawImageUrls) {
+    static _prepareSpreadsheetImageUrl(rawImageUrls, activityDescription) {
         const preparedImageUrls = new Array();
         const rawImageUrlsAsArray = rawImageUrls.split(";")
 
@@ -215,7 +215,7 @@ class SpreadsheetData {
 
                 const imageId = rawImageUrl.match(GOOGLE_DRIVE_IMAGE_LINK_PATTERN)[1];
                 const imageToView = GOOGLE_DRIVE_HTML_IMG_LINK_PATTERN.replace("{{ID}}", imageId);
-                preparedImageUrls.push(imageToView);
+                preparedImageUrls.push(new SpreadsheetImage(imageToView, "[" + (i+1) + "] " + activityDescription));
             } catch (e) {
                 console.warn(rawImageUrlsAsArray.length + " - " + rawImageUrlsAsArray);
                 console.warn(e);
@@ -241,6 +241,19 @@ class SpreadsheetHeader {
 
     toString() {
         return "DateSheetHeader: [name: " + this.name + ", columns: " + this.columns + ", startIndex: " + this.startIndex + ", spreadsheetName: " + this.spreadsheetName + "]";
+    }
+
+}
+
+class SpreadsheetImage {
+
+    constructor(url, description) {
+        this.url = url;
+        this.description = description;
+    }
+
+    toString() {
+        return "Image: [url: " + this.url + ", description: " + this.description + "]";
     }
 
 }

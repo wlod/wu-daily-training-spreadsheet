@@ -46,7 +46,7 @@
       <h2>Training</h2>
         
         <ul class="training-summary-content">
-            <li v-for="spreadsheetLink in spreadsheetsLink"><a href="#" v-bind:class="{ 'selected': spreadsheetLink.data.isSelected }" @click="loadSpreadsheet( spreadsheetLink )"><i class="material-icons md-48 item-title-icon">view_list</i><div><strong>{{ spreadsheetLink.data.label }}</strong><br/><em>{{ spreadsheetLink.data.startDate }}</em> - <em>{{ spreadsheetLink.data.endDate }}</em></div></a></li>
+            <li v-for="spreadsheetLink in spreadsheetsLink"><a href="#" :class="{ 'selected': spreadsheetLink.data.isSelected }" @click="loadSpreadsheet( spreadsheetLink )"><i class="material-icons md-48 item-title-icon">view_list</i><div><strong>{{ spreadsheetLink.data.label }}</strong><br/><em>{{ spreadsheetLink.data.startDate }}</em> - <em>{{ spreadsheetLink.data.endDate }}</em></div></a></li>
         </ul>
     
        <div v-if="spreadsheetsData === null && dataLoading === true">
@@ -90,7 +90,6 @@
                    </div>
                   
                   <ul class="item-list">
-      
                       <li class="item" v-for="spreadsheetData in item.activities" v-if="spreadsheetData.containsStartTime === true && spreadsheetData.isVisible === true">
                           <div class="item-title">
                               <i class="material-icons md-36 item-title-icon">{{ spreadsheetData.itemTitleIcon }}</i>
@@ -98,16 +97,15 @@
                           </div>
       
                           <div class="item-content item-content-left">
-                              <p v-for="(values, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
-                                  <span v-for="(value, key) in values">
-                                       <a v-bind:href="value" class="image-trigger"><img src="assets/loader-2.gif" v-bind:data-src="value" class="lazyload item-image"/></a>&nbsp;
+                              <p v-for="(pictures, key) in spreadsheetData.viewData" v-if="key === 'pictures'">
+                                 <span v-for="(picture, key) in pictures">
+                                       <a :href="picture.url" class="image-trigger"><img src="assets/loader-2.gif" :data-src="picture.url" :data-image-description="picture.description" class="lazyload item-image" /></a>&nbsp;
                                   </span>
                               </p>
                               <p v-for="(value, key) in spreadsheetData.viewData" v-if="key !== 'pictures'">
                                   <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
                               </p>
                           </div>
-      
                       </li>
                   </ul>
                </div>
