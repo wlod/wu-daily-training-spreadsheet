@@ -29,6 +29,7 @@ class WebUtil {
      * Append js script file to DOM
      */
     static appendScriptToDOM(path) {
+        // TODO only one path should be added
         const script = document.createElement('script');
         script.setAttribute("type", "text/javascript");
         script.setAttribute("src", path);

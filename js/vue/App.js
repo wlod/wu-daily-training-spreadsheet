@@ -96,7 +96,7 @@ class App {
                             if (WebUtil.isDevOptionIsOn("no-image") === true) {
                                 return;
                             }
-                            ExtViews.appendViewsToImage();
+                            ExtViews.appendViewsToImageWithLibraries();
                         });
                 },
 
@@ -109,13 +109,21 @@ class App {
                             }
                             if (item.day === day) {
                                 activity.isVisible = !activity.isVisible;
-                                this.visibleSpreadsheets[spreadsheetName] = activity.isVisible;
+                                this.visibleSpreadsheetsPerDay[spreadsheetName][day] = activity.isVisible;
                             }
                             if (allHasTheSameVisibleValue !== this.visibleSpreadsheets[spreadsheetName]) {
                                 this.visibleSpreadsheets[spreadsheetName] = false;
                             }
                         });
                     });
+
+                    if(true === this.visibleSpreadsheetsPerDay[spreadsheetName][day]) {
+                        Vue.nextTick(function () {
+                            // TODO sorry - when we use below selector the navigiation beetwen all images doesnt work properly
+                            ExtViews.appendViewsToImage('ul[data-spreadsheet-date="' + day + '"] ' + 'li[data-spreadsheet-name="' + spreadsheetName + '"]' + '  .image-trigger');
+                        });
+                    }
+
                 },
 
                 filterBySpreadsheetName: function (spreadsheetName) {
@@ -129,6 +137,12 @@ class App {
                         });
                         this.visibleSpreadsheetsPerDay[spreadsheetName][item.day] = isVisible;
                     });
+
+                    if(true === this.visibleSpreadsheets[spreadsheetName]) {
+                        Vue.nextTick(function () {
+                            ExtViews.appendViewsToImage('li[data-spreadsheet-name="' + spreadsheetName + '"]' + '  .image-trigger');
+                        });
+                    }
                 }
             },
 
