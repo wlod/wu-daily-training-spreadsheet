@@ -90,7 +90,7 @@
                    </div>
                   
                   <ul class="item-list" :data-spreadsheet-date="item.day">
-                      <li class="item" v-for="activity in item.activities" v-if="activity.containsStartTime === true && activity.isVisible === true" :data-spreadsheet-name="activity.spreadsheetName">
+                      <li class="item" v-for="activity in item.activities" v-if="activity.containsStartTime === true" :data-spreadsheet-name="activity.spreadsheetName" :data-activity-visble="activity.isVisible">
                           <div class="item-title">
                               <i class="material-icons md-36 item-title-icon">{{ activity.itemTitleIcon }}</i>
                               <span class="item-title-text">{{ activity.startTime }}</span>

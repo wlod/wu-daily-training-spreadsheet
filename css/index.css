@@ -69,6 +69,11 @@ body {
     border-top: 1px solid #000;
     padding: 0px 12px 0px 12px;
     margin-top: 20px;
+    display: none;
+}
+
+.item[data-activity-visble="true"] {
+    display: block;
 }
 
 .item-title {

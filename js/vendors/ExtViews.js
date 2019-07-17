@@ -49,7 +49,6 @@ class ExtViews {
     }
 
     static createNavigation(viewer, element, triggers, index) {
-        // TODO bug create dynamic navigation
         const nextImageDom = triggers[index + 1];
         const prevImageDom = triggers[index - 1];
 
