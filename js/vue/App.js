@@ -16,9 +16,12 @@ class App {
                 visibleSpreadsheets: new Array(),
                 visibleSpreadsheetsPerDay: new Array(),
                 spreadsheets: new Array(),
+
+                repositoryLastUpdate: null
             },
 
             beforeCreate() {
+                this.controlVersionRepositoryProvider = new ControlVersionRepositoryProvider();
                 this.dataProvider = new GApiSpreadsheetProvider(gapi);
 
                 this.loadApplicationConfig = [{spreadsheet: APP_CONFIGURATION_SPREADSHEET}];
@@ -34,10 +37,21 @@ class App {
             },
 
             mounted() {
+                this.loadRepositoryData();
                 this.loadSpreadsheetLinks();
             },
 
             methods: {
+
+                loadRepositoryData: function() {
+
+                    this.controlVersionRepositoryProvider.loadData().then( () => {
+                        const lastUpdateDate = new Date(this.controlVersionRepositoryProvider.getLastUpdateDate());
+                        this.repositoryLastUpdate = lastUpdateDate.toLocaleDateString() + " - " + lastUpdateDate.toLocaleTimeString();
+                    });
+
+                },
+
                 loadSpreadsheetLinks: function () {
                     this.dataProvider.loadSpreadsheetsLink(LIST_CONFIGURATION_SPREADSHEET)
                         .then((loadedSpreadsheetsLink) => {
@@ -56,7 +70,6 @@ class App {
 
                 loadSpreadsheet: function (spreadsheetLink) {
                     console.debug("Load spdreadsheet", spreadsheetLink);
-
                     if (typeof this.selectedSpreadsheetLink !== "undefined" && this.selectedSpreadsheetLink !== null) {
                         this.selectedSpreadsheetLink.data.isSelected = false;
                     }

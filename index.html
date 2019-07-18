@@ -14,7 +14,8 @@
 
     <script type="text/javascript" src="js/PrototypeJsCore.js"></script>
     <script type="text/javascript" src="js/WebUtil.js"></script>
-    
+
+    <script type="text/javascript" src="js/controlVersionRepository/ControlVersionRepositoryProvider.js"></script>
     <script type="text/javascript" src="js/gdocs/GApiConf.js"></script>
     <script type="text/javascript" src="js/gdocs/SpreadsheetConf.js"></script>
     <script type="text/javascript" src="js/gdocs/SpreadsheetUtils.js"></script>
@@ -30,14 +31,11 @@
 
 </head>
 <body>
-<!-- TODO Add information from github https://api.github.com/repos/wlod/wu-daily-training-spreadsheet  -->
-<p>wu-daily-training-spreadsheet - <a href="https://github.com/wlod/wu-daily-training-spreadsheet/" target="_blank">current version - github</a>.</p>
-<p>data - <a href="https://docs.google.com/spreadsheets/d/1jx7v_zyb4hIDSaa1IxXIUuUgPEFRxqORYn0_g9AqJas/edit#gid=1777293991" target="_blank">google docs</a>.</p>
-
-<pre id="content"></pre>
 
 <div id="app">
-    
+    <p>wu-daily-training-spreadsheet - <a href="https://github.com/wlod/wu-daily-training-spreadsheet/" target="_blank">current version - github</a> (<span>last change: <span v-if="repositoryLastUpdate === null" class="text-loading"><span>.</span><span>.</span><span>.</span></span><span v-if="repositoryLastUpdate !== null">{{repositoryLastUpdate}}</span></span>)</p>
+    <p>data - <a href="https://docs.google.com/spreadsheets/d/1jx7v_zyb4hIDSaa1IxXIUuUgPEFRxqORYn0_g9AqJas/edit#gid=1777293991" target="_blank">google docs</a>.</p>
+
     <div v-if="spreadsheetsLink === null">
         <img src="assets/loader-3.gif"/>
     </div>
@@ -56,7 +54,7 @@
        <div v-if="spreadsheetsData !== null">
                
            <h2>Days - {{ spreadsheetsData.label }}</h2>
-   
+           <!-- TODO style > class -->
            <div style="margin-bottom: 25px;">
                Shows on all days:
                <label v-for="spreadsheet in spreadsheets">
