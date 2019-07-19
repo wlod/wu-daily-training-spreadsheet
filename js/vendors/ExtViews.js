@@ -28,11 +28,19 @@ class ExtViews {
             });
             viewer.on('open', () => {
                 WebUtil.waitForDomElement('#ext-views-wrapper > div.ext-views-content', 40, (element) => {
+                    ExtViews.snapBrowserScroll(img)
                     ExtViews.createDescription(triggers[index])
                     ExtViews.createNavigation(viewer, element, triggers, index)
                 });
             });
         });
+    }
+
+    static snapBrowserScroll(img) {
+        const dayContainer = img.closest("div.day-container")
+        if(dayContainer !== null) {
+            window.scrollTo(0, dayContainer.offsetTop);
+        }
     }
 
     static createDescription(sourceImageDom) {
