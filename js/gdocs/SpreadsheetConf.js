@@ -11,7 +11,7 @@ const SPREADSHEET_CONF = {
     },
 
     appendPropertyFromRow: function (rowPropertyKeyValue, propertiesParent) {
-        if (rowPropertyKeyValue.length != 2) {
+        if (rowPropertyKeyValue.length !== 2) {
             return;
         }
         if (rowPropertyKeyValue[0].startsWith(SPREADSHEET_CELL_MULTIDATA_COMMENT) || rowPropertyKeyValue[1].startsWith(SPREADSHEET_CELL_MULTIDATA_COMMENT)) {

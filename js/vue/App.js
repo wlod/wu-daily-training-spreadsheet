@@ -13,9 +13,9 @@ class App {
                 spreadsheetsData: null,
 
                 dataLoading: false,
-                visibleSpreadsheets: new Array(),
-                visibleSpreadsheetsPerDay: new Array(),
-                spreadsheets: new Array(),
+                visibleSpreadsheets: [],
+                visibleSpreadsheetsPerDay: [],
+                spreadsheets: [],
 
                 repositoryLastUpdate: null
             },
@@ -63,9 +63,9 @@ class App {
                     this.spreadsheetsData = null;
                     this.dataLoading = false;
 
-                    this.visibleSpreadsheets = new Array();
-                    this.visibleSpreadsheetsPerDay = new Array();
-                    this.spreadsheets = new Array();
+                    this.visibleSpreadsheets = [];
+                    this.visibleSpreadsheetsPerDay = [];
+                    this.spreadsheets = [];
                 },
 
                 loadSpreadsheet: function (spreadsheetLink) {
@@ -93,7 +93,7 @@ class App {
                         .then(() => {
                             SPREADSHEET_CONF.SPREADSHEETS_TO_LOAD.forEach((spreadsheetName) => {
                                 this.visibleSpreadsheets[spreadsheetName] = true;
-                                this.visibleSpreadsheetsPerDay[spreadsheetName] = new Array();
+                                this.visibleSpreadsheetsPerDay[spreadsheetName] = [];
                                 this.spreadsheets.push(spreadsheetName);
                             });
 

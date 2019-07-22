@@ -34,7 +34,7 @@ class Spreadsheet {
     }
 
     _initData() {
-        this.data = new Object();
+        this.data = {};
         this.dataSpreadsheetsDataMap = new Map();
 
         const spreadsheetRows = this.gCalSpreadsheet.result.values;
@@ -45,7 +45,7 @@ class Spreadsheet {
 
             const spreadsheetHeader = this.headers[i];
 
-            this.data[spreadsheetHeader.name] = new Array();
+            this.data[spreadsheetHeader.name] = [];
 
 
             for (let j = 1; j < spreadsheetRows.length; j++) {
@@ -53,7 +53,7 @@ class Spreadsheet {
                 const date = spreadsheetRows[j][0];
 
                 if (typeof this.dataSpreadsheetsDataMap.get(date) === "undefined") {
-                    this.dataSpreadsheetsDataMap.set(date, new Array());
+                    this.dataSpreadsheetsDataMap.set(date, []);
                 }
 
                 const rawDataAsArray = [];
@@ -137,7 +137,7 @@ class SpreadsheetData {
 
     // TODO split
     _initViewData() {
-        this.viewData = new Object();
+        this.viewData = {};
 
         if (SPREADSHEET_CONF.COLUMNS_TO_SHOW_NAME_IN_DETAILS.includes(this.name)) {
             this.viewData['name'] = this.name;
@@ -147,7 +147,7 @@ class SpreadsheetData {
             return;
         }
 
-        const skipColumns = new Array();
+        const skipColumns = [];
 
         if (SPREADSHEET_CONF.SPREADSHEETS_SUPPORT_START_TIME.includes(this.spreadsheetName)) {
             const startTimeOrDurationColumn = SPREADSHEET_CONF[START_TIME_COLUMN_PREFIX + this.spreadsheetName];
@@ -202,8 +202,8 @@ class SpreadsheetData {
     }
 
     static _prepareSpreadsheetImage(rawImageUrls, activityDescription) {
-        const preparedImageUrls = new Array();
-        const rawImageUrlsAsArray = rawImageUrls.split(";")
+        const preparedImageUrls = [];
+        const rawImageUrlsAsArray = rawImageUrls.split(";");
 
         for (let i = 0; i < rawImageUrlsAsArray.length; i++) {
             try {

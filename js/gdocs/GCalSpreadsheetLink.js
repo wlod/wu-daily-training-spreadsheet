@@ -11,7 +11,7 @@ class GCalSpreadsheetLink {
     }
 
     _initData() {
-        this.data = new Object();
+        this.data = {};
         this.data["label"] = this.resultRow[0];
         this.data["startDate"] = this.resultRow[1];
         this.data["endDate"] = this.resultRow[2];

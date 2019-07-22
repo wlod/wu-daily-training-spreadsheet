@@ -37,14 +37,13 @@ class GCalSpreadsheet {
      * Support only column names: from 'a' to 'z' or 'A' to 'Z'
      */
     static columnRange(beginCellChar, endCellChar) {
-        let columnRange = [];
         let supportedColumns = 'abcdefghijklmnopqrstuvwxyz';
         if (beginCellChar === beginCellChar.toUpperCase()) {
             endCellChar = endCellChar.toUpperCase();
             supportedColumns = supportedColumns.toUpperCase();
         }
         supportedColumns = supportedColumns.substring(supportedColumns.indexOf(beginCellChar), supportedColumns.indexOf(endCellChar) + 1);
-        columnRange = supportedColumns.split('');
+        const columnRange = supportedColumns.split('');
         return columnRange;
     }
 }

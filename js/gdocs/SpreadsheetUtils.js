@@ -61,8 +61,7 @@ class SpreadsheetUtils {
             }
             let checkHours = parseInt(a.split(":")[0]) - parseInt(b.split(":")[0]);
             if (checkHours === 0) {
-                let checkMinutes = parseInt(a.split(":")[1]) - parseInt(b.split(":")[1]);
-                return checkMinutes;
+                return parseInt(a.split(":")[1]) - parseInt(b.split(":")[1]);
             } else {
                 return checkHours;
             }

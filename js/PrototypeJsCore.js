@@ -1,18 +1,16 @@
 if (!Array.prototype.forEach) {
-    Array.prototype.forEach = function (fun /* , thisp */) {
-        var len = this.length;
+    Array.prototype.forEach = function (fun /* , thisParam */) {
+        let len = this.length;
         if (typeof fun != "function")
             throw new TypeError();
 
-        var thisp = arguments[1];
-        for (var i = 0; i < len; i++) {
+        let thisParam = arguments[1];
+        for (let i = 0; i < len; i++) {
             if (i in this)
-                fun.call(thisp, this[i], i, this);
+                fun.call(thisParam, this[i], i, this);
         }
     };
 }
-;
-
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf#Polyfill
 if (!Array.prototype.indexOf) {
     Array.prototype.indexOf = (function (Object, max, min) {
@@ -21,7 +19,7 @@ if (!Array.prototype.indexOf) {
             if (this === null || this === undefined)
                 throw TypeError("Array.prototype.indexOf called on null or undefined");
 
-            var that = Object(this), Len = that.length >>> 0, i = min(fromIndex | 0, Len);
+            let that = Object(this), Len = that.length >>> 0, i = min(fromIndex | 0, Len);
             if (i < 0)
                 i = max(0, Len + i);
             else if (i >= Len)
@@ -43,9 +41,4 @@ if (!Array.prototype.indexOf) {
             return -1; // if the value was not found, then return -1
         };
     })(Object, Math.max, Math.min);
-}
-;
-
-String.prototype.inList = function (list) {
-    return (Array.apply(null, arguments).indexOf(this.toString()) != -1)
 }

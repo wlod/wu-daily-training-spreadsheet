@@ -37,7 +37,7 @@
     <p>data - <a href="https://docs.google.com/spreadsheets/d/1jx7v_zyb4hIDSaa1IxXIUuUgPEFRxqORYn0_g9AqJas/edit#gid=1777293991" target="_blank">google docs</a>.</p>
 
     <div v-if="spreadsheetsLink === null">
-        <img src="assets/loader-3.gif"/>
+        <img src="assets/loader-3.gif" alt="spreadsheetsLink - loader"/>
     </div>
     
     <div v-if="spreadsheetsLink !== null">
@@ -48,7 +48,7 @@
         </ul>
     
        <div v-if="spreadsheetsData === null && dataLoading === true">
-           <img src="assets/loader-3.gif"/>
+           <img src="assets/loader-3.gif" alt="spreadsheetsData - loader"/>
        </div>
          
        <div v-if="spreadsheetsData !== null">
@@ -97,7 +97,7 @@
                           <div class="item-content item-content-left">
                               <p v-for="(pictures, key) in activity.viewData" v-if="key === 'pictures'">
                                  <span v-for="(picture, key) in pictures">
-                                       <a :href="picture.url" class="image-trigger"><img src="assets/loader-2.gif" :data-src="picture.url" :data-image-description="picture.description" class="lazyload item-image" /></a>&nbsp;
+                                       <a :href="picture.url" class="image-trigger"><img src="assets/loader-2.gif" alt="picture - loader" :data-src="picture.url" :data-image-description="picture.description" class="lazyload item-image" /></a>&nbsp;
                                   </span>
                               </p>
                               <p v-for="(value, key) in activity.viewData" v-if="key !== 'pictures'">

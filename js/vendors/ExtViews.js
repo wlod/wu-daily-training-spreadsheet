@@ -5,7 +5,7 @@ class ExtViews {
      * Append navigation to Views library by viewer.on('open'... and viewer.on('close',...
      */
     static appendViewsToImageWithLibraries() {
-        return new Promise((resolve, reject) => {
+        return new Promise(() => {
 
             WebUtil.appendScriptToDOM('js/vendors/lazysizes.min.js');
             WebUtil.appendScriptToDOM('js/vendors/ls.attrchange.min.js');
@@ -21,23 +21,23 @@ class ExtViews {
             const viewer = new Views(img, {
                 defaultTheme: true,
                 prefix: 'ext',
-                loader: '<img src="assets/loader-2.gif" class="ext-views-loader"/>',
+                loader: '<img src="assets/loader-2.gif" class="ext-views-loader" alt="loader"/>',
                 anywhereToClose: true,
                 openAnimationDuration: 0,
                 closeAnimationDuration: 0
             });
             viewer.on('open', () => {
                 WebUtil.waitForDomElement('#ext-views-wrapper > div.ext-views-content', 40, (element) => {
-                    ExtViews.snapBrowserScroll(img)
-                    ExtViews.createDescription(triggers[index])
-                    ExtViews.createNavigation(viewer, element, triggers, index)
+                    ExtViews.snapBrowserScroll(img);
+                    ExtViews.createDescription(triggers[index]);
+                    ExtViews.createNavigation(viewer, element, triggers, index);
                 });
             });
         });
     }
 
     static snapBrowserScroll(img) {
-        const dayContainer = img.closest("div.day-container")
+        const dayContainer = img.closest("div.day-container");
         if(dayContainer !== null) {
             window.scrollTo(0, dayContainer.offsetTop);
         }
@@ -60,13 +60,13 @@ class ExtViews {
         const nextImageDom = triggers[index + 1];
         const prevImageDom = triggers[index - 1];
 
-        const prevNavigation = ExtViews.createNavigationDOMElement(viewer, "Prev", element, prevImageDom, "ext-views-navigation-prev");
-        const nextNavigation = ExtViews.createNavigationDOMElement(viewer, "Next", element, nextImageDom, "ext-views-navigation-next");
+        const prevNavigation = ExtViews.createNavigationDOMElement(viewer, "Prev (arrow left)", element, prevImageDom, "ext-views-navigation-prev");
+        const nextNavigation = ExtViews.createNavigationDOMElement(viewer, "Next (arrow right)", element, nextImageDom, "ext-views-navigation-next");
 
         // TODO for now "document.onkeydown" is only used in this place
         document.onkeydown = function (e) {
             if (e.key === 'ArrowLeft' && typeof prevNavigation !== "undefined") {
-                prevNavigation !== prevNavigation.click();
+                prevNavigation.click();
             }
             if (e.key === 'ArrowRight' && typeof nextNavigation !== "undefined") {
                 nextNavigation.click();

@@ -3,29 +3,6 @@
 class WebUtil {
 
     /**
-     * Below is simple and ugly solution for RWD
-     */
-    static updateItemHeight() {
-        return new Promise((resolve, reject) => {
-            let maxHeight = 0;
-            document.querySelectorAll('ul.item-list').forEach((itemList) => {
-                const itemsContent = itemList.querySelectorAll('li.item > div.item-content');
-                itemsContent.forEach((itemContent) => {
-                    if (maxHeight < itemContent.clientHeight) {
-                        maxHeight = itemContent.clientHeight;
-                    }
-                });
-                itemsContent.forEach((itemContent) => {
-                    itemContent.style.height = maxHeight + "px";
-                });
-            });
-            document.querySelectorAll('div.day-container .day-summary').forEach((daySummary) => {
-                daySummary.style.height = maxHeight + "px";
-            });
-        });
-    }
-
-    /**
      * Append js script file to DOM
      */
     static appendScriptToDOM(path) {
@@ -58,15 +35,15 @@ class WebUtil {
         if (loadedElement !== null) {
             func(loadedElement);
             return;
-        } else if (inAttempt < 0) {
+        }
+        if (inAttempt < 0) {
             console.error("Cannot load element: " + selector);
             return;
-        } else {
-            inAttempt -= 1;
-            setTimeout(() => {
-                WebUtil.waitForDomElement(selector, time, func, inAttempt);
-            }, time);
         }
+        inAttempt -= 1;
+        setTimeout(() => {
+            WebUtil.waitForDomElement(selector, time, func, inAttempt);
+        }, time);
     }
 
 }
