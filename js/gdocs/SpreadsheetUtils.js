@@ -73,7 +73,7 @@ class SpreadsheetUtils {
         const startDate = new Date('2000/01/01 ' + startHour);
         const endDate = new Date('2000/01/01 ' + endHour);
         const diff = endDate.getTime() - startDate.getTime();
-        return (diff / 60000);
+        return Math.abs((diff / 60000));
     }
 
 }
