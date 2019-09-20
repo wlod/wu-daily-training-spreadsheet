@@ -4,6 +4,7 @@
     <title>wu-daily-training-spreadsheet</title>
     <link rel='shortcut icon' type='image/x-icon' href='assets/favicon.ico' />
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -95,12 +96,12 @@
                           </div>
       
                           <div class="item-content item-content-left">
-                              <p v-for="(pictures, key) in activity.viewData" v-if="key === 'pictures'">
+                              <p v-for="(pictures, key) in activity.viewData" v-if="key === 'pictures'" :data-activity-key="key">
                                  <span v-for="(picture, key) in pictures">
-                                       <a :href="picture.url" class="image-trigger"><img src="assets/loader-2.gif" alt="picture - loader" :data-src="picture.url" :data-image-description="picture.description" class="lazyload item-image" /></a>&nbsp;
+                                       <a :href="picture.url" class="image-trigger"><img src="assets/loader-2.gif" alt="picture - loader" :data-src="picture.url" :data-image-label="picture.description" class="lazyload item-image" /></a>&nbsp;
                                   </span>
                               </p>
-                              <p v-for="(value, key) in activity.viewData" v-if="key !== 'pictures'">
+                              <p v-for="(value, key) in activity.viewData" v-if="key !== 'pictures'" :data-activity-key="key">
                                   <span>{{ key }}:</span>&nbsp;<span>{{ value }}</span>
                               </p>
                           </div>
