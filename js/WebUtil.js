@@ -46,4 +46,32 @@ class WebUtil {
         }, time);
     }
 
+    /**
+     * Select text in DOM Element
+    */
+    static selectTextForDomElement(domElement) {
+        if (document.selection) {
+            const range = document.body.createTextRange();
+            range.moveToElementText(domElement);
+            range.select();
+        } else if (window.getSelection()) {
+            const range = document.createRange();
+            range.selectNode(domElement);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        }
+    }
+
+    /**
+     * Copy DOM Element text to clipboard
+    */
+    static copyTextToClipboardForDomElement(domElement) {
+        try {
+            WebUtil.selectTextForDomElement(domElement);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+        } catch (e) {
+            console.log('Cannot copy text from dom element: {}.', e, domElement);
+        }
+    }
 }

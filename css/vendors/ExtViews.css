@@ -4,9 +4,9 @@ div.ext-views-navigation {
     height: 100%;
     position: absolute;
     color: #FFF;
-    font-size: 14px;
     padding: 2px;
     text-align: center;
+    font-size: 0.85rem;
 }
 
 div.ext-views-navigation span {
@@ -20,13 +20,13 @@ div.ext-views-navigation span {
 div.ext-views-navigation:after {
     display: none;
     position: absolute;
+    top: 45%;
     width: 160px;
     height: 18px;
     padding: 2px;
     background-color: #FFF;
     color: #000;
-    font-size: 14px;
-    top: 45%;
+    font-size: 0.85rem;
 }
 
 div.ext-views-navigation:hover:after {
@@ -49,12 +49,45 @@ div.ext-views-navigation-prev:after {
     content: "Go back to previous";
 }
 
-div.ext-views-meal-description {
+div.ext-views-meal-container {
+    z-index: 10099 !important;
+    width: 320px;
     max-width: 100%;
     max-height: 100%;
     position: absolute;
     top: calc(0% + 20px);
-    left: 50%;
+    left: calc(50% - 160px);
+    background-color: #000;
+    color: #FFF;
+    padding: 2px;
+    font-size: 0.85rem;
+}
+
+@media only screen and (min-width: 767px) {
+  div.ext-views-meal-container {
+    width: 640px;
+    left: calc(50% - 320px);
+  }
+}
+
+div.ext-views-meal-container div {
+    padding: 4px;
+}
+
+div.ext-views-meal-container-description {
+    position: relative;
+    opacity: 0.75;
+}
+
+div.ext-views-meal-container-description i.material-icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 4px;
+}
+
+div.ext-views-meal-container-description div {
+    margin-left: 28px;
 }
 
 img.ext-views-loader {
@@ -68,10 +101,6 @@ img.ext-views-loader {
     box-sizing: border-box;
 }
 
-img.ext-views-image {
-
-}
-
 [data-image-label]::after {
     content: attr(data-image-label);
     background-color: #000;
@@ -82,4 +111,5 @@ img.ext-views-image {
     width: 320px;
     position: absolute;
     left: calc(50% - 160px);
+    bottom: 10%;
 }

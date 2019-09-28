@@ -1,3 +1,5 @@
+"use strict";
+
 class App {
 
     constructor() {
@@ -69,7 +71,7 @@ class App {
                 },
 
                 loadSpreadsheet: function (spreadsheetLink) {
-                    console.debug("Load spdreadsheet", spreadsheetLink);
+                    console.debug("Load spreadsheet", spreadsheetLink);
                     if (typeof this.selectedSpreadsheetLink !== "undefined" && this.selectedSpreadsheetLink !== null) {
                         this.selectedSpreadsheetLink.data.isSelected = false;
                     }

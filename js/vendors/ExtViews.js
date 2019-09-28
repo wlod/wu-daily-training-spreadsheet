@@ -1,3 +1,5 @@
+"use strict";
+
 class ExtViews {
     /**
      * Add js files to end of head tag in index.hml
@@ -29,7 +31,7 @@ class ExtViews {
             viewer.on('open', () => {
                 WebUtil.waitForDomElement('#ext-views-wrapper > div.ext-views-content', 40, (imageContainer) => {
                     ExtViews.snapBrowserScroll(img);
-                    ExtViews.createLabel(triggers[index]);
+                    ExtViews.createLabel(triggers[index], imageContainer);
                     ExtViews.createMealDescription(triggers[index], imageContainer);
                     ExtViews.createNavigation(viewer, imageContainer, triggers, index);
                 });
@@ -44,38 +46,55 @@ class ExtViews {
         }
     }
 
-    static createLabel(sourceImageDom) {
+    static createLabel(sourceImageDom, imageContainer) {
         if (typeof sourceImageDom === "undefined" || sourceImageDom == null) {
-            return;
-        }
-
-        const imageContainer = document.querySelector("#ext-views-wrapper > div.ext-views-content");
-        if (typeof imageContainer === "undefined" || imageContainer == null) {
             return;
         }
 
         imageContainer.setAttribute("data-image-label", sourceImageDom.firstChild.getAttribute("data-image-label"));
     }
 
-    // TODO dodac rozwijany opis do zdjec
+    // TODO logic + view + styles <- change it!
     static createMealDescription(sourceImageDom, imageContainer) {
         if (typeof sourceImageDom === "undefined" || sourceImageDom == null) {
             return;
         }
 
-        const mealDescription = sourceImageDom.closest("div.item-content").querySelector('p[data-activity-key="meal"] > span:last-child');
-        if (typeof mealDescription === "undefined" || mealDescription == null) {
+        const mealDescriptionNode = sourceImageDom.closest("div.item-content").querySelector('p[data-activity-key="meal"] > span:last-child');
+        if (typeof mealDescriptionNode === "undefined" || mealDescriptionNode == null) {
             return;
         }
 
-        console.log("Description: ", mealDescription.innerHTML);
+        const containerExpand = document.createElement("div");
+        containerExpand.innerHTML = 'Show recipe/ingredients:';
+
+        const containerToggleMealDescription = document.createElement("div");
+        containerToggleMealDescription.setAttribute("class", "ext-views-meal-container-description toggle");
+
+        const containerMealDescription = document.createElement("div");
+        containerMealDescription.innerHTML =  mealDescriptionNode.innerHTML;
+
+        const containerCopyToClipboard = document.createElement("i");
+        containerCopyToClipboard.setAttribute("class", "material-icons md-24 item-title-icon");
+        containerCopyToClipboard.setAttribute("title", "Copy recipe/ingredients to clipboard.");
+        containerCopyToClipboard.innerHTML = 'file_copy';
+        containerCopyToClipboard.addEventListener("click", (event) => {
+            event.stopImmediatePropagation();
+            WebUtil.copyTextToClipboardForDomElement(containerMealDescription);
+            MODAL.showMessage("Recipe/ingredients copied to clipboard", 1500);
+        });
 
         const container = document.createElement("div");
-        container.setAttribute("class", "ext-views-meal-description");
+        container.setAttribute("class", "ext-views-meal-container");
+        container.addEventListener("click", (event) => {
+            event.stopImmediatePropagation();
+            containerToggleMealDescription.classList.toggle('toggle');
+        });
 
-        const textNodeLabel = document.createTextNode("Recipe");
-        container.appendChild(textNodeLabel);
-
+        containerToggleMealDescription.appendChild(containerMealDescription);
+        containerToggleMealDescription.appendChild(containerCopyToClipboard);
+        containerExpand.appendChild(containerToggleMealDescription);
+        container.appendChild(containerExpand);
         imageContainer.appendChild(container);
     }
 
