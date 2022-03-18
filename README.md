@@ -19,7 +19,7 @@ Above points it's not glorification google - I jut describe idea - for some simp
 
 JS Libraries:
 
-- Vue.js
+- Vue.js (2.6.14)
 - Google API
 - Views (https://github.com/adrianklimek/views)
 - lazysizes (https://github.com/aFarkas/lazysizes)
